@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رحلة التميّز | قافلة خديجة رضي الله عنها</title>
+<style>
+:root{--sky1:#1b1650;--sky2:#6a2c70;--sky3:#f08a5d;--gold:#ffd166;--green:#2bb673;--red:#ef6f4a;--card:#fffaf0;--ink:#2d2a4a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;font-family:Tahoma,"Segoe UI",Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--sky1),var(--sky2) 55%,var(--sky3));background-attachment:fixed;overflow-x:hidden}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.stars i{position:absolute;color:#fff;font-style:normal;animation:tw 2.5s infinite alternate;opacity:.3}
+@keyframes tw{to{opacity:1;transform:scale(1.4)}}
+.dunes{position:fixed;bottom:0;left:0;right:0;height:22vh;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60% 100% at 20% 100%,#e8a85f 60%,transparent 61%),radial-gradient(ellipse 70% 120% at 75% 100%,#d98f46 60%,transparent 61%)}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:14px 14px 40px}
+.screen{display:none;animation:pop .45s}.screen.on{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.97)}}
+.panel{background:var(--card);border-radius:24px;padding:20px;box-shadow:0 10px 0 #0003,0 18px 35px #0004;border:3px solid var(--gold)}
+h1{margin:0;color:#fff;text-align:center;font-size:clamp(30px,8vw,48px);text-shadow:0 4px 0 #0005}
+.sub{color:#ffe9b8;text-align:center;margin:6px 0 16px}
+.staff{display:flex;gap:8px;margin:0 0 14px}.staff div{flex:1;background:#fff3d6;border:2px dashed var(--gold);border-radius:14px;padding:8px;text-align:center;font-size:13px;color:#6b3d6e}.staff b{display:block;font-size:16px;color:#c2410c}
+.hero{font-size:80px;text-align:center;animation:bob 2s infinite ease-in-out}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-3deg)}}
+label{display:block;font-weight:bold;margin:10px 0 4px}
+input[type=text],textarea{width:100%;border:3px solid #e6d3a8;border-radius:14px;padding:12px;font:inherit;background:#fff}
+input:focus,textarea:focus{outline:none;border-color:var(--sky2)}
+.btn{display:block;width:100%;margin-top:16px;border:0;border-radius:18px;padding:15px;font:inherit;font-size:20px;font-weight:bold;cursor:pointer;color:#fff;background:linear-gradient(180deg,#ff9f43,#f0643a);box-shadow:0 6px 0 #a8431f;transition:.1s}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 #a8431f}
+.btn.g{background:linear-gradient(180deg,#3fd08a,#1f9d63);box-shadow:0 6px 0 #146e44}
+.btn.p{background:linear-gradient(180deg,#8a6fe0,#5a3fb5);box-shadow:0 6px 0 #3b2780}
+.hud{display:flex;gap:8px;margin-bottom:10px}
+.hud div{flex:1;background:#ffffffee;border-radius:14px;padding:6px;text-align:center;font-size:13px;font-weight:bold;box-shadow:0 4px 0 #0003}
+.hud b{display:block;font-size:20px;color:#c2410c}
+.track{position:relative;margin:6px 8px 18px;height:62px}
+.road{position:absolute;top:34px;right:0;left:0;height:10px;border-radius:9px;background:repeating-linear-gradient(90deg,#fff8 0 12px,transparent 12px 22px)}
+.nodes{position:absolute;top:24px;right:0;left:0;display:flex;justify-content:space-between}
+.node{width:30px;height:30px;border-radius:50%;background:#fff5;border:3px solid #fff9;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:bold}
+.node.ok{background:var(--green);border-color:#fff}.node.bad{background:var(--red);border-color:#fff}.node.now{background:var(--gold);color:#7a4b00;border-color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.25)}}
+.camel{position:absolute;top:-8px;font-size:38px;transition:right .9s cubic-bezier(.5,1.4,.5,1);transform:translateX(50%) scaleX(-1)}
+.chip{display:inline-block;padding:4px 14px;border-radius:99px;color:#fff;font-weight:bold;font-size:14px;margin-bottom:10px}
+.q{font-size:clamp(20px,5vw,26px);font-weight:bold;line-height:1.7;margin:4px 0 14px}
+.opts{display:grid;gap:10px}
+.opt{border:3px solid #e2d0a2;background:#fff;border-radius:16px;padding:14px;font:inherit;font-size:19px;font-weight:bold;color:var(--ink);cursor:pointer;box-shadow:0 5px 0 #d8c28d;transition:.12s;text-align:center}
+.opt:hover:not(:disabled){border-color:var(--sky2)}
+.opt:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 #d8c28d}
+.opt.right{background:#d5f6e4;border-color:var(--green);box-shadow:0 5px 0 #1f9d63;animation:jump .5s}
+.opt.wrong{background:#ffe0d6;border-color:var(--red);box-shadow:0 5px 0 #b9482a;animation:shake .4s}
+.opt:disabled{cursor:default}
+@keyframes jump{40%{transform:translateY(-10px) scale(1.04)}}
+@keyframes shake{25%{transform:translateX(8px)}75%{transform:translateX(-8px)}}
+.tf{grid-template-columns:1fr 1fr}.tf .opt{font-size:24px;padding:20px 8px}
+.fb{display:none;margin-top:14px;border-radius:16px;padding:12px 14px;font-weight:bold}
+.fb.show{display:block;animation:pop .3s}.fb.ok{background:#d5f6e4;color:#0e6b40}.fb.no{background:#fff0d6;color:#8a4b00}
+.combo{position:fixed;top:30%;left:50%;transform:translate(-50%,-50%);z-index:9;font-size:34px;font-weight:bold;color:#fff;text-shadow:0 4px 0 #c2410c,0 0 20px #ffd166;pointer-events:none;animation:cb 1.1s forwards;white-space:nowrap}
+@keyframes cb{0%{opacity:0;transform:translate(-50%,-30%) scale(.4)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-120%) scale(1)}}
+.fall{position:fixed;top:-40px;z-index:8;font-size:26px;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.chest{font-size:96px;text-align:center;cursor:pointer;animation:bob 1.2s infinite}
+.big{font-size:54px;font-weight:bold;color:#c2410c;text-align:center}
+.st{font-size:42px;letter-spacing:6px;text-align:center}
+.st .off{filter:grayscale(1);opacity:.3}
+.self label{display:flex;gap:10px;align-items:flex-start;font-weight:normal;margin:6px 0}
+.self input{width:22px;height:22px;accent-color:var(--green);margin-top:4px}
+textarea{min-height:80px;resize:vertical}
+.hidden{display:none!important}
+.small{font-size:13px;color:#6b6a85;text-align:center;margin-top:10px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="stars" id="sky"></div><div class="dunes"></div>
+<div class="wrap">
+
+<section class="screen on" id="s0"><div class="panel">
+<div class="hero">🐪</div>
+<h1 style="color:#c2410c;text-shadow:none">رحلة التميّز</h1>
+<p class="sub" style="color:#6b3d6e">انضمّي إلى قافلة أم المؤمنين خديجة رضي الله عنها، وأجيبي عن ٩ تحدّيات لتفتحي صندوق الكنز! 🧰</p>
+<div class="staff"><div>👩‍🏫 المعلمة<b>خديجة الشهري</b></div><div>🌟 المديرة<b>مريم الوليدي</b></div></div>
+<label for="nm">اسم الطالبة</label><input type="text" id="nm" placeholder="اكتبي اسمكِ">
+<label for="cl">الصف والفصل</label><input type="text" id="cl" placeholder="مثال: الرابع / أ">
+<button class="btn" id="go">🚀 انطلقي في الرحلة</button>
+</div></section>
+
+<section class="screen" id="s1">
+<div class="hud"><div>⭐ النقاط<b id="pt">0</b></div><div>🔥 التتابع<b id="sk">0</b></div><div>🎯 المحطة<b id="stn">1/9</b></div></div>
+<div class="track"><div class="road"></div><div class="nodes" id="nodes"></div><div class="camel" id="camel">🐪</div></div>
+<div class="panel"><span class="chip" id="chip"></span><div class="q" id="q"></div><div class="opts" id="opts"></div>
+<div class="fb" id="fb"></div><button class="btn g hidden" id="nx">المحطة التالية ➜</button></div>
+</section>
+
+<section class="screen" id="s2"><div class="panel">
+<div class="chest" id="chest">🧰</div>
+<p class="small" id="tap" style="font-size:16px">اضغطي على الصندوق لتفتحيه!</p>
+<div id="prize" class="hidden">
+<h1 id="rt" style="color:#c2410c;text-shadow:none;font-size:clamp(26px,7vw,38px)"></h1>
+<div class="st" id="rs"></div><div class="big" id="rsc"></div>
+<p id="rm" style="text-align:center;font-weight:bold"></p>
+<label for="r1">💭 كيف ساهمت خديجة رضي الله عنها في دعم الدعوة في بدايتها؟</label><textarea id="r1" placeholder="اكتبي إجابتكِ..."></textarea>
+<label for="r2">💭 ماذا نتعلّم من أمانة النبي ﷺ في التجارة؟</label><textarea id="r2" placeholder="عبّري بأسلوبكِ..."></textarea>
+<div class="self"><label style="font-weight:bold">🪞 أنا أستطيع أن:</label>
+<label><input type="checkbox" class="sf"> أعرف اسم ونسب أم المؤمنين خديجة رضي الله عنها.</label>
+<label><input type="checkbox" class="sf"> أذكر سبب زواجها من النبي ﷺ.</label>
+<label><input type="checkbox" class="sf"> أدرك فضلها ومكانتها في الإسلام.</label></div>
+<button class="btn p" id="rep">✉️ جهّزي إجاباتي للمعلمة</button>
+<textarea id="out" readonly class="hidden" style="margin-top:12px;min-height:150px"></textarea>
+<div id="act" class="hidden"><button class="btn g" id="cp">📋 نسخ الملخص</button><button class="btn" id="sh">📤 مشاركة</button></div>
+<p class="small">لا تُرسل النتائج تلقائيًّا؛ أرسلي الملخص إلى معلمتكِ عبر منصة المدرسة.</p>
+<button class="btn" id="again">↻ ابدئي رحلة جديدة</button>
+</div></div></section>
+</div>
+
+<script>
+const D=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+const $=id=>document.getElementById(id);
+const ST=[["🌿 كنز المعرفة","#2bb673"],["🧡 تحدّي صح أم خطأ","#f08a1d"],["💎 النجمة الذهبية","#3b8fe0"]];
+const TF=["✓ صح","✕ خطأ"];
+const Q=[
+{s:0,l:"لقب خديجة",q:"ما اللقب الذي كانت تُعرف به خديجة رضي الله عنها بين قومها؟",o:["الطاهرة","الصدّيقة","الفاروق","ذات النطاقين"],a:0,ok:"أحسنتِ! لُقّبت بالطاهرة 🌸"},
+{s:0,l:"وجهة التجارة",q:"إلى أي بلاد أرسلت خديجة رضي الله عنها النبي ﷺ في تجارتها؟",o:["اليمن","الشام","مصر","العراق"],a:1,ok:"رائع! كانت الرحلة إلى بلاد الشام 🐪"},
+{s:0,l:"عمر النبي ﷺ عند الزواج",q:"كم كان عمر النبي ﷺ عندما تزوّج خديجة رضي الله عنها؟",o:["عشرين سنة","خمسًا وعشرين سنة","ثلاثين سنة","أربعين سنة"],a:1,ok:"صحيح! كان عمره ﷺ خمسًا وعشرين سنة."},
+{s:0,l:"سنة الوفاة",q:"في أي سنة من البعثة تُوفّيت أم المؤمنين خديجة رضي الله عنها؟",o:["السنة الثالثة","السنة الخامسة","السنة العاشرة","السنة الثالثة عشرة"],a:2,ok:"أحسنتِ! تُوفّيت في العام العاشر من البعثة."},
+{s:1,l:"أول من آمن من النساء",q:"خديجة رضي الله عنها أول من آمن بالنبي ﷺ من النساء.",o:TF,a:0,ok:"صحيح! كانت أول من آمن به من النساء 💚",tf:1},
+{s:1,l:"سبب الزواج",q:"رغبت خديجة رضي الله عنها في الزواج من النبي ﷺ طمعًا في ماله.",o:TF,a:1,ok:"أحسنتِ! رغبت فيه لصدقه وأمانته وحسن خلقه.",tf:1},
+{s:1,l:"البشارة بالجنة",q:"بشّر النبي ﷺ خديجة رضي الله عنها ببيت في الجنة لا صخب فيه ولا نصب.",o:TF,a:0,ok:"صحيح! وردت هذه البشارة في الحديث الصحيح 🏡",tf:1},
+{s:1,l:"العمر عند الزواج",q:"كانت خديجة رضي الله عنها أصغر سنًّا من النبي ﷺ عند زواجهما.",o:TF,a:1,ok:"أحسنتِ! المشهور في كتب السيرة أنها كانت أكبر منه سنًّا.",tf:1},
+{s:2,l:"سبب الاختيار",q:"ما السبب الرئيس الذي جعل خديجة رضي الله عنها تختار النبي ﷺ زوجًا لها؟",o:["جماله وقوته","حُسن أخلاقه وأمانته","كثرة أمواله وتجارته","رغبة أعمامه في ذلك"],a:1,ok:"ممتازة! الصدق والأمانة وحسن الخلق 🌟"}
+];
+let i=0,pts=0,sk=0,log=[],locked=false,ac;
+// sky
+for(let k=0;k<45;k++){const e=document.createElement("i");e.textContent="✦";e.style.cssText=`top:${Math.random()*70}%;right:${Math.random()*100}%;font-size:${6+Math.random()*10}px;animation-delay:${Math.random()*3}s`;$("sky").appendChild(e)}
+function snd(f,d=.15,t="sine"){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+function yay(){[523,659,784,1047].forEach((f,k)=>setTimeout(()=>snd(f,.2),k*90))}
+function rain(list,n=30){for(let k=0;k<n;k++){const e=document.createElement("div");e.className="fall";e.textContent=list[k%list.length];e.style.right=Math.random()*100+"%";e.style.animationDuration=(2+Math.random()*2)+"s";e.style.animationDelay=Math.random()*.6+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),5000)}}
+function show(n){document.querySelectorAll(".screen").forEach((s,k)=>s.classList.toggle("on",k===n));scrollTo(0,0)}
+function buildNodes(){$("nodes").innerHTML=Q.map((_,k)=>`<div class="node" id="n${k}">${D(k+1)}</div>`).join("")}
+function render(){
+ locked=false;const q=Q[i];
+ $("pt").textContent=D(pts);$("sk").textContent=D(sk);$("stn").textContent=D(i+1)+"/٩";
+ document.querySelectorAll(".node").forEach((n,k)=>{if(k===i)n.className="node now"});
+ $("camel").style.right=(i/8*100)+"%";
+ const c=ST[q.s];$("chip").textContent=c[0];$("chip").style.background=c[1];
+ $("q").textContent=q.q;
+ $("opts").className="opts"+(q.tf?" tf":"");
+ $("opts").innerHTML=q.o.map((t,k)=>`<button class="opt" data-k="${k}">${t}</button>`).join("");
+ $("opts").querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+ $("fb").className="fb";$("nx").classList.add("hidden");
+ $("nx").textContent=i===8?"🧰 اذهبي إلى صندوق الكنز":"المحطة التالية ➜";
+}
+function pick(k){
+ if(locked)return;locked=true;const q=Q[i],b=[...document.querySelectorAll(".opt")];
+ b.forEach(x=>x.disabled=true);
+ const good=k===q.a;log.push({l:q.l,ans:q.o[k],good});
+ b[q.a].classList.add("right");
+ const fb=$("fb");fb.classList.add("show");
+ if(good){
+  sk++;pts+=10+(sk>=3?5:0);$("n"+i).className="node ok";$("n"+i).textContent="★";
+  fb.classList.add("ok");fb.textContent=q.ok;snd(660,.12);setTimeout(()=>snd(880,.18),120);
+  rain(["⭐","✨","🌟"],14);
+  if(sk>=3)combo("🔥 تتابع "+D(sk)+"! +٥");else combo("أحسنتِ! +١٠");
+ }else{
+  sk=0;b[k].classList.add("wrong");$("n"+i).className="node bad";$("n"+i).textContent="✕";
+  fb.classList.add("no");fb.textContent="لا بأس، تعلّمنا شيئًا جديدًا 💡 الإجابة الصحيحة: "+q.o[q.a]+". "+q.ok.replace(/^(أحسنتِ|رائع|صحيح|ممتازة)[!،]?\s*/,"");snd(220,.3,"triangle");
+ }
+ $("pt").textContent=D(pts);$("sk").textContent=D(sk);
+ $("nx").classList.remove("hidden");
+}
+function combo(t){const e=document.createElement("div");e.className="combo";e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),1200)}
+$("nx").onclick=()=>{if(i<8){i++;render()}else finish()};
+$("go").onclick=()=>{if(!$("nm").value.trim()){$("nm").focus();$("nm").style.borderColor="#ef6f4a";return}
+ i=0;pts=0;sk=0;log=[];buildNodes();show(1);render();snd(523,.15)};
+$("nm").addEventListener("keydown",e=>{if(e.key==="Enter")$("go").click()});
+function score(){return log.filter(x=>x.good).length}
+function finish(){
+ show(2);$("chest").textContent="🧰";$("chest").classList.remove("hidden");$("tap").classList.remove("hidden");$("prize").classList.add("hidden");
+}
+$("chest").onclick=()=>{
+ const s=score();$("chest").textContent="👑";$("tap").classList.add("hidden");$("prize").classList.remove("hidden");
+ const t=s===9?"🏆 بطلة السيرة النبوية!":s>=7?"🌟 متميزة ومتألقة!":s>=5?"🌿 تقتربين من التميّز!":"💪 مغامرة شجاعة! جرّبي مرة أخرى";
+ $("rt").textContent=t;
+ const n=s>=8?3:s>=5?2:1;
+ $("rs").innerHTML=[0,1,2].map(k=>`<span class="${k<n?"":"off"}">⭐</span>`).join("");
+ $("rsc").textContent=D(s)+" / ٩  •  "+D(pts)+" نقطة";
+ $("rm").textContent=s===9?"أبدعتِ في كل المحطات يا "+$("nm").value.trim()+"!":"أحسنتِ يا "+$("nm").value.trim()+"! الفوز الحقيقي أن نتعلّم من سيرة الصالحين ونقتدي بأخلاقهم.";
+ yay();rain(s>=5?["🎉","⭐","💎","🌟","✨"]:["🌸","⭐"],45);
+};
+function report(){
+ const L=["لعبة رحلة التميّز مع أم المؤمنين خديجة رضي الله عنها","اسم الطالبة: "+$("nm").value.trim(),"الصف والفصل: "+($("cl").value.trim()||"غير محدد"),"النتيجة: "+D(score())+" / ٩ ، النقاط: "+D(pts),""];
+ log.forEach((x,k)=>L.push(D(k+1)+". "+x.l+": "+x.ans+(x.good?" ✓":" ✕")));
+ L.push("","السؤال الكتابي الأول: "+($("r1").value.trim()||"لم تتم الإجابة"),"السؤال الكتابي الثاني: "+($("r2").value.trim()||"لم تتم الإجابة"));
+ const sf=["معرفة الاسم والنسب","ذكر سبب الزواج","معرفة فضل خديجة رضي الله عنها"].filter((_,k)=>document.querySelectorAll(".sf")[k].checked);
+ L.push("التقويم الذاتي: "+(sf.join("، ")||"لم يتم التحديد"));
+ return L.join("\n");
+}
+$("rep").onclick=()=>{$("out").value=report();$("out").classList.remove("hidden");$("act").classList.remove("hidden");yay()};
+$("cp").onclick=async()=>{const o=$("out");try{await navigator.clipboard.writeText(o.value);$("cp").textContent="✅ تم النسخ!"}catch(e){o.select();$("cp").textContent="حدّدي النص وانسخيه"}};
+$("sh").onclick=async()=>{if(navigator.share){try{await navigator.share({title:"إجاباتي في رحلة التميّز",text:$("out").value})}catch(e){}}else{$("out").select();$("sh").textContent="انسخي النص وأرسليه"}};
+$("again").onclick=()=>{$("out").classList.add("hidden");$("act").classList.add("hidden");$("r1").value=$("r2").value="";document.querySelectorAll(".sf").forEach(c=>c.checked=false);$("cp").textContent="📋 نسخ الملخص";show(0)};
+</script>
+</body>
+</html>

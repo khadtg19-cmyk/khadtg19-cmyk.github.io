@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حديقة التوحيد</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2b2352;--teal:#1f8a8a;--pink:#ff7aa8;--sun:#ffd25e;--mint:#c9f2dc;--lav:#ece6ff;--card:#ffffffee;--bad:#e5576b;--good:#2fa36b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:'Cairo','Segoe UI',Tahoma,sans-serif;color:var(--ink);
+background:radial-gradient(circle at 15% 10%,#fff3c4 0,transparent 35%),radial-gradient(circle at 90% 20%,#ffd6e6 0,transparent 40%),linear-gradient(#d9f3ff,#e9ffe9 60%,#b9ecc4);background-attachment:fixed}
+#app{max-width:640px;margin:0 auto;padding:14px 14px 40px}
+.card{background:var(--card);border-radius:28px;padding:20px;box-shadow:0 10px 0 #1f8a8a22,0 18px 40px #2b235222}
+h1{font-weight:900;font-size:2.4rem;margin:.2em 0;line-height:1.2}
+.hero{text-align:center}
+.sun{font-size:4.2rem;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(6deg)}}
+.teacher{display:inline-block;background:var(--sun);padding:8px 20px;border-radius:99px;font-weight:700;margin:6px 0 14px;box-shadow:0 4px 0 #c99a1a}
+input{width:100%;font:inherit;font-size:1.15rem;padding:14px;border-radius:18px;border:3px solid var(--lav);text-align:center;margin:10px 0;background:#fff;color:var(--ink)}
+input:focus{outline:3px solid var(--teal)}
+button{font:inherit;cursor:pointer}
+.go{background:var(--pink);color:#fff;border:0;font-weight:900;font-size:1.3rem;padding:14px 34px;border-radius:99px;box-shadow:0 6px 0 #c9487a;transition:.1s}
+.go:active{transform:translateY(5px);box-shadow:0 1px 0 #c9487a}
+.bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:700}
+.garden{display:flex;gap:4px;justify-content:center;align-items:flex-end;background:linear-gradient(#0000 55%,#8a5a3c 55%);border-radius:20px;padding:6px 4px 0;height:70px;margin-bottom:14px}
+.pot{flex:1;text-align:center;font-size:1.5rem;line-height:1;padding-bottom:6px;opacity:.9}
+.pot.now{animation:bob 1.4s infinite}
+.pot.empty{filter:grayscale(1);opacity:.35}
+.bloom{animation:pop .6s cubic-bezier(.3,1.8,.5,1)}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.q{background:var(--lav);border-radius:20px;padding:16px;font-weight:900;font-size:1.25rem;line-height:1.6;margin-bottom:14px}
+.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:right;background:#fff;border:3px solid var(--lav);border-radius:18px;padding:12px 14px;margin-bottom:10px;font-weight:700;font-size:1.05rem;color:var(--ink);box-shadow:0 4px 0 #d4c9fa;min-height:56px}
+.opt b{background:var(--teal);color:#fff;border-radius:50%;min-width:34px;height:34px;display:grid;place-items:center}
+.opt:hover{border-color:var(--teal)}
+.opt.ok{background:#d6f7e5;border-color:var(--good);box-shadow:0 4px 0 #2fa36b55}
+.opt.no{background:#ffe0e5;border-color:var(--bad);animation:shake .4s;pointer-events:none}
+@keyframes shake{25%{transform:translateX(8px)}75%{transform:translateX(-8px)}}
+.msg{min-height:3.2em;text-align:center;font-weight:900;font-size:1.15rem;margin:6px 0}
+.hint{font-weight:500;font-size:.95rem;opacity:.8}
+.big{font-size:4rem;text-align:center}
+.cert{border:4px dashed var(--pink);border-radius:22px;padding:16px;text-align:center;background:#fffbea;margin:12px 0}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;font-size:2rem}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.alt{background:var(--teal);box-shadow:0 6px 0 #11595a}
+.alt:active{box-shadow:0 1px 0 #11595a}
+.conf{position:fixed;top:-20px;font-size:1.6rem;pointer-events:none;animation:fall 2.4s linear forwards;z-index:9}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--card:#fffffff2}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+var Q=[
+["ما هو تعريف التوحيد كما ورد في الدرس؟",["إفراد الله في ربوبيته وألوهيته وأسمائه وصفاته","الإيمان بوجود الله فقط دون العمل","حفظ أسماء الله الحسنى فقط","التفكر في مخلوقات الله دون عبادته"],0,"التوحيد يشمل ثلاثة أنواع: الربوبية والألوهية والأسماء والصفات."],
+["إلى أي نوع من أنواع التوحيد يندرج اعتقادنا (أن لا خالق إلا الله)؟",["توحيد الألوهية","توحيد الربوبية","توحيد الأسماء والصفات","الإحسان"],1,"الخلق والرزق والتدبير كلها من أفعال الله، فهي ربوبية."],
+["أي من العبارات التالية تمثل توحيد الألوهية؟",["لا رازق إلا الله","لا مالك إلا الله","الله هو السميع البصير","ألا نسجد إلا لله"],3,"الألوهية هي إفراد الله بالعبادة، ومنها السجود."],
+["على أي شيء يولد كل إنسان كما بين الدرس؟",["على حب المال","على الفطرة (التوحيد)","على تعلم القراءة والكتابة","على دين آبائه مباشرة"],1,"كل مولود يولد على الفطرة وهي التوحيد."],
+["ما هو تعريف توحيد الربوبية؟",["الإقرار بأن الله هو الخالق المالك الرازق المدبر","إفراد الله بالعبادة والدعاء","الإيمان بأسمائه وصفاته","طاعة الرسول صلى الله عليه وسلم"],0,"الربوبية: الله الخالق المالك الرازق المدبر."],
+["كيف كان موقف المشركين في عهد النبي صلى الله عليه وسلم من توحيد الربوبية؟",["كانوا ينكرونه تماماً","كانوا يقرون به ويعترفون أن الله هو الخالق","كانوا لا يعرفون شيئاً عنه","كانوا يعتقدون أن الأصنام هي التي خلقت السماء"],1,"كانوا يعترفون أن الله هو الخالق لكنهم أشركوا في العبادة."],
+["لماذا لم يُدخل الإقرار بتوحيد الربوبية المشركين في الإسلام؟",["لأنهم كانوا لا يصلون","لأنهم عبدوا مع الله غيره","لأنهم أنكروا وجود الله","لأنهم لم يحجوا إلى البيت الحرام"],1,"الإقرار بالربوبية لا يكفي، فلا بد من إفراد الله بالعبادة."],
+["ما هو تعريف توحيد الألوهية؟",["إفراد الله بالخلق والرزق","إفراد الله بالأسماء والصفات","إفراد الله بالعبادة","الإيمان بوجود الله فقط"],2,"الألوهية = العبادة لله وحده."],
+["ما هو تعريف الطاغوت كما ورد في الدرس؟",["كل ما عُبد من دون الله وهو راضٍ","كل من عصى والديه","كل حاكم في الأرض","كل من كذب في حديثه"],0,"الطاغوت: كل ما عُبد من دون الله وهو راضٍ بذلك."],
+["بماذا يتعلق توحيد الربوبية؟",["بأفعال العبد","بأفعال الله تعالى","بأسماء المخلوقات","بصفات الرسل"],1,"الربوبية تتعلق بأفعال الله: يخلق ويرزق ويدبر."]
+];
+var FL=["🌸","🌻","🌷","🌺","🌼","💐","🪻","🌹","🌸","🌻"];
+var A=document.getElementById('app'),name='',i=0,res=[],tries=0,ac;
+function beep(f,d){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.type='triangle';g.gain.setValueAtTime(.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+function yay(){beep(660,.15);setTimeout(function(){beep(880,.25)},140)}
+function conf(){var s=['🌸','⭐','🎀','✨','🦋','🌟'];for(var k=0;k<26;k++){var e=document.createElement('div');e.className='conf';e.textContent=s[k%6];e.style.left=Math.random()*100+'vw';e.style.animationDelay=Math.random()*.8+'s';document.body.appendChild(e);setTimeout(function(x){x.remove()}.bind(null,e),3500)}}
+function esc(t){return t.replace(/[&<>]/g,'')}
+function start(){
+A.innerHTML='<div class="card hero"><div class="sun">🌞</div><h1>حديقة التوحيد</h1><div>أجيبي بشكل صحيح لتُزهر ورودك!</div><div class="teacher">إعداد المعلمة: خديجة الشهري</div><div>مادة القرآن الكريم والدراسات الإسلامية · الصف الرابع</div><input id="nm" placeholder="اكتبي اسمك هنا" maxlength="30" aria-label="اسم الطالبة"><button class="go" id="st">هيا نزرع 🌱</button></div>';
+document.getElementById('st').onclick=function(){name=esc(document.getElementById('nm').value.trim())||'يا بطلة';i=0;res=[];beep(520,.2);show()};
+}
+function garden(){var h='';for(var k=0;k<Q.length;k++){var c=k===i?'pot now':'pot';var s='🌰';if(k<i)s=res[k]===1?FL[k]:'🌱';else if(k>i)c='pot empty';h+='<div class="'+c+(k===i-1?' bloom':'')+'">'+s+'</div>'}return '<div class="garden">'+h+'</div>'}
+function show(){
+tries=0;var q=Q[i],ord=q[1].map(function(t,n){return n}).sort(function(){return Math.random()-.5}),L=['أ','ب','ج','د'];
+var h='<div class="card"><div class="bar"><span>السؤال '+(i+1)+' من '+Q.length+'</span><span>🌸 '+res.filter(function(r){return r===1}).length+'</span></div>'+garden()+'<div class="q">'+q[0]+'</div>';
+ord.forEach(function(o,n){h+='<button class="opt" data-o="'+o+'"><b>'+L[n]+'</b><span>'+q[1][o]+'</span></button>'});
+h+='<div class="msg" id="msg">اختاري الإجابة الصحيحة 🤔</div></div>';A.innerHTML=h;
+A.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){pick(b)}});
+}
+function pick(b){
+var q=Q[i],msg=document.getElementById('msg');
+if(+b.dataset.o===q[2]){
+b.classList.add('ok');A.querySelectorAll('.opt').forEach(function(x){x.style.pointerEvents='none'});
+var first=tries===0;res[i]=first?1:0;yay();if(first)conf();
+msg.innerHTML=(first?'أحسنتِ! أزهرت وردتك 🌸':'جميل! نبتت براعم 🌱 حاولي بسرعة أكبر')+'<div class="hint">'+q[3]+'</div><div class="btns"><button class="go" id="nx">'+(i===Q.length-1?'اعرضي حديقتي 🌈':'التالي ➜')+'</button></div>';
+document.getElementById('nx').onclick=function(){i++;i<Q.length?show():end()};
+}else{tries++;b.classList.add('no');beep(220,.3);msg.textContent=tries>1?'تلميح: '+q[3]:'لا بأس، جربي مرة أخرى 💪'}
+}
+function end(){
+var n=res.filter(function(r){return r===1}).length,st=n>=9?'🏆':n>=7?'⭐':n>=5?'🌟':'🌱',t=n>=9?'مبدعة التوحيد!':n>=7?'ممتازة!':n>=5?'جيدة جداً!':'بداية جميلة، أعيدي المحاولة!';
+var f='';res.forEach(function(r,k){f+=r===1?FL[k]:'🌱'});
+A.innerHTML='<div class="card"><div class="big">'+st+'</div><div class="cert"><h1 style="font-size:1.7rem">'+t+'</h1><div>الطالبة: <b>'+name+'</b></div><div class="row">'+f+'</div><div style="font-size:1.4rem;font-weight:900">'+n+' من '+Q.length+' ورود</div><div class="teacher" style="margin-top:12px">المعلمة: خديجة الشهري</div></div><div class="btns"><button class="go alt" id="rp">العبي من جديد 🔄</button></div></div>';
+conf();beep(784,.3);document.getElementById('rp').onclick=start;
+}
+start();
+</script>
+</body>
+</html>

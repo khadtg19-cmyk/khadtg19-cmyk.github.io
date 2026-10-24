@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رحلة الغوص في أعماق المعرفة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0b2f4a;--pearl:#fffaf0;--sand:#f3e2bd;--gold:#e8b94a;--coral:#ff7f6e;--ok:#1f9d6b;--teal:#18a6b5;--deep:#0b3d63;--card:#fffaf0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{font-family:'Cairo',Tahoma,'Segoe UI',sans-serif;font-size:19px;line-height:1.7;color:#fff;
+background:linear-gradient(#cdf3f7 0%,#8fe0e6 14%,#18a6b5 32%,#0e6c97 56%,#0b3d63 80%,#06233f 100%);
+background-size:100% 400%;background-position:0 0;transition:background-position 2s ease;overflow-x:hidden}
+body.s1{background-position:0 34%}body.s2{background-position:0 67%}body.s3{background-position:0 100%}
+body.l{color:var(--ink)}
+button{font:inherit;cursor:pointer;border:0}
+button:focus-visible{outline:4px solid var(--gold);outline-offset:2px}
+#app{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:14px 14px 90px}
+.scr{display:none}.scr.on{display:block;animation:in .6s ease}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+#bub{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+#bub i{position:absolute;bottom:-40px;border-radius:50%;border:2px solid rgba(255,255,255,.7);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.7),rgba(255,255,255,.1));animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-115vh) translateX(20px)}}
+#waves{position:fixed;left:0;right:0;bottom:0;height:70px;z-index:1;pointer-events:none;opacity:.55}
+#waves svg{position:absolute;bottom:0;width:200%;height:100%;animation:wv 9s linear infinite}
+#waves svg+svg{animation-duration:14s;opacity:.6;bottom:6px}
+@keyframes wv{to{transform:translateX(50%)}}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.pill{background:rgba(255,255,255,.88);color:var(--ink);border-radius:30px;padding:4px 16px;font-weight:700;font-size:16px}
+#snd{min-width:48px;min-height:48px;border-radius:50%;background:var(--pearl);font-size:22px}
+h1{font-weight:900;font-size:clamp(34px,9vw,56px);line-height:1.35;margin:10px 0;color:var(--ink);text-shadow:0 3px 0 #fff,0 6px 18px rgba(24,166,181,.5)}
+h2{font-weight:900;font-size:clamp(24px,5.5vw,32px);margin:6px 0 10px;line-height:1.5}
+.hero{text-align:center;padding-top:14px}
+.shell{font-size:68px;display:inline-block;animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
+.panel{background:var(--card);color:var(--ink);border-radius:26px;padding:18px 20px;margin:14px 0;box-shadow:0 10px 30px rgba(6,35,63,.3)}
+.guide{display:flex;gap:12px;align-items:flex-start}
+.guide .av{font-size:52px;flex:none;animation:bob 5s ease-in-out infinite}
+.btn{display:block;width:100%;min-height:58px;border-radius:30px;font-weight:900;font-size:22px;color:#5a3b00;background:linear-gradient(#ffe08a,var(--gold));box-shadow:0 5px 0 #b98a22,0 10px 20px rgba(0,0,0,.25);margin-top:14px;transition:transform .15s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #b98a22}
+.btn.alt{background:var(--pearl);color:var(--ink);box-shadow:0 5px 0 #b7c9d6}
+.info{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;font-weight:700}
+ul.how{padding:0 22px;margin:8px 0}ul.how li{margin:6px 0}
+.bar{height:16px;background:rgba(255,255,255,.35);border-radius:10px;overflow:hidden;flex:1}
+.bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffe08a,var(--gold));transition:width .8s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:18px 10px;margin:22px 0;justify-items:center}
+.pearl{width:92px;height:92px;border-radius:50%;font-weight:900;font-size:26px;color:var(--ink);
+background:radial-gradient(circle at 32% 28%,#fff 0,#f6efe0 35%,#cfd9e4 75%);box-shadow:inset -6px -8px 14px rgba(0,0,0,.18),0 8px 16px rgba(0,0,0,.3);position:relative}
+.pearl.lock{filter:grayscale(.8) brightness(.7);opacity:.7;cursor:not-allowed}
+.pearl.now{animation:pulse 1.6s ease-in-out infinite}
+.pearl.done{background:radial-gradient(circle at 32% 28%,#fff 0,#ffe9a0 40%,var(--gold) 90%);box-shadow:0 0 28px 8px rgba(255,224,138,.7),inset -6px -8px 14px rgba(0,0,0,.12)}
+.pearl.gold{width:110px;height:110px}
+@keyframes pulse{50%{transform:scale(1.1);box-shadow:0 0 30px 10px rgba(255,255,255,.7)}}
+.lbl{font-size:14px;text-align:center;margin-top:4px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+#modal{position:fixed;inset:0;z-index:10;background:rgba(6,35,63,.72);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:16px}
+#modal.on{display:flex}
+#card{background:var(--card);color:var(--ink);width:100%;max-width:680px;border-radius:28px;padding:20px;margin:auto;box-shadow:0 0 0 6px var(--gold),0 20px 50px rgba(0,0,0,.5);animation:open .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes open{from{transform:scale(.3);opacity:0}}
+.tag{display:inline-block;background:var(--teal);color:#fff;border-radius:20px;padding:0 14px;font-size:15px;font-weight:700}
+.opt{display:block;width:100%;min-height:58px;margin:10px 0;padding:8px 16px;text-align:right;border-radius:18px;background:#e7f6f8;color:var(--ink);font-weight:700;border:3px solid #bfe4ea;transition:.2s}
+.opt.sel{border-color:var(--teal);background:#c9eef2}
+.opt.ok{background:#c8f0de;border-color:var(--ok)}
+.opt.no{background:#ffe1dc;border-color:var(--coral);animation:sh .4s}
+@keyframes sh{25%{transform:translateX(6px)}75%{transform:translateX(-6px)}}
+.tf{display:flex;gap:12px}.tf .opt{text-align:center;font-size:24px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cols .opt{font-size:17px;min-height:70px}
+.opt.done{background:#c8f0de;border-color:var(--ok);pointer-events:none}
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.mg .opt{text-align:center;margin:0}.mg .e{font-size:34px;display:block;line-height:1.3}
+.bins{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.bin{min-height:150px;border:3px dashed var(--teal);border-radius:20px;padding:8px;background:#effafb;cursor:pointer}
+.bin h3{margin:0 0 6px;font-size:17px;text-align:center;color:var(--deep)}
+.chip{display:inline-block;margin:4px;padding:6px 14px;border-radius:16px;background:#ffe9a0;font-weight:700;border:3px solid transparent;cursor:grab;font-size:17px}
+.chip.sel{border-color:var(--coral);transform:scale(1.07)}
+.chip.in{background:#c8f0de;cursor:default}
+#tray{min-height:60px;text-align:center}
+#fb{border-radius:18px;padding:0;margin-top:10px;font-weight:700}
+#fb.ok{background:#e0f7ec;padding:12px 16px;border:3px solid var(--ok)}
+#fb.no{background:#fff1ee;padding:12px 16px;border:3px solid var(--coral)}
+.cert{text-align:center;border:8px double var(--gold);background:linear-gradient(#fffdf5,#fff3d1)}
+.cert .big{font-size:60px;font-weight:900;color:var(--deep);line-height:1.2}
+.cert .medal{font-size:70px}
+.cert ul{text-align:right;display:inline-block;margin:4px 0}
+.spark{position:fixed;font-size:26px;pointer-events:none;z-index:20;animation:rise2 1.4s ease-out forwards}
+@keyframes rise2{to{transform:translateY(-120px) scale(1.6);opacity:0}}
+@media(max-width:480px){body{font-size:17px}.cols{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body class="l">
+<div id="bub" aria-hidden="true"></div>
+<div id="waves" aria-hidden="true">
+<svg viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0 35Q150 0 300 35T600 35T900 35T1200 35V70H0Z" fill="#fff"/></svg>
+<svg viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0 40Q150 10 300 40T600 40T900 40T1200 40V70H0Z" fill="#8fe0e6"/></svg></div>
+<main id="app">
+
+<section class="scr on" id="intro"><div class="hero">
+<div class="shell" aria-hidden="true">🐚</div>
+<h1>رحلة الغوص في أعماق المعرفة</h1>
+<div class="panel guide"><div class="av" aria-hidden="true">🤿</div>
+<div>هيا بنا نغوص في أعماق البحر</div></div>
+<div class="panel info"><span>إعداد المعلمة: خديجة الشهري</span><span>المرحلة الدراسية: الصف الرابع الابتدائي</span><span>المادة: الفقه</span><span>الدرس: الوضوء</span></div>
+<button class="btn" id="go1">ابدئي المغامرة 🌊</button></div></section>
+
+<section class="scr" id="call"><h2 style="text-align:center">المرحلة الأولى: «نداء البحر»</h2>
+<div class="panel"><div class="guide"><div class="av" aria-hidden="true">🐠</div><div>
+نبدأ على شاطئ هادئ، ثم نغوص إلى أعماق البحر الفيروزي لنجمع اللآلئ.
+<ul class="how"><li>المسي اللؤلؤة المتوهجة لتنفتح ويظهر سؤالها.</li><li>أجيبي عن السؤال أو نفّذي النشاط، ولكِ محاولة أخرى مع تلميح عند الخطأ.</li><li>كل لؤلؤة تضيء بإجابتك تقرّبك من الكنز.</li><li>زر 🔊 لتشغيل الصوت أو إيقافه.</li></ul></div></div></div>
+<button class="btn" id="go2">هيا نغوص! 🤿</button></section>
+
+<section class="scr" id="map">
+<div class="top"><span class="pill" id="stg"></span><div class="bar" aria-label="التقدم"><b id="pb"></b></div><span class="pill" id="cnt"></span></div>
+<div id="mapbody"></div></section>
+
+<section class="scr" id="end"></section>
+</main>
+
+<div id="modal" role="dialog" aria-modal="true"><div id="card"></div></div>
+<div style="position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:10px;z-index:30"><button id="snd" aria-label="تشغيل أو إيقاف الصوت">🔊</button></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const A=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const ST=[
+{n:'لآلئ المعرفة',t:'المرحلة الثانية'},
+{n:'تحدي الأعماق',t:'المرحلة الثالثة'},
+{n:'كنز الإتقان',t:'المرحلة الرابعة'}];
+const Q=[
+{s:0,k:'mcq',tag:'اختيار من متعدد',topic:'العبادات التي يجب لها الوضوء',q:'يجب الوضوء لثلاث عبادات. أيٌّ مما يأتي منها؟',o:['الصلاة','الدعاء','النوم','ذكر الله'],a:0,h:'تذكّري: الصلاة، والطواف بالكعبة، ومسّ المصحف.',e:'يجب الوضوء للصلاة، والطواف بالكعبة المشرفة، ومسّ المصحف.'},
+{s:0,k:'tf',tag:'صح أم خطأ',topic:'العبادات التي يجب لها الوضوء',q:'يجب الوضوء للدعاء.',a:false,h:'راجعي العبادات الثلاث التي يجب لها الوضوء.',e:'الدعاء لا يجب له الوضوء؛ فالواجب للصلاة والطواف ومسّ المصحف.'},
+{s:0,k:'match',tag:'المطابقة',topic:'شروط الوضوء',q:'صلي كل شرط من شروط الوضوء بما يناسبه:',p:[['النية','محلّها القلب'],['طهارة الماء','فلا يصح الوضوء بالماء النجس'],['إزالة ما يمنع وصول الماء إلى البشرة','مثل العجين وطلاء الأظافر']],h:'شروط الوضوء هي الأشياء التي تسبق الوضوء، ولا يصح الوضوء بدونها.',e:'شروط الوضوء: النية ومحلّها القلب، وطهارة الماء، وإزالة ما يمنع وصول الماء إلى البشرة.'},
+{s:0,k:'sort',tag:'السحب والإفلات',topic:'حكم الوضوء',q:'صنّفي البطاقات: متى يجب الوضوء ومتى يُسَنّ؟ (المسي البطاقة ثم الصندوق، أو اسحبيها)',b:['يجب الوضوء لها','يُسَنّ الوضوء لها'],i:[['الصلاة',0],['الطواف بالكعبة',0],['مسّ المصحف',0],['ذكر الله عزّ وجلّ',1],['النوم',1]],h:'الواجب ثلاث عبادات، والباقي مما يُسَنّ له الوضوء.',e:'يجب للصلاة والطواف ومسّ المصحف، ويُسَنّ لذكر الله والنوم، ويُسَنّ في كل وقت.'},
+{s:0,k:'multi',tag:'اكتشفي الإجابة',topic:'الماء الذي يصح الوضوء به',q:'اختاري كل ما يصح الوضوء به، ثم المسي «تحقّقي»:',o:[['🍵','الشاي',0],['🥤','العصير',0],['🌊','ماء البحر',1],['🌧️','ماء المطر',1],['🏞️','ماء الشلال',1],['💧','ماء القناة',1]],h:'الشاي والعصير لم يعد يُسمّى كلٌّ منهما ماءً.',e:'يصح الوضوء بماء البحر والمطر والشلال والقناة، ولا يصح بالشاي والعصير.'},
+{s:1,k:'mcq',tag:'تطبيق',topic:'إزالة ما يمنع وصول الماء',q:'أرادت نورة الوضوء وعلى أظافرها طلاء. ماذا تفعل؟',o:['تتوضأ والطلاء على أظافرها','تزيل الطلاء ثم تتوضأ','تتوضأ بالعصير'],a:1,h:'من شروط الوضوء: إزالة ما يمنع وصول الماء إلى البشرة.',e:'طلاء الأظافر يمنع وصول الماء إلى البشرة، فتزيله ثم تتوضأ.'},
+{s:1,k:'tf',tag:'صح أم خطأ',topic:'طهارة الماء',q:'يصح الوضوء بالماء النجس.',a:false,h:'تذكّري شرط «طهارة الماء».',e:'لا يصح الوضوء بالماء النجس؛ لأن طهارة الماء شرط لصحة الوضوء.'},
+{s:1,k:'mcq',tag:'اختيار من متعدد',topic:'النية',q:'ما محلّ النية في الوضوء؟',o:['القلب','اللسان','اليد'],a:0,h:'النية هي أول شروط الوضوء.',e:'النية محلّها القلب.'},
+{s:2,k:'tf',tag:'صح أم خطأ',topic:'استحباب الوضوء الدائم',q:'يُستحب للمسلم أن يكون على وضوء دائمًا.',a:true,h:'الوضوء يُسَنّ في كل وقت.',e:'عبارة صحيحة: يُستحب للمسلم أن يكون على وضوء دائمًا.'},
+{s:2,k:'tf',tag:'صح أم خطأ',topic:'العبادات التي يجب لها الوضوء',q:'يُسَنّ الوضوء عند الصلاة.',a:false,h:'هل الوضوء للصلاة واجب أم سنّة؟',e:'عبارة خاطئة، والصواب: يجب الوضوء عند الصلاة.'},
+{s:2,k:'mcq',tag:'فضل الوضوء',topic:'فضل الوضوء',q:'قال النبي ﷺ: «مَنْ تَوَضَّأَ فَأَحْسَنَ الْوُضُوءَ…». ماذا يحدث له؟',o:['تخرج خطاياه من جسده','لا يحتاج إلى الصلاة','يصبح الماء نجسًا'],a:0,h:'تذكّري الحديث: «حتى تخرج من تحت أظفاره».',e:'من توضأ فأحسن الوضوء خرجت خطاياه من جسده حتى تخرج من تحت أظفاره.'},
+{s:2,k:'multi',gold:1,tag:'تحدي اللؤلؤة الذهبية',topic:'شروط الوضوء',q:'أرادت ليلى الصلاة. اختاري ما يلزمها لصحة وضوئها:',o:[['❤️','النية بالقلب',1],['🥤','الوضوء بالعصير',0],['💅','إزالة طلاء الأظافر',1],['🚰','الوضوء بماء غير نجس',1]],h:'فكّري في شروط الوضوء الثلاثة.',e:'يلزمها: النية، وطهارة الماء، وإزالة ما يمنع وصول الماء إلى البشرة.'}];
+const PR=['أحسنتِ يا غواصة المعرفة!','رائعة يا مبدعة!','إجابة صحيحة، لقد أضأتِ لؤلؤتكِ!','ممتازة! أنتِ تقتربين من الكنز!'];
+let cur=0,st=0,res=[],snd=true,AC;
+
+// ---- sound ----
+function tone(f,d,ty,v,at){try{const o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.value=f;const t=AC.currentTime+at;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d)}catch(e){}}
+function clap(){try{for(let j=0;j<4;j++){const n=AC.sampleRate*.08,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let x=0;x<n;x++)d[x]=(Math.random()*2-1)*(1-x/n);const s=AC.createBufferSource(),g=AC.createGain(),f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=1800;g.gain.value=.25;s.buffer=b;s.connect(f);f.connect(g);g.connect(AC.destination);s.start(AC.currentTime+.35+j*.11)}}catch(e){}}
+function sfx(k){if(!snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(k=='ok'){[523,659,784,1047].forEach((f,j)=>tone(f,.25,'triangle',.12,j*.09));clap()}else if(k=='soft')tone(330,.3,'sine',.06,0);else tone(700,.07,'sine',.07,0)}catch(e){}}
+$('#snd').onclick=()=>{snd=!snd;$('#snd').textContent=snd?'🔊':'🔇';sfx('tap')};
+
+// ---- ambience ----
+(function(){const b=$('#bub');for(let i=0;i<14;i++){const e=document.createElement('i'),s=8+Math.random()*22;e.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;animation-duration:${9+Math.random()*10}s;animation-delay:-${Math.random()*12}s`;b.appendChild(e)}})();
+function spark(x,y){['✨','⭐','🫧'].forEach((c,j)=>{const e=document.createElement('div');e.className='spark';e.textContent=c;e.style.left=(x+j*26-26)+'px';e.style.top=y+'px';document.body.appendChild(e);setTimeout(()=>e.remove(),1500)})}
+
+// ---- navigation ----
+function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id==id));window.scrollTo(0,0)}
+function theme(n){document.body.className=n?('s'+n):'l'}
+$('#go1').onclick=()=>{sfx('tap');theme(0);show('call')};
+$('#go2').onclick=()=>{sfx('tap');st=0;theme(1);renderMap();show('map')};
+
+function renderMap(){
+ const done=res.filter(x=>x!==undefined).length;
+ $('#pb').style.width=(done/Q.length*100)+'%';$('#cnt').textContent=A(done)+' / '+A(Q.length)+' 🔮';
+ const m=$('#mapbody');
+ if(cur>=Q.length){fin();return}
+ if(Q[cur].s>st){
+  $('#stg').textContent=ST[st].t;
+  m.innerHTML=`<div class="panel" style="text-align:center"><div class="shell">🎉</div><h2>أتممتِ «${ST[st].n}»!</h2><p>عدد اللآلئ المضيئة: ${A(done)}. استعدّي للغوص أعمق.</p></div><button class="btn" id="nx">${ST[st+1].t}: «${ST[st+1].n}» 🤿</button>`;
+  $('#nx').onclick=()=>{sfx('tap');st++;theme(st+1);renderMap()};return}
+ $('#stg').textContent=ST[st].t;
+ let h=`<h2 style="text-align:center">«${ST[st].n}»</h2><p style="text-align:center;margin:0">المسي اللؤلؤة المتوهجة لتفتحيها</p><div class="grid">`;
+ Q.forEach((q,i)=>{if(q.s!=st)return;const c=res[i]!==undefined?'done':i==cur?'now':'lock';
+  h+=`<div><button class="pearl ${c} ${q.gold?'gold':''}" data-i="${i}" ${c=='lock'?'aria-disabled="true"':''} aria-label="لؤلؤة ${A(i+1)}">${q.gold?'👑':A(i+1)}</button><div class="lbl">${q.gold?'الذهبية':c=='done'?'مضيئة ✨':c=='now'?'افتحيني':'مقفلة'}</div></div>`});
+ m.innerHTML=h+'</div>';
+ m.querySelectorAll('.pearl').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(i==cur){sfx('tap');openQ(i)}});
+}
+
+// ---- questions ----
+let q,errs,fin1;
+function msg(t,c){const f=$('#fb');f.className=c;f.innerHTML=t}
+function acts(i){$('#acts').innerHTML=`<button class="btn" id="nxt">${i==Q.length-1?'اكشفي الكنز 🏆':'تابعي الغوص 🫧'}</button>`;$('#nxt').onclick=()=>{$('#modal').classList.remove('on');cur=i+1;renderMap();if(cur>=Q.length)show('end')}}
+function good(i){res[i]=errs==0?1:0;sfx('ok');const r=$('#card').getBoundingClientRect();spark(r.left+r.width/2,r.top+60);
+ msg(`<span style="color:var(--ok)">${PR[Math.floor(Math.random()*PR.length)]}</span><br>${q.e}`,'ok');acts(i)}
+function reveal(i){res[i]=0;msg('الإجابة الصحيحة موضّحة أمامك، وهي لؤلؤة تستحق المراجعة 🌟<br>'+q.e,'ok');acts(i)}
+function bad(i,canReveal){errs++;sfx('soft');
+ if(canReveal&&errs>=2){reveal(i);return false}
+ msg('اقتربتِ من الإجابة، هيا حاولي مرة أخرى!<br>💡 '+q.h,'no');return true}
+function openQ(i){q=Q[i];errs=0;
+ $('#card').innerHTML=`<span class="tag">${q.tag}</span><h2>${q.q}</h2><div id="body"></div><div id="fb"></div><div id="acts"></div>`;
+ $('#modal').classList.add('on');R[q.k](i)}
+const R={
+ mcq(i,tf){const o=tf?['صح ✓','خطأ ✗']:q.o,a=tf?(q.a?0:1):q.a;
+  $('#body').innerHTML=(tf?'<div class="tf">':'')+o.map((t,j)=>`<button class="opt" data-j="${j}">${t}</button>`).join('')+(tf?'</div>':'');
+  const bs=[...document.querySelectorAll('.opt')];
+  bs.forEach(b=>b.onclick=()=>{if($('#acts').innerHTML)return;const j=+b.dataset.j;
+   if(j==a){b.classList.add('ok');good(i)}else{b.classList.add('no');setTimeout(()=>b.classList.remove('no'),600);if(!bad(i,true)){bs[a].classList.add('ok')}}})},
+ tf(i){R.mcq(i,1)},
+ multi(i){
+  $('#body').innerHTML='<div class="mg">'+q.o.map((x,j)=>`<button class="opt" data-j="${j}"><span class="e">${x[0]}</span>${x[1]}</button>`).join('')+'</div><button class="btn alt" id="chk">تحقّقي ✔</button>';
+  const bs=[...document.querySelectorAll('.mg .opt')];
+  bs.forEach(b=>b.onclick=()=>{if(!$('#acts').innerHTML){b.classList.toggle('sel');sfx('tap')}});
+  $('#chk').onclick=()=>{if($('#acts').innerHTML)return;const ok=bs.every((b,j)=>b.classList.contains('sel')==!!q.o[j][2]);
+   if(ok){bs.forEach((b,j)=>{b.classList.remove('sel');if(q.o[j][2])b.classList.add('ok')});$('#chk').remove();good(i)}
+   else if(!bad(i,true)){bs.forEach((b,j)=>{b.classList.remove('sel');b.classList.add(q.o[j][2]?'ok':'no')});$('#chk').remove()}}},
+ match(i){
+  const L=q.p.map((x,j)=>[x[0],j]),Rr=sh(q.p.map((x,j)=>[x[1],j]));let sel=null,n=0;
+  $('#body').innerHTML='<div class="cols"><div>'+L.map(x=>`<button class="opt L" data-j="${x[1]}">${x[0]}</button>`).join('')+'</div><div>'+Rr.map(x=>`<button class="opt Rt" data-j="${x[1]}">${x[0]}</button>`).join('')+'</div></div>';
+  const ls=document.querySelectorAll('.L'),rs=document.querySelectorAll('.Rt');
+  ls.forEach(b=>b.onclick=()=>{ls.forEach(x=>x.classList.remove('sel'));sel=b;b.classList.add('sel');sfx('tap')});
+  rs.forEach(b=>b.onclick=()=>{if(!sel)return msg('اختاري المصطلح أولًا من العمود الأول 👆','no');
+   if(sel.dataset.j==b.dataset.j){sel.classList.remove('sel');sel.classList.add('done');b.classList.add('done');sel=null;sfx('tap');n++;msg('','');if(n==q.p.length)good(i)}
+   else{errs++;sfx('soft');b.classList.add('no');setTimeout(()=>b.classList.remove('no'),600);msg('اقتربتِ من الإجابة، هيا حاولي مرة أخرى!<br>💡 '+q.h,'no')}})},
+ sort(i){
+  let sel=null,n=0;
+  $('#body').innerHTML='<div id="tray">'+sh(q.i).map((x,j)=>`<span class="chip" draggable="true" tabindex="0" data-b="${x[1]}">${x[0]}</span>`).join('')+'</div><div class="bins">'+q.b.map((t,j)=>`<div class="bin" data-b="${j}"><h3>${t}</h3></div>`).join('')+'</div>';
+  const place=(c,bin)=>{if(!c||c.classList.contains('in'))return;
+   if(c.dataset.b==bin.dataset.b){c.classList.remove('sel');c.classList.add('in');c.draggable=false;bin.appendChild(c);sel=null;sfx('tap');msg('','');if(++n==q.i.length)good(i)}
+   else{errs++;sfx('soft');msg('اقتربتِ من الإجابة، هيا جرّبي صندوقًا آخر!<br>💡 '+q.h,'no')}};
+  let drag=null;
+  document.querySelectorAll('.chip').forEach(c=>{c.onclick=()=>{if(c.classList.contains('in'))return;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));sel=c;c.classList.add('sel');sfx('tap')};
+   c.ondragstart=e=>{drag=c;e.dataTransfer.setData('text','x')}});
+  document.querySelectorAll('.bin').forEach(b=>{b.onclick=()=>sel&&place(sel,b);b.ondragover=e=>e.preventDefault();b.ondrop=e=>{e.preventDefault();place(drag,b)}})}
+};
+
+// ---- certificate ----
+function fin(){
+ theme(3);const ok=res.filter(x=>x==1).length,T=Q.length;
+ const lvl=ok>=10?['🏆','غواصة متقنة','أتقنتِ الدرس بتميّز!']:ok>=7?['🥇','غواصة متميّزة','أنتِ قريبة جدًّا من الإتقان!']:['🌟','غواصة مثابرة','واصلي المراجعة وستصلين إلى الكنز!'];
+ const weak=[...new Set(Q.filter((x,i)=>res[i]==0).map(x=>x.topic))];
+ $('#end').innerHTML=`<div class="panel cert"><div class="medal">${lvl[0]}</div><h2>شهادة غواصة المعرفة</h2>
+ <p><b>أحسنتِ يا غواصة المعرفة! لقد أتممتِ رحلتكِ في أعماق الفقه.</b></p>
+ <div class="big">${A(ok)} / ${A(T)}</div><p>الإجابات الصحيحة من المحاولة الأولى</p>
+ <p><b>${lvl[1]}</b> — ${lvl[2]}</p>
+ ${weak.length?'<p><b>لآلئ تحتاج إلى تعزيز:</b></p><ul>'+weak.map(w=>'<li>'+w+'</li>').join('')+'</ul>':'<p>لم تحتاجي إلى أي تعزيز! 🎉</p>'}
+ <p style="font-size:15px">إعداد المعلمة: خديجة الشهري — الفقه — الصف الرابع الابتدائي — درس الوضوء</p></div>
+ <button class="btn" id="again">ابدئي رحلة جديدة 🐚</button>`;
+ $('#again').onclick=()=>{cur=0;st=0;res=[];theme(0);show('intro')};
+}
+</script></body></html>

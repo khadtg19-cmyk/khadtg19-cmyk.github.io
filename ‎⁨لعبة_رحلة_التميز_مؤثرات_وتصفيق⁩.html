@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لعبة رحلة التميّز | أم المؤمنين خديجة رضي الله عنها</title>
+<style>
+:root{--green:#22a968;--deep:#0b5963;--teal:#126a76;--pale:#f3f8fc;--line:#d9e1e6;--orange:#ff9800;--blue:#42a5f5;--gold:#f4c65e;--ink:#343b40;--muted:#65747b}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f4;color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.75}
+.shell{max-width:1020px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 18px #193a4412}
+.topline{height:7px;background:linear-gradient(90deg,var(--green),var(--deep))}
+header{padding:22px 24px 12px}
+.brand{background:linear-gradient(100deg,#25ad66,#0b5963);border-radius:11px;color:#fff;text-align:center;padding:11px 14px;font-size:clamp(17px,3vw,24px);font-weight:bold}
+.brand small{display:block;font-size:13px;font-weight:normal;color:#e9f7ef}
+.hero{margin:14px 24px 18px;background:linear-gradient(115deg,#f1f9f5,#f3f8fc);border:1px solid #d4e8df;border-radius:14px;padding:16px;text-align:center}
+.hero h1{margin:0;color:var(--deep);font-size:clamp(22px,4vw,32px)}
+.hero p{margin:4px 0;color:#536b70}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.stat{background:#fff;border:1px solid #d7e5df;border-radius:10px;padding:6px 13px;min-width:105px;font-size:13px}
+.stat b{color:var(--teal);font-size:17px}
+main{padding:0 24px 26px}
+.studentbar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+input[type=text]{width:100%;border:1px solid #b9ccd2;border-radius:8px;padding:10px;font:inherit}
+.section{margin:16px 0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:white}
+.sectionhead{padding:9px 14px;color:#fff;font-weight:bold;font-size:18px;display:flex;align-items:center;justify-content:space-between}
+.greenhead{background:linear-gradient(90deg,var(--green),var(--deep))}
+.orangehead{background:var(--orange)}
+.bluehead{background:var(--blue)}
+.sectionbody{padding:13px 15px}
+.instruction{border:1px solid #8eb5c1;background:#f3f8fc;color:#356c7b;border-radius:7px;padding:8px 12px;font-size:13px;margin:0 0 12px}
+.qcard{padding:12px 2px;border-bottom:1px solid #e2e7e9}
+.qcard:last-child{border-bottom:0}
+.qrow{display:flex;gap:10px;align-items:flex-start}
+.qnum{flex:0 0 32px;height:32px;border-radius:50%;background:#e4f4e9;color:#13784b;display:flex;align-items:center;justify-content:center;font-weight:bold;border:1px solid #a8d9bc}
+.qtext{font-weight:bold;flex:1}
+.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 0 42px}
+.option{display:flex;align-items:center;gap:8px;border:1px solid #b9d8e2;background:#fff;border-radius:8px;padding:8px 10px;cursor:pointer;transition:.15s}
+.option:hover{background:#f0f8fb;border-color:#42a5f5}
+.option input{accent-color:var(--teal);margin:0;transform:scale(1.12)}
+.option:has(input:checked){border-color:var(--teal);background:#eaf6f4}
+.feedback{display:none;margin:9px 0 0 42px;padding:7px 10px;border-radius:7px;font-size:13px}
+.feedback.show{display:block}.correct{background:#e7f6eb;color:#17663b}.wrong{background:#fff1dc;color:#8b5700}
+.tfgrid{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+.tfgrid .qtext{font-weight:normal}
+.tfbtn{border:1px solid #d8dfe2;background:#fff;border-radius:8px;padding:5px 12px;font-weight:bold;cursor:pointer}
+.tfbtn.selected{background:#fff0d9;border-color:#f2b449}
+.tfbtn.correctsel{background:#e7f6eb;border-color:#5ab77a}
+.tfbtn.wrongsel{background:#fff1dc;border-color:#e7a33d}
+.choiceletters{display:flex;gap:7px;flex-wrap:wrap}
+.choiceletters .option{justify-content:center}
+.actionrow{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+button.action{border:0;border-radius:9px;padding:11px 17px;font:inherit;font-weight:bold;cursor:pointer}
+.primary{background:var(--deep);color:#fff}.secondary{background:#edf3f5;color:#285661;border:1px solid #c6d8de!important}.gold{background:#fff1c9;color:#77540a;border:1px solid #efd17d!important}
+button:disabled{opacity:.6;cursor:not-allowed}
+.result{display:none;border:2px solid #8ac9a2;background:#f0faf3;border-radius:12px;padding:18px;text-align:center;margin:16px 0}
+.result.show{display:block}
+.score{font-size:35px;color:#0c7650;font-weight:bold}
+.stars{font-size:27px;letter-spacing:4px;color:#d9a52d}
+.reflection{width:100%;min-height:85px;border:1px solid #bfd2d8;border-radius:8px;padding:10px;font:inherit;resize:vertical}
+.selfrow{display:flex;gap:9px;align-items:flex-start;padding:7px 0}
+.selfrow input{accent-color:var(--blue);margin-top:7px;transform:scale(1.15)}
+.progress{height:8px;background:#e5ecee;border-radius:99px;overflow:hidden;margin-top:8px}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .3s}
+footer{text-align:center;color:#718087;font-size:12px;padding:12px 20px 25px}
+@media(max-width:650px){header{padding:15px 12px 8px}.hero{margin:10px 12px 14px}main{padding:0 12px 22px}.studentbar{grid-template-columns:1fr}.options{grid-template-columns:1fr;margin-right:0;margin-left:0}.feedback{margin-right:0;margin-left:0}.tfgrid{grid-template-columns:1fr auto auto}.sectionbody{padding:10px}.qnum{flex-basis:29px;height:29px}.actionrow button{width:100%}}
+@media print{body{background:#fff}.shell{box-shadow:none}.actionrow{display:none}.section{break-inside:avoid}}
+
+/* ✨ حركة لطيفة ومؤثرات تشجيعية */
+@keyframes floatIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes pop{0%{transform:scale(.7);opacity:0}65%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes bounce{0%,100%{transform:translateY(0)}45%{transform:translateY(-7px)}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+@keyframes confettiFall{0%{transform:translateY(-12vh) rotate(0deg);opacity:1}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 #ffd76a00}50%{box-shadow:0 0 0 7px #ffd76a55}}
+@keyframes progressPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
+.hero{animation:floatIn .7s ease-out both}
+.brand{background-size:200% 100%;animation:shimmer 8s linear infinite}
+.stat{transition:transform .25s,box-shadow .25s}
+.stat:hover{transform:translateY(-3px);box-shadow:0 7px 18px #0b596322}
+.section{transition:transform .25s,box-shadow .25s}
+.section:hover{box-shadow:0 8px 22px #124c5b12}
+.qcard{animation:floatIn .45s ease-out both}
+.option{transition:transform .16s,background .16s,border-color .16s,box-shadow .16s}
+.option:active{transform:scale(.985)}
+.option:has(input:checked){box-shadow:0 0 0 2px #126a7610}
+.tfbtn{transition:transform .16s,background .16s}
+.tfbtn:active{transform:scale(.94)}
+.qnum{transition:transform .25s}
+.qcard:has(input:checked) .qnum{animation:bounce .5s ease}
+.progress span{animation:progressPulse 2s ease-in-out infinite}
+.feedback.show{animation:pop .35s ease-out both}
+.feedback.correct{border:1px solid #8fd4a3}
+.feedback.wrong{border:1px solid #f1cb87}
+.result.show{animation:pop .45s ease-out both}
+.action{transition:transform .18s,filter .18s,box-shadow .18s}
+.action:hover{transform:translateY(-2px);filter:brightness(1.04);box-shadow:0 6px 15px #153f4318}
+#celebrationLayer{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9999}
+.confetti{position:absolute;top:-20px;width:10px;height:16px;border-radius:3px;animation:confettiFall var(--duration,2.8s) linear forwards;left:var(--left)}
+#cheerToast{position:fixed;z-index:10000;left:50%;top:18px;transform:translateX(-50%) scale(.8);width:min(92vw,430px);background:linear-gradient(120deg,#1fa968,#075d63);color:white;border:3px solid #ffe39a;border-radius:20px;padding:16px 18px;text-align:center;box-shadow:0 15px 45px #073f3f45;opacity:0;pointer-events:none}
+#cheerToast.show{animation:cheerIn 2.7s ease both}
+#cheerToast .big{font-size:27px;font-weight:bold;display:block}
+#cheerToast .emoji{font-size:34px;display:block;animation:bounce .65s ease infinite}
+@keyframes cheerIn{0%{opacity:0;transform:translateX(-50%) translateY(-18px) scale(.8)}12%,78%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-10px) scale(.96)}}
+.feedback .mini-stars{display:block;letter-spacing:4px;color:#c78c14;font-size:17px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="celebrationLayer" aria-hidden="true"></div><div id="cheerToast" role="status" aria-live="polite"><span class="emoji">👏✨</span><span class="big">أنتِ رائعة!</span><span class="toastText">أحسنتِ يا بطلة!</span></div><div class="shell">
+<div class="topline"></div>
+<header><div class="brand">📖 أم المؤمنين خديجة بنت خويلد رضي الله عنها <small>لعبة تعليمية تفاعلية • تعلّمي، تحدّي، وتألقّي</small></div></header>
+<section class="hero">
+<h1>🏆 رحلة التميّز</h1>
+<p>هل أنتِ مستعدة لاجتياز محطات المعرفة وجمع نجوم التميّز؟</p>
+<div class="stats">
+<div class="stat">⭐ النقاط<br><b id="points">٠</b></div>
+<div class="stat">🎯 المحطات المكتملة<br><b id="completed">٠ / ٣</b></div>
+<div class="stat">💎 شاراتكِ<br><b id="badges">٠</b></div>
+</div>
+<div class="progress"><span id="progress"></span></div><div style="margin-top:10px"><button type="button" class="action secondary" id="soundToggle" style="padding:5px 12px;font-size:13px">🔔 تشغيل التصفيق التشجيعي: مفعّل</button><span style="font-size:12px;color:#687b80;margin-right:8px">ستسمعين التصفيق عند الإجابة الصحيحة</span></div>
+</section>
+<main>
+<div class="studentbar">
+<label>اسم الطالبة<input type="text" id="studentName" placeholder="اكتبي اسمكِ الثلاثي"></label>
+<label>الصف والفصل<input type="text" id="studentClass" placeholder="مثال: الرابع / أ"></label>
+</div>
+
+<section class="section">
+<div class="sectionhead greenhead"><span>🌿 المحطة الأولى | كنز المعرفة</span><span>٤ أسئلة</span></div>
+<div class="sectionbody">
+<p class="instruction">اختاري الإجابة الصحيحة. كل إجابة صحيحة تمنحكِ نقاطًا جديدة!</p>
+<div class="qcard" data-q="q1"><div class="qrow"><span class="qnum">١</span><div class="qtext">ما اللقب الذي كانت تُعرف به خديجة رضي الله عنها بين قومها؟</div></div>
+<div class="options">
+<label class="option"><input type="radio" name="q1" value="a"> الطاهرة</label><label class="option"><input type="radio" name="q1" value="b"> الصدّيقة</label>
+<label class="option"><input type="radio" name="q1" value="c"> الفاروق</label><label class="option"><input type="radio" name="q1" value="d"> ذات النطاقين</label>
+</div><div class="feedback"></div></div>
+<div class="qcard" data-q="q2"><div class="qrow"><span class="qnum">٢</span><div class="qtext">إلى أي بلاد أرسلت خديجة رضي الله عنها النبي ﷺ في تجارتها؟</div></div>
+<div class="options">
+<label class="option"><input type="radio" name="q2" value="a"> اليمن</label><label class="option"><input type="radio" name="q2" value="b"> الشام</label>
+<label class="option"><input type="radio" name="q2" value="c"> مصر</label><label class="option"><input type="radio" name="q2" value="d"> العراق</label>
+</div><div class="feedback"></div></div>
+<div class="qcard" data-q="q3"><div class="qrow"><span class="qnum">٣</span><div class="qtext">كم كان عمر النبي ﷺ عندما تزوّج خديجة رضي الله عنها؟</div></div>
+<div class="options">
+<label class="option"><input type="radio" name="q3" value="a"> عشرين سنة</label><label class="option"><input type="radio" name="q3" value="b"> خمسًا وعشرين سنة</label>
+<label class="option"><input type="radio" name="q3" value="c"> ثلاثين سنة</label><label class="option"><input type="radio" name="q3" value="d"> أربعين سنة</label>
+</div><div class="feedback"></div></div>
+<div class="qcard" data-q="q4"><div class="qrow"><span class="qnum">٤</span><div class="qtext">في أي سنة من البعثة تُوفّيت أم المؤمنين خديجة رضي الله عنها؟</div></div>
+<div class="options">
+<label class="option"><input type="radio" name="q4" value="a"> السنة الثالثة</label><label class="option"><input type="radio" name="q4" value="b"> السنة الخامسة</label>
+<label class="option"><input type="radio" name="q4" value="c"> السنة العاشرة</label><label class="option"><input type="radio" name="q4" value="d"> السنة الثالثة عشرة</label>
+</div><div class="feedback"></div></div>
+</div></section>
+
+<section class="section">
+<div class="sectionhead orangehead"><span>🧡 المحطة الثانية | تحدّي الصواب والخطأ</span><span>٤ أسئلة</span></div>
+<div class="sectionbody">
+<p class="instruction" style="border-color:#ffd18a;background:#fffaf1;color:#96600b">انتبهي إلى معنى العبارة، ثم اختاري «صح» أو «خطأ».</p>
+<div class="qcard" data-q="q5"><div class="tfgrid"><span class="qtext"><b>٥.</b> خديجة رضي الله عنها أول من آمن بالنبي ﷺ من النساء.</span><button type="button" class="tfbtn" data-name="q5" value="true">✓ صح</button><button type="button" class="tfbtn" data-name="q5" value="false">✕ خطأ</button></div><div class="feedback"></div></div>
+<div class="qcard" data-q="q6"><div class="tfgrid"><span class="qtext"><b>٦.</b> رغبت خديجة رضي الله عنها في الزواج من النبي ﷺ طمعًا في ماله.</span><button type="button" class="tfbtn" data-name="q6" value="true">✓ صح</button><button type="button" class="tfbtn" data-name="q6" value="false">✕ خطأ</button></div><div class="feedback"></div></div>
+<div class="qcard" data-q="q7"><div class="tfgrid"><span class="qtext"><b>٧.</b> بشّر النبي ﷺ خديجة رضي الله عنها ببيت في الجنة لا صخب فيه ولا نصب.</span><button type="button" class="tfbtn" data-name="q7" value="true">✓ صح</button><button type="button" class="tfbtn" data-name="q7" value="false">✕ خطأ</button></div><div class="feedback"></div></div>
+<div class="qcard" data-q="q8"><div class="tfgrid"><span class="qtext"><b>٨.</b> كانت خديجة رضي الله عنها أصغر سنًّا من النبي ﷺ عند زواجهما.</span><button type="button" class="tfbtn" data-name="q8" value="true">✓ صح</button><button type="button" class="tfbtn" data-name="q8" value="false">✕ خطأ</button></div><div class="feedback"></div></div>
+</div></section>
+
+<section class="section">
+<div class="sectionhead bluehead"><span>💎 المحطة الثالثة | النجمة الذهبية</span><span>سؤال التحدّي</span></div>
+<div class="sectionbody">
+<p class="instruction" style="border-color:#9bd2ff;background:#f2f9ff;color:#216ca5">السؤال الأخير في التحدي المعرفي؛ اختاري بعناية!</p>
+<div class="qcard" data-q="q9"><div class="qrow"><span class="qnum" style="background:#e8f4ff;color:#237cc1;border-color:#a8d7ff">٩</span><div class="qtext">ما السبب الرئيس الذي جعل خديجة رضي الله عنها تختار النبي ﷺ زوجًا لها؟</div></div>
+<div class="options">
+<label class="option"><input type="radio" name="q9" value="a"> جماله وقوته</label><label class="option"><input type="radio" name="q9" value="b"> حُسن أخلاقه وأمانته</label>
+<label class="option"><input type="radio" name="q9" value="c"> كثرة أمواله وتجارته</label><label class="option"><input type="radio" name="q9" value="d"> رغبة أعمامه في ذلك</label>
+</div><div class="feedback"></div></div>
+</div></section>
+
+<section class="section">
+<div class="sectionhead greenhead"><span>🌱 التقويم الختامي | فكّري وأبدعي</span><span>تعبير</span></div>
+<div class="sectionbody">
+<label style="font-weight:bold;display:block;margin-bottom:7px">١٠. كيف ساهمت أم المؤمنين خديجة رضي الله عنها في دعم الدعوة الإسلامية في بدايتها؟</label>
+<textarea id="reflection1" class="reflection" placeholder="اكتبي إجابتكِ هنا..."></textarea>
+<label style="font-weight:bold;display:block;margin:14px 0 7px">١١. ماذا نتعلّم من خُلُق الأمانة الذي اتّصف به النبي ﷺ في التجارة؟</label>
+<textarea id="reflection2" class="reflection" placeholder="عبّري عن فهمكِ بأسلوبكِ..."></textarea>
+</div></section>
+
+<section class="section">
+<div class="sectionhead bluehead"><span>🪞 التقويم الذاتي | أنا أستطيع</span></div>
+<div class="sectionbody">
+<label class="selfrow"><input type="checkbox" id="s1"> أعرف اسم ونسب أم المؤمنين خديجة رضي الله عنها.</label>
+<label class="selfrow"><input type="checkbox" id="s2"> أستطيع ذكر سبب زواج خديجة رضي الله عنها من النبي ﷺ.</label>
+<label class="selfrow"><input type="checkbox" id="s3"> أدرك فضل خديجة رضي الله عنها ومكانتها في الإسلام.</label>
+</div></section>
+
+<div class="actionrow">
+<button class="action primary" id="grade">🏆 احسبي نقاطي واكشفي نتيجتي</button>
+<button class="action gold" id="prepare">✉️ جهّزي إجاباتي للإرسال</button>
+<button class="action secondary" id="reset">↻ ابدئي من جديد</button>
+</div>
+<section class="result" id="result" aria-live="polite">
+<div class="stars" id="stars">★ ★ ★</div><h2 id="resultTitle">أحسنتِ!</h2>
+<div class="score" id="score">٠ / ٩</div><p id="resultText"></p>
+<p><b>تذكّري:</b> الفوز الحقيقي أن نتعلّم من سيرة الصالحين ونقتدي بأخلاقهم.</p>
+<textarea id="report" class="reflection" readonly style="display:none;text-align:right"></textarea>
+<div class="actionrow" style="justify-content:center;margin-bottom:0">
+<button class="action primary" id="copy">نسخ ملخص الإجابات</button>
+<button class="action secondary" id="share">مشاركة الملخص</button>
+</div>
+<p style="font-size:12px;color:#61766c">لا تُرسل النتائج تلقائيًّا إلى المعلمة؛ بعد تجهيز الملخص، أرسليه عبر منصة المدرسة أو وسيلة التواصل المعتمدة.</p>
+</section>
+</main>
+<footer>الصدق والأمانة والإخلاص قيمٌ تضيء طريق التميّز • نشاط تعليمي تفاعلي</footer>
+</div>
+<script>
+const key={q1:"a",q2:"b",q3:"b",q4:"c",q5:"true",q6:"false",q7:"true",q8:"false",q9:"b"};
+const feedback={
+q1:["أحسنتِ! لُقّبت خديجة رضي الله عنها بالطاهرة.","الإجابة الصحيحة: الطاهرة."],
+q2:["رائع! كانت الرحلة التجارية إلى بلاد الشام.","الإجابة الصحيحة: الشام."],
+q3:["إجابة صحيحة! كان عمر النبي ﷺ خمسًا وعشرين سنة.","الإجابة الصحيحة: خمسًا وعشرين سنة."],
+q4:["أحسنتِ! تُوفّيت في العام العاشر من البعثة.","الإجابة الصحيحة: السنة العاشرة من البعثة."],
+q5:["صحيح! كانت أول من آمن بالنبي ﷺ من النساء.","الإجابة الصحيحة: صح."],
+q6:["أحسنتِ! عُرف النبي ﷺ بالصدق والأمانة وحسن الخلق.","الإجابة الصحيحة: خطأ."],
+q7:["صحيح! وردت هذه البشارة في الحديث الصحيح.","الإجابة الصحيحة: صح."],
+q8:["أحسنتِ! المشهور في كتب السيرة أنها كانت أكبر منه ﷺ سنًّا.","الإجابة الصحيحة: خطأ."],
+q9:["ممتازة! الصدق والأمانة وحسن الخلق من الصفات التي عُرف بها النبي ﷺ.","الإجابة الأفضل: حُسن أخلاقه وأمانته."]
+};
+const chosen={};
+let soundEnabled=true;
+const celebrated={};
+const cheerLines=["أنتِ رائعة! واصلي التألّق 🌟","أحسنتِ يا بطلة! إجابة مميّزة 👏","ما شاء الله عليكِ! عقل متألّق 💚","رائعة ومبدعة! استمري في التقدّم ✨","يا سلام! نجمة جديدة تلمع ⭐","فخورة باجتهادكِ يا مبدعة! 🏆"];
+function showCheer(text){
+ const toast=document.getElementById("cheerToast");
+ toast.querySelector(".toastText").textContent=text||cheerLines[Math.floor(Math.random()*cheerLines.length)];
+ toast.classList.remove("show");void toast.offsetWidth;toast.classList.add("show");
+}
+function confettiBurst(amount=65){
+ const layer=document.getElementById("celebrationLayer");
+ const colors=["#20a968","#42a5f5","#ffad24","#e86b9a","#9b82e8","#f4d35e","#18b6a4"];
+ for(let i=0;i<amount;i++){
+  const el=document.createElement("span");el.className="confetti";
+  el.style.setProperty("--left",Math.random()*100+"%");
+  el.style.setProperty("--duration",(2+Math.random()*2.1)+"s");
+  el.style.background=colors[Math.floor(Math.random()*colors.length)];
+  el.style.width=(6+Math.random()*7)+"px";el.style.height=(9+Math.random()*10)+"px";
+  el.style.animationDelay=(Math.random()*.45)+"s";
+  layer.appendChild(el);setTimeout(()=>el.remove(),4800);
+ }
+}
+function applause(){
+ if(!soundEnabled)return;
+ try{
+  const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;
+  const ctx=new Ctx();const start=ctx.currentTime;
+  // Short, soft synthetic claps; no external audio or network required.
+  for(let i=0;i<18;i++){
+   const t=start+i*.075;
+   const buffer=ctx.createBuffer(1,Math.floor(ctx.sampleRate*.055),ctx.sampleRate);
+   const data=buffer.getChannelData(0);
+   for(let j=0;j<data.length;j++)data[j]=(Math.random()*2-1)*Math.pow(1-j/data.length,2);
+   const source=ctx.createBufferSource();source.buffer=buffer;
+   const filter=ctx.createBiquadFilter();filter.type="highpass";filter.frequency.value=900+Math.random()*900;
+   const gain=ctx.createGain();gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(.13,t+.008);gain.gain.exponentialRampToValueAtTime(.0001,t+.06);
+   source.connect(filter);filter.connect(gain);gain.connect(ctx.destination);source.start(t);source.stop(t+.06);
+  }
+  setTimeout(()=>ctx.close(),2200);
+ }catch(e){}
+}
+function celebrate(name){
+ if(celebrated[name])return;
+ celebrated[name]=true;confettiBurst(42);applause();showCheer();
+}
+document.getElementById("soundToggle").addEventListener("click",()=>{
+ soundEnabled=!soundEnabled;
+ document.getElementById("soundToggle").textContent=soundEnabled?"🔔 تشغيل التصفيق التشجيعي: مفعّل":"🔕 التصفيق التشجيعي: متوقف";
+ if(soundEnabled){applause();showCheer("جرّبي الإجابة الصحيحة واستمتعي بالتصفيق! 👏")}
+});
+function setAnswer(name,value,el){
+ chosen[name]=value;
+ document.querySelectorAll('[data-name="'+name+'"]').forEach(b=>{b.classList.remove("selected","correctsel","wrongsel");if(b.value===value)b.classList.add("selected")});
+ updateStats();
+}
+document.querySelectorAll('input[type=radio]').forEach(el=>el.addEventListener("change",()=>{
+ chosen[el.name]=el.value;
+ const card=el.closest(".qcard");
+ if(card){
+  const f=card.querySelector(".feedback");
+  if(el.value===key[el.name]){
+   f.className="feedback show correct";f.innerHTML='<span class="mini-stars">★ ★ ★</span>'+feedback[el.name][0];
+   celebrate(el.name);
+  }else{f.className="feedback show wrong";f.textContent="محاولة جميلة! فكّري مرة أخرى، فأنتِ قادرة 💪";delete celebrated[el.name]}
+ }
+ updateStats()
+}));
+document.querySelectorAll(".tfbtn").forEach(b=>b.addEventListener("click",()=>{
+ setAnswer(b.dataset.name,b.value,b);
+ const card=b.closest(".qcard"),f=card.querySelector(".feedback");
+ if(b.value===key[b.dataset.name]){
+  f.className="feedback show correct";f.innerHTML='<span class="mini-stars">★ ★ ★</span>'+feedback[b.dataset.name][0];celebrate(b.dataset.name);
+ }else{f.className="feedback show wrong";f.textContent="لا بأس يا بطلة! حاولي مرة أخرى، فالخطأ فرصة للتعلّم 🌱";delete celebrated[b.dataset.name]}
+}));
+function updateStats(){
+ let count=0;Object.keys(key).forEach(k=>{if(chosen[k]!==undefined)count++});
+ document.getElementById("completed").textContent=(count===9?"٣":count>=5?"٢":"١")+" / ٣";
+ document.getElementById("progress").style.width=(count/9*100)+"%";
+}
+function grade(){
+ let score=0,answered=0;
+ Object.keys(key).forEach(k=>{
+   const v=chosen[k];const card=document.querySelector('[data-q="'+k+'"]');const f=card.querySelector(".feedback");
+   f.className="feedback show";
+   if(v===undefined){f.textContent="لم تختاري إجابة بعد.";f.classList.add("wrong");return}
+   answered++;
+   if(v===key[k]){score++;f.textContent=feedback[k][0];f.classList.add("correct")}
+   else{f.textContent=feedback[k][1];f.classList.add("wrong")}
+ });
+ let points=score*10;
+ document.getElementById("points").textContent=String(points).replace(/[0-9]/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+ document.getElementById("badges").textContent=score>=8?"٣":score>=5?"٢":"١";
+ document.getElementById("score").textContent=String(score).replace(/[0-9]/g,d=>"٠١٢٣٤٥٦٧٨٩"[d])+" / ٩";
+ document.getElementById("resultTitle").textContent=score===9?"🏆 بطلة السيرة النبوية!":score>=7?"🌟 متميزة ومتألقة!":score>=5?"🌿 تقتربين من التميّز!":"💪 أعيدي المحاولة يا بطلة!";
+ document.getElementById("resultText").textContent=score===9?"أبدعتِ في جميع التحديات! جمعتِ كل نقاط المعرفة.":score>=7?"أحسنتِ! راجعي الإجابات التي أخطأتِ فيها لتزدادي معرفة.":"راجعي الدرس وتأمّلي الإجابات الصحيحة، ثم أعيدي المحاولة.";
+ document.getElementById("result").classList.add("show");
+ if(score===9){confettiBurst(130);applause();showCheer("يا بطلة! أتقنتِ جميع الأسئلة، أنتِ رائعة! 🏆")}
+ else if(score>=7){confettiBurst(75);applause();showCheer("إنجاز جميل! تابعي التقدّم يا مبدعة 🌟")}
+ document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function makeReport(){
+ const name=document.getElementById("studentName").value.trim();
+ if(!name){alert("فضلاً، اكتبي اسمكِ أولاً.");document.getElementById("studentName").focus();return false}
+ const labels={q1:"لقب خديجة رضي الله عنها",q2:"وجهة التجارة",q3:"عمر النبي ﷺ عند الزواج",q4:"سنة الوفاة من البعثة",q5:"أول من آمن من النساء",q6:"سبب الزواج",q7:"البشارة بالبيت في الجنة",q8:"العمر عند الزواج",q9:"سبب اختيار النبي ﷺ"};
+ const lines=["لعبة رحلة التميّز مع أم المؤمنين خديجة رضي الله عنها","اسم الطالبة: "+name,"الصف والفصل: "+(document.getElementById("studentClass").value.trim()||"غير محدد"),""];
+ Object.keys(key).forEach((k,i)=>{let val=chosen[k];let input=document.querySelector('input[name="'+k+'"]:checked');if(!val&&input)val=input.value;let display="لم تتم الإجابة";if(val){if(k==="q1")display=val==="a"?"الطاهرة":val==="b"?"الصدّيقة":val==="c"?"الفاروق":"ذات النطاقين";else if(k==="q2")display={a:"اليمن",b:"الشام",c:"مصر",d:"العراق"}[val];else if(k==="q3")display={a:"عشرون سنة",b:"خمس وعشرون سنة",c:"ثلاثون سنة",d:"أربعون سنة"}[val];else if(k==="q4")display={a:"السنة الثالثة",b:"السنة الخامسة",c:"السنة العاشرة",d:"السنة الثالثة عشرة"}[val];else if(k==="q5"||k==="q6"||k==="q7"||k==="q8")display=val==="true"?"صح":"خطأ";else display={a:"جماله وقوته",b:"حسن أخلاقه وأمانته",c:"كثرة أمواله وتجارته",d:"رغبة أعمامه في ذلك"}[val]}lines.push((i+1)+". "+labels[k]+": "+display)});
+ lines.push("السؤال الكتابي الأول: "+(document.getElementById("reflection1").value.trim()||"لم تتم الإجابة"));
+ lines.push("السؤال الكتابي الثاني: "+(document.getElementById("reflection2").value.trim()||"لم تتم الإجابة"));
+ lines.push("التقويم الذاتي: "+[["s1","معرفة الاسم والنسب"],["s2","ذكر سبب الزواج"],["s3","معرفة فضل خديجة رضي الله عنها"]].filter(x=>document.getElementById(x[0]).checked).map(x=>x[1]).join("، "));
+ document.getElementById("report").value=lines.join("\n");document.getElementById("report").style.display="block";return true;
+}
+document.getElementById("grade").addEventListener("click",grade);
+document.getElementById("prepare").addEventListener("click",()=>{if(makeReport()){document.getElementById("result").classList.add("show");document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"})}});
+document.getElementById("copy").addEventListener("click",async()=>{if(!document.getElementById("report").value&&!makeReport())return;const t=document.getElementById("report").value;try{await navigator.clipboard.writeText(t);alert("نُسخ ملخص إجاباتكِ. أرسليه إلى معلمتكِ.");}catch(e){document.getElementById("report").select();alert("انسخي النص الظاهر ثم أرسليه إلى معلمتكِ.")}});
+document.getElementById("share").addEventListener("click",async()=>{if(!document.getElementById("report").value&&!makeReport())return;const text=document.getElementById("report").value;if(navigator.share){try{await navigator.share({title:"إجاباتي في رحلة التميّز",text})}catch(e){}}else{document.getElementById("report").select();alert("انسخي الملخص وأرسليه عبر وسيلة التواصل المعتمدة.")}});
+document.getElementById("reset").addEventListener("click",()=>{if(confirm("هل تريدين مسح إجاباتكِ والبدء من جديد؟"))location.reload()});
+</script>
+</body></html>
