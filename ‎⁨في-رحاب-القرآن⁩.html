@@ -1,0 +1,733 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>في رحاب القرآن</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Tajawal:wght@500;700;800&display=swap">
+<style>
+/* Layout: classroom game board — a hub of game cards, one game stage at a time, and a results board for the teacher */
+:root{
+  --paper:#FBF3E6; --card:#FFFDF8; --ink:#1F3B4D; --muted:#6a5a3f; --line:#D9C7A5;
+  --teal:#3E7F88; --teal-soft:#DDEEEC; --coral:#E07A5F; --gold:#F2B84B; --leaf:#5E8E3E; --leaf-soft:#EAF3E0; --rose-soft:#FBE9E4;
+  --f-ui:'Tajawal',system-ui,sans-serif; --f-q:'Amiri Quran','Amiri','Traditional Arabic',serif;
+  color-scheme:light;
+}
+html,body{background:var(--paper);color:var(--ink)}
+body{font-family:var(--f-ui);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px}
+.wrap{max-width:1100px;margin:0 auto}
+.board{position:relative;background:linear-gradient(180deg,#FDF6EA,#F5E6CF);border:2px solid #EADBC0;border-radius:28px;padding:clamp(14px,2.6vw,28px);overflow:hidden;box-shadow:0 10px 30px rgba(120,90,40,.12)}
+.deco{position:absolute;pointer-events:none}
+header.hd{position:relative;padding-inline:8px 64px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.school{font-size:.82rem;font-weight:700;color:var(--teal)}
+.who{display:flex;align-items:center;gap:8px;background:#fff;border:2px dashed var(--line);border-radius:40px;padding:6px 14px}
+.who label{font-weight:800;white-space:nowrap;font-size:.92rem}
+.who.ayah{font-family:var(--f-q);font-size:1.15rem;line-height:1.9;color:#12324a;padding:4px 18px}
+.who input{border:0;border-bottom:2px dotted var(--ink);background:transparent;font:700 .95rem var(--f-ui);color:var(--ink);width:170px;max-width:46vw;padding:2px}
+.who input:focus{outline:none;border-bottom-color:var(--coral)}
+.cloud{position:relative;margin:14px auto 6px;max-width:640px;background:var(--card);border:2.5px dashed var(--line);border-radius:60px;padding:14px 20px;text-align:center}
+.cloud small{font-weight:800;color:var(--teal)}
+.cloud h1{margin:.15em 0 0;font-size:clamp(1.5rem,3.4vw,2.2rem);font-weight:800;line-height:1.3;text-wrap:balance}
+.cloud h1 b{color:var(--coral)}
+.cloud p{margin:.3em 0 0;color:var(--muted);font-weight:500;font-size:.92rem}
+.hub{position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));grid-auto-rows:1fr;gap:14px;margin-top:16px}
+.hub .gcard{height:100%}
+.gcard{position:relative;text-align:right;background:var(--card);border:2px solid #EADBC0;border-radius:20px;padding:14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;font:inherit;color:inherit;transition:transform .15s,box-shadow .15s}
+.gcard:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(120,90,40,.14)}
+.gcard:focus-visible,button:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.gic{flex:none;width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:var(--c)}
+.gic svg{width:34px;height:34px}
+.gcard .gt{display:block;margin:0;font-size:1.05rem;font-weight:800}
+.gcard .gd{display:block;margin:.25em 0 0;font-size:.84rem;color:var(--muted);font-weight:500;line-height:1.5}
+.skill{display:inline-block;margin-top:6px;font-size:.74rem;font-weight:800;color:var(--c2);background:var(--c);border-radius:10px;padding:1px 9px}
+.stars{position:absolute;top:10px;left:12px;color:var(--gold);font-size:.95rem;letter-spacing:1px}
+.stage{position:relative;margin-top:16px;background:var(--card);border:2.5px dashed var(--line);border-radius:26px;padding:clamp(14px,2.4vw,24px)}
+.stage-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stage-top h2{margin:0;font-size:1.25rem;font-weight:800;display:flex;align-items:center;gap:10px}
+.prog{display:flex;gap:4px}
+.prog i{width:22px;height:8px;border-radius:6px;background:#EADBC0}
+.prog i.ok{background:var(--leaf)}.prog i.no{background:var(--coral)}.prog i.cur{background:var(--gold)}
+.back{background:var(--teal-soft);color:var(--teal)}
+button{font:800 1rem var(--f-ui);border:0;border-radius:40px;padding:10px 22px;cursor:pointer;color:var(--ink)}
+.primary{background:var(--coral);color:#fff;box-shadow:0 4px 0 #b95a42}
+.primary:active{transform:translateY(2px);box-shadow:0 2px 0 #b95a42}
+.how{margin:10px 0 0;font-size:.92rem;font-weight:700;color:var(--muted)}
+.qbox{margin-top:16px;text-align:center}
+.prompt{font-size:1.1rem;font-weight:800;line-height:1.7;text-wrap:balance}
+.big{font-family:var(--f-q);font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.6;color:#12324a;margin:.1em 0}
+.verse{font-family:var(--f-q);font-size:clamp(1.3rem,3vw,1.75rem);line-height:2;color:#12324a}
+.verse mark{background:#FCE9A8;border-radius:8px;padding:0 4px;color:inherit}
+.opts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+.opt{background:#fff;border:2.5px solid var(--line);border-radius:18px;padding:12px 20px;font-size:1.05rem;min-width:120px}
+.opt.wide{flex:1 1 100%;max-width:560px;text-align:right;font-weight:700;line-height:1.6}
+.opt.q{font-family:var(--f-q);font-weight:400;font-size:1.5rem;padding:6px 20px}
+.opt:hover:not(:disabled){border-color:var(--teal)}
+.opt.right{background:var(--leaf-soft);border-color:var(--leaf);color:#2f5a1c}
+.opt.wrong{background:var(--rose-soft);border-color:var(--coral)}
+.opt:disabled{cursor:default}
+.sunmoon{display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.sunmoon .opt{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:150px}
+.sunmoon svg{width:56px;height:56px}
+.tiles .opt{font-family:var(--f-q);font-size:2rem;min-width:90px;padding:4px 18px}
+.feedback{min-height:3.2em;margin-top:14px;font-weight:700;line-height:1.6;font-size:.98rem;max-width:620px;margin-inline:auto;border-radius:14px;padding:8px 12px}
+.feedback.ok{background:var(--leaf-soft);color:#2f5a1c}
+.feedback.no{background:#FFF4D6;color:#7a5413}
+.next{margin-top:12px}
+.memory{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
+.mc{aspect-ratio:4/3;border-radius:16px;border:2.5px solid var(--line);background:linear-gradient(135deg,var(--teal),#2d636b);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1.6rem;padding:6px;text-align:center;line-height:1.4;max-width:100%}
+.mc.open,.mc.done{background:#fff;color:var(--ink);font-size:.98rem}
+.mc.open .q,.mc.done .q{font-family:var(--f-q);font-size:1.45rem;font-weight:400}
+.mc.done{border-color:var(--leaf);background:var(--leaf-soft)}
+.endbox{text-align:center;margin-top:18px}
+.endbox .score{font-size:2.4rem;color:var(--gold);letter-spacing:4px}
+.endbox p{font-weight:800;font-size:1.1rem}
+.results{margin-top:16px;display:grid;gap:12px}
+.rrow{display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:12px;align-items:center;background:#fff;border:1.5px solid #EADBC0;border-radius:16px;padding:10px 14px}
+.rrow b{font-weight:800}
+.bar{height:14px;border-radius:10px;background:#F1E6D2;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--teal),var(--leaf))}
+.lvl{font-size:.82rem;font-weight:800;text-align:center;border-radius:12px;padding:3px 6px;font-variant-numeric:tabular-nums}
+.lvl.a{background:var(--leaf-soft);color:#2f5a1c}.lvl.b{background:#FFF4D6;color:#7a5413}.lvl.c{background:var(--teal-soft);color:var(--teal)}.lvl.d{background:#F1EBE0;color:var(--muted)}
+.vres{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 10px;margin-top:18px;background:#fff;border:1.5px solid #EADBC0;border-radius:20px;padding:18px 10px 14px}
+.vcol{flex:1 1 0;min-width:88px;max-width:130px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.vpc{font-weight:800;font-size:1rem;font-variant-numeric:tabular-nums}
+.vbar{width:40px;height:190px;border-radius:14px;background:#F1E6D2;display:flex;align-items:flex-end;overflow:hidden}
+.vbar i{display:block;width:100%;border-radius:14px;background:linear-gradient(0deg,var(--teal),var(--leaf));transition:height .6s}
+.vcol b{font-size:.88rem;font-weight:800;line-height:1.35;min-height:2.7em;display:flex;align-items:center}
+.vcol .lvl{font-size:.72rem;line-height:1.3}
+@media (max-width:640px){.vres{flex-wrap:nowrap;gap:4px;padding:14px 6px 10px}.vcol{min-width:0;max-width:none;gap:4px}.vbar{height:150px;width:24px;border-radius:10px}.vbar i{border-radius:10px}.vpc{font-size:.75rem}.vcol b{font-size:.66rem;min-height:4em}.vcol .lvl{font-size:.58rem;padding:2px 3px}}
+.rescard{position:relative;margin-top:14px;display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center;background:linear-gradient(270deg,#FFFDF8,#E9F1F5);border:2px solid #C9DCE4;border-radius:22px;padding:16px 18px;box-shadow:0 6px 16px rgba(31,59,77,.08)}
+.rescard .rc-main{flex:1 1 200px}
+.rescard .gt{display:block;font-size:1.15rem;font-weight:800}
+.rescard .gd{display:block;margin-top:.2em;font-size:.86rem;color:var(--muted);font-weight:500}
+.rescard .skill{display:inline-block;margin-top:6px;font-size:.74rem;font-weight:800;border-radius:10px;padding:1px 9px}
+.idcard{position:relative;flex:2 1 260px;min-width:0;max-width:100%;box-sizing:border-box;display:flex;flex-wrap:nowrap;gap:10px 14px;align-items:center;background:#fff;border:2.5px dashed var(--teal);border-radius:18px;padding:18px 16px 12px;margin-top:8px}
+.idtag{position:absolute;top:-13px;right:16px;background:var(--gold);color:#5a3d06;font-weight:800;font-size:.8rem;border-radius:20px;padding:2px 12px;box-shadow:0 2px 0 #d39a2a}
+.idcard label{display:flex;align-items:center;gap:6px;font-weight:800;font-size:.95rem;white-space:nowrap;min-width:0;flex:1 1 0}
+.idcard label:last-of-type{flex:none}
+.idcard input{border:0;background:transparent;font:700 1rem var(--f-ui);color:var(--ink);width:100%;min-width:0;padding:2px}
+.idcard input#hk{width:64px!important;flex:none}
+.idcard input:focus{outline:none;border-bottom-color:var(--coral)}
+.rescard #toRes{flex:none}
+.idbox{display:flex;flex-wrap:nowrap;min-width:0;gap:8px 16px;align-items:center;background:#fff;border:2.5px solid var(--teal);border-radius:16px;padding:8px 14px;box-shadow:0 3px 0 var(--teal-soft)}
+.idbox label{display:flex;align-items:center;gap:6px;font-weight:800;font-size:.92rem;white-space:nowrap;min-width:0}
+.idbox input{border:0;background:transparent;font:700 .95rem var(--f-ui);color:var(--ink);width:150px;max-width:34vw;min-width:0;padding:2px}
+.idbox input#klass{width:56px!important}
+.idbox input:focus{outline:none;border-bottom-color:var(--coral)}
+.note{margin-top:10px;font-size:.86rem;color:var(--muted);font-weight:500;line-height:1.7}
+.credit{position:relative;margin:18px 60px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:.84rem;font-weight:700;color:var(--muted);border-top:1.5px dashed var(--line);padding-top:10px}
+.credit b{color:var(--ink)}
+/* Treasure map + stage themes */
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px 14px;margin-top:18px}
+.st{position:relative;text-align:right;border:2px solid transparent;border-radius:22px;padding:16px 14px 14px;background:var(--s2);display:flex;gap:12px;align-items:center;box-shadow:inset 0 -5px 0 rgba(0,0,0,.06);transition:transform .15s}
+.st:hover{transform:translateY(-2px);border-color:var(--s)}
+.st .num{position:absolute;top:-10px;right:-6px;width:32px;height:32px;border-radius:50%;background:var(--s);color:#fff;display:grid;place-items:center;font-weight:800;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.st .gic{background:#fff;width:52px;height:52px}
+.st .gt{display:block;font-weight:800;font-size:1.1rem;color:var(--s)}
+.st .mech{display:inline-block;margin-top:4px;font-size:.8rem;font-weight:800;background:#fff;color:var(--s);border-radius:10px;padding:1px 9px}
+.stage.th{border:3px solid var(--s);background:linear-gradient(180deg,var(--s2) 0,var(--card) 240px)}
+.th .stage-top h2{color:var(--s)}
+.th .stage-top .gic{background:#fff!important}
+.th .back{background:#fff;color:var(--s)}
+.th .primary{background:var(--s);box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.th .prog i.cur{background:var(--s)}
+.th .opt:hover:not(:disabled){border-color:var(--s)}
+.th .mc:not(.open):not(.done){background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(0,0,0,.2)),var(--s)}
+.th .verse mark{background:var(--s2);box-shadow:inset 0 -3px 0 var(--s)}
+.src{font-weight:700;color:var(--muted);font-size:.85rem}
+.mean{display:inline-block;margin-top:8px;background:#fff;border:2px dashed var(--s,var(--line));border-radius:16px;padding:8px 20px;font-weight:800;font-size:1.15rem}
+.hint{text-align:center;font-weight:800;color:var(--s,var(--teal));margin:10px 0 0}
+.balloons{gap:18px}
+.balloons .opt{width:150px;min-height:124px;border:0;border-radius:50% 50% 47% 47%/58% 58% 42% 42%;background:var(--bc);box-shadow:inset -10px -12px 0 rgba(0,0,0,.07);position:relative;margin-bottom:26px;font-weight:800;line-height:1.4;padding:12px}
+.balloons .opt::after{content:'';position:absolute;bottom:-26px;left:50%;width:2px;height:26px;background:#9b7a5a}
+.balloons .opt.right{background:#9CCB7A;color:#1e3d10}
+.balloons .opt.wrong{background:#ddd;opacity:.6}
+.sh-hex .opt{clip-path:polygon(14% 0,86% 0,100% 50%,86% 100%,14% 100%,0 50%);border:0;background:var(--s2);padding:10px 40px;min-width:150px}
+.sh-hex .opt.right{background:#CFE6BE}.sh-hex .opt.wrong{background:#F6CFC4}
+.sh-leaf .opt{border-radius:30px 6px 30px 6px}
+.sh-ticket .opt{border-radius:8px;border-style:dashed;border-color:var(--s);background:#FFFBEF}
+.sh-ticket .opt.right{background:var(--leaf-soft);border-color:var(--leaf)}.sh-ticket .opt.wrong{background:var(--rose-soft);border-color:var(--coral)}
+.tfb .opt{min-width:150px;font-size:1.25rem;font-weight:800;border-radius:24px;display:flex;align-items:center;gap:8px;justify-content:center}
+.tfi{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--s2);color:var(--s)}
+.ladwrap{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:16px;align-items:start}
+.ladder{background:#fff;border-radius:18px;padding:8px;border:2px dashed var(--s)}
+.ladder svg{display:block;width:100%;max-height:340px}
+.chests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px auto 0;max-width:540px}
+.chest{background:#fff;border:2.5px solid var(--line);border-radius:18px;padding:8px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font:400 1.3rem var(--f-q);line-height:1.6}
+.chest svg{width:72px;height:58px}
+.chest.sel{border-color:var(--s);background:var(--s2)}
+.chest.ok{background:#FFF6D6;border-color:#E3B341}.chest.no{background:#F1EDE7;opacity:.75}
+.conn{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;margin-top:16px}
+.conn .col{display:flex;flex-direction:column;gap:10px}
+.cbtn{background:#fff;border:2.5px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:700;font-size:.95rem;line-height:1.5}
+.cbtn.q{font-family:var(--f-q);font-size:1.35rem;font-weight:400;padding:4px 14px}
+.cbtn.sel{border-color:var(--s);background:var(--s2);box-shadow:0 0 0 3px var(--s2)}
+.cbtn.done{background:var(--pc);border-color:var(--pc);cursor:default;color:var(--ink)}
+.cbtn.bad{animation:shake .4s;border-color:var(--coral)}
+.rail{position:relative;height:96px;margin:14px 34px 0}
+.rline{position:absolute;top:30px;left:0;right:0;height:8px;border-radius:4px;background:repeating-linear-gradient(90deg,#8a6a4a 0 12px,#C9B28E 12px 18px)}
+.stn{position:absolute;top:18px;transform:translateX(50%);display:flex;flex-direction:column;align-items:center;gap:6px;width:76px;text-align:center}
+.stn i{font-style:normal;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#fff;border:3px solid #C9B28E;font-weight:800;color:var(--muted);transition:background .4s,border-color .4s,color .4s}
+.stn.done i{background:var(--s);border-color:var(--s);color:#fff}
+.stn b{font-size:.74rem;font-weight:800;line-height:1.3;color:var(--ink)}
+.train{position:absolute;top:-16px;transform:translateX(50%);width:64px;transition:right 1.5s cubic-bezier(.5,0,.3,1);z-index:2}
+.train svg{width:64px;height:40px;display:block}
+.transit .endbox{margin-top:6px}
+.nextcard{display:flex;gap:12px;align-items:center;max-width:460px;margin:14px auto 0;background:var(--s2);border:2.5px solid var(--s);border-radius:20px;padding:12px 16px;animation:pop .5s 1.4s both}
+.nextcard .gic{background:#fff}
+.nextcard small{display:block;font-weight:800;color:var(--s)}
+.nextcard b{display:block;font-size:1.2rem;font-weight:800}
+.nextcard span span,.nextcard>span>span{font-size:.88rem;color:var(--muted);font-weight:700}
+.tdone{text-align:center;font-weight:800;font-size:1.15rem;color:var(--s)}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.aline{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;min-height:68px;max-width:640px;margin:14px auto 6px;padding:10px;border:2.5px dashed var(--s);border-radius:18px;background:#fff}
+.aline.ok{border-style:solid;border-color:var(--leaf);background:var(--leaf-soft)}.aline.no{border-style:solid;border-color:var(--coral);background:var(--rose-soft)}
+.ph{color:var(--muted);font-weight:700;font-size:.9rem}
+.pool{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;min-height:56px}
+.wt{font:800 1.1rem var(--f-ui);background:var(--s2);border:2px solid var(--s);border-radius:14px;padding:2px 16px;line-height:1.6;padding-block:8px}
+.aline .wt{background:#fff}
+.tiles .opt{font-family:var(--f-q)}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media (max-width:640px){.rail{margin-inline:22px;height:64px}.stn{width:58px}.stn b{display:none}.stn i{width:28px;height:28px;font-size:.85rem}.ladwrap{grid-template-columns:minmax(0,1fr) 64px}.balloons .opt{width:130px;min-height:110px}.chests{grid-template-columns:repeat(2,minmax(0,1fr))}.conn{gap:10px 10px}.cbtn{font-size:.85rem;padding:8px 8px}.cbtn.q{font-size:1.15rem}}
+@media (max-width:640px){.memory{grid-template-columns:repeat(3,minmax(0,1fr))}.rrow{grid-template-columns:1fr 76px}.rrow .bar{grid-column:1/-1;grid-row:2}.credit{margin-inline:0;margin-bottom:56px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap" dir="rtl"><div class="board">
+  <svg class="deco" style="top:-8px;left:-10px" width="110" height="100" viewBox="0 0 120 110" aria-hidden="true"><path d="M60 8l13 27 29 4-21 21 5 29-26-14-26 14 5-29-21-21 29-4z" fill="#F2B84B" stroke="#e09a2c" stroke-width="3" stroke-linejoin="round"/></svg>
+  <svg class="deco" style="bottom:0;left:0" width="84" height="92" viewBox="0 0 150 160" aria-hidden="true"><g fill="#7FA35B"><path d="M70 160C66 110 60 70 40 30c26 30 38 70 40 130z"/><ellipse cx="40" cy="60" rx="16" ry="7" transform="rotate(-40 40 60)"/><ellipse cx="58" cy="95" rx="18" ry="7" transform="rotate(-25 58 95)"/><ellipse cx="88" cy="80" rx="18" ry="7" transform="rotate(30 88 80)"/><ellipse cx="96" cy="118" rx="18" ry="7" transform="rotate(20 96 118)"/></g><circle cx="110" cy="40" r="7" fill="#E07A5F"/></svg>
+  <svg class="deco" style="bottom:4px;right:6px" width="56" height="84" viewBox="0 0 96 140" aria-hidden="true"><circle cx="48" cy="82" r="44" fill="#FBE3A0" opacity=".45"/><path d="M48 6v14" stroke="#8a6a2a" stroke-width="3"/><circle cx="48" cy="8" r="6" fill="none" stroke="#8a6a2a" stroke-width="3"/><path d="M30 34h36l-4-10H34z" fill="#9c7432"/><path d="M28 36h40v62l-6 12H34l-6-12z" fill="#F7CF6B" stroke="#9c7432" stroke-width="4"/><path d="M48 36v74M28 66h40" stroke="#9c7432" stroke-width="2.5"/><path d="M26 112h44v10H26z" fill="#9c7432"/></svg>
+
+  <header class="hd">
+    <div class="school">الابتدائية التاسعة عشر لتحفيظ القرآن الكريم · الصف الرابع</div>
+    <div class="who ayah">﴿كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ مُبَارَكٌ لِّيَدَّبَّرُوا آيَاتِهِ﴾</div>
+  </header>
+
+  <div id="view"></div>
+
+  <div class="credit"><span>المعلمة: <b>خديجة مطلق الشهري</b></span><span>مديرة المدرسة: <b>مريم محمد الوليدي</b></span></div>
+</div></div>
+
+<script>
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const SAW=s=>s.replace(/ﷺ/g,'<span style="font-family:var(--f-q)">ﷺ</span>');
+const ICON={
+ compass:'<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="#fff" stroke="#2d636b" stroke-width="3"/><path d="M20 9l4 11-4 11-4-11z" fill="#E07A5F"/><circle cx="20" cy="20" r="2.5" fill="#2d636b"/></svg>',
+ cards:'<svg viewBox="0 0 40 40"><rect x="6" y="9" width="17" height="23" rx="3" fill="#fff" stroke="#7a4fb0" stroke-width="3" transform="rotate(-10 14 20)"/><rect x="17" y="8" width="17" height="23" rx="3" fill="#7B4FB0" transform="rotate(8 25 20)"/><path d="M25 15l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="#F2B84B"/></svg>',
+ quill:'<svg viewBox="0 0 40 40"><path d="M30 6C18 9 12 18 10 30l3 1c3-10 9-17 17-25z" fill="#fff" stroke="#8f6215" stroke-width="2.5"/><path d="M9 33h16" stroke="#8f6215" stroke-width="3" stroke-linecap="round"/></svg>',
+ sun:'<svg viewBox="0 0 40 40"><circle cx="15" cy="16" r="7" fill="#F2B84B"/><g stroke="#F2B84B" stroke-width="2.5" stroke-linecap="round"><path d="M15 4v3M15 25v3M3 16h3M24 16h3M6.5 7.5l2 2M21.5 22.5l2 2M6.5 24.5l2-2M21.5 9.5l2-2"/></g><path d="M33 25a8 8 0 1 1-8-10 6 6 0 0 0 8 10z" fill="#3E5A9B"/></svg>',
+ taa:'<svg viewBox="0 0 40 40"><text x="20" y="28" text-anchor="middle" font-family="Amiri Quran,serif" font-size="24" fill="#1F7A86">ـة ـت</text></svg>',
+ quill2:'<svg viewBox="0 0 40 40"><path d="M31 5C19 8 13 17 11 29l3 1c3-10 9-17 17-25z" fill="#F7CF6B" stroke="#8f6215" stroke-width="2.5"/><path d="M8 34h18" stroke="#8f6215" stroke-width="3" stroke-linecap="round"/><circle cx="30" cy="30" r="5" fill="#5E8E3E"/></svg>',
+ hamza:'<svg viewBox="0 0 40 40"><text x="20" y="30" text-anchor="middle" font-family="Amiri Quran,serif" font-size="24" fill="#7B4FB0">أ ا</text></svg>',
+ alif:'<svg viewBox="0 0 40 40"><text x="20" y="30" text-anchor="middle" font-family="Amiri Quran,serif" font-size="24" fill="#1E7F5C">ا ى</text></svg>',
+ tanwin:'<svg viewBox="0 0 40 40"><text x="20" y="32" text-anchor="middle" font-family="Amiri Quran,serif" font-size="26" fill="#C05621">ـًا</text></svg>',
+ lamp:'<svg viewBox="0 0 40 40"><path d="M20 4c-7 0-12 5-12 11 0 5 3 7 5 10v3h14v-3c2-3 5-5 5-10 0-6-5-11-12-11z" fill="#F7CF6B" stroke="#8f6215" stroke-width="2.5"/><path d="M14 31h12M15 35h10" stroke="#8f6215" stroke-width="2.5" stroke-linecap="round"/><path d="M20 10v8M16 14h8" stroke="#8f6215" stroke-width="2" stroke-linecap="round"/></svg>',
+ train:'<svg viewBox="0 0 40 40"><path d="M4 34h32" stroke="#8a6a4a" stroke-width="2.5" stroke-dasharray="4 3"/><rect x="6" y="14" width="22" height="14" rx="3" fill="#2B6CB0"/><rect x="20" y="8" width="12" height="20" rx="3" fill="#E07A5F"/><rect x="23" y="11" width="6" height="6" rx="1.5" fill="#fff"/><circle cx="12" cy="30" r="3.5" fill="#1F3B4D"/><circle cx="26" cy="30" r="3.5" fill="#1F3B4D"/><circle cx="9" cy="8" r="3" fill="#cbd5e1"/></svg>',
+ opp:'<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#F2B84B"/><path d="M20 6a14 14 0 0 1 0 28z" fill="#3E5A9B"/><path d="M10 20h6M24 20h6" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M27 17v6" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>',
+ one:'<svg viewBox="0 0 40 40"><circle cx="11" cy="20" r="7" fill="#1E7F5C"/><path d="M20 20h4" stroke="#1E7F5C" stroke-width="2.5" stroke-linecap="round"/><circle cx="30" cy="12" r="4" fill="#7CC4A4"/><circle cx="30" cy="22" r="4" fill="#7CC4A4"/><circle cx="30" cy="32" r="4" fill="#7CC4A4"/></svg>',
+ gen:'<svg viewBox="0 0 40 40"><text x="20" y="17" text-anchor="middle" font-family="Tajawal,sans-serif" font-weight="800" font-size="12" fill="#2B6CB0">هذا</text><path d="M9 21h22" stroke="#e5b3cf" stroke-width="2"/><text x="20" y="34" text-anchor="middle" font-family="Tajawal,sans-serif" font-weight="800" font-size="12" fill="#B83280">هذه</text></svg>',
+ puzzle:'<svg viewBox="0 0 40 40"><rect x="4" y="22" width="14" height="10" rx="3" fill="#2B6CB0"/><rect x="22" y="22" width="14" height="10" rx="3" fill="#90B8E4"/><rect x="13" y="8" width="14" height="10" rx="3" fill="#F2B84B"/><path d="M20 18v3" stroke="#8a6a4a" stroke-width="2"/></svg>',
+ count:'<svg viewBox="0 0 40 40"><circle cx="11" cy="20" r="5" fill="#C24B5E"/><circle cx="23" cy="14" r="5" fill="#E07A8C"/><circle cx="23" cy="27" r="5" fill="#E07A8C"/><circle cx="33" cy="20" r="4" fill="#F0B3BE"/></svg>',
+ blocks:'<svg viewBox="0 0 40 40"><rect x="5" y="22" width="13" height="12" rx="2" fill="#4F7F32"/><rect x="21" y="22" width="13" height="12" rx="2" fill="#F2B84B"/><rect x="13" y="7" width="13" height="12" rx="2" fill="#8DB06A"/></svg>',
+ palm:'<svg viewBox="0 0 40 40"><path d="M20 36V16" stroke="#7a5230" stroke-width="3" stroke-linecap="round"/><path d="M20 16C14 9 8 10 5 13c5-1 10 0 15 3zM20 16c6-7 12-6 15-3-5-1-10 0-15 3zM20 16c-3-7-1-11 2-13-1 4 0 9-2 13z" fill="#2E7D6B"/><circle cx="18" cy="18" r="2" fill="#B7791F"/><circle cx="22" cy="18" r="2" fill="#B7791F"/></svg>',
+ link:'<svg viewBox="0 0 40 40"><rect x="4" y="14" width="19" height="12" rx="6" fill="none" stroke="#6B4BA8" stroke-width="3.5"/><rect x="17" y="14" width="19" height="12" rx="6" fill="none" stroke="#B48DE6" stroke-width="3.5"/></svg>',
+ balloon:'<svg viewBox="0 0 40 40"><path d="M15 27c-1 4 1 6 0 10M26 24c1 4-1 7 0 12" stroke="#8a5a40" stroke-width="1.5" fill="none"/><ellipse cx="15" cy="17" rx="8" ry="10" fill="#D9603F"/><ellipse cx="26" cy="14" rx="7" ry="9" fill="#F2B84B"/></svg>',
+ hex:'<svg viewBox="0 0 40 40"><path d="M17 4l11 6.5v13L17 30 6 23.5v-13z" fill="#2F6FB0"/><circle cx="17" cy="17" r="5" fill="none" stroke="#fff" stroke-width="2.5"/><path d="M26 26l8 8" stroke="#1d4a78" stroke-width="4" stroke-linecap="round"/></svg>',
+ dune:'<svg viewBox="0 0 40 40"><circle cx="29" cy="11" r="5" fill="#F2B84B"/><path d="M2 32c8-12 16-12 24 0z" fill="#D9A55A"/><path d="M14 34c8-10 16-10 24 0z" fill="#B7791F"/></svg>',
+ book:'<svg viewBox="0 0 40 40"><path d="M20 11c-5-3-10-3-15-1v20c5-2 10-2 15 1 5-3 10-3 15-1V10c-5-2-10-2-15 1z" fill="#fff" stroke="#B23A62" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 11v20" stroke="#B23A62" stroke-width="2"/><path d="M9 16h7M9 20h7M24 16h7M24 20h7" stroke="#e7a3b9" stroke-width="2" stroke-linecap="round"/></svg>',
+ chest:'<svg viewBox="0 0 40 40"><path d="M6 17h28v15H6z" fill="#8a5a2b"/><path d="M6 17c0-6 4-9 14-9s14 3 14 9z" fill="#a56d35"/><path d="M6 17h28" stroke="#F2B84B" stroke-width="3"/><rect x="17" y="15" width="6" height="8" rx="1.5" fill="#F2B84B"/></svg>',
+ ladder:'<svg viewBox="0 0 40 40"><path d="M12 36L16 6M28 36L32 6" stroke="#9A6B12" stroke-width="3" stroke-linecap="round"/><path d="M13 29h16M14 21h16M15 13h16" stroke="#9A6B12" stroke-width="3" stroke-linecap="round"/><path d="M34 1l1.5 3 3.3.5-2.4 2.3.6 3.2-3-1.6-3 1.6.6-3.2-2.4-2.3 3.3-.5z" fill="#F2B84B"/></svg>',
+};
+const BAL=['#F7B7A3','#FFD98A','#B9E0D9','#D4C3F0'];
+const PAIRC=['#CFE6BE','#FCE9A8','#CDE3F5','#F6D3C8','#E3D6F5','#D2EEE8'];
+const qfont=s=>SAW(s).replace(/﴿[^﴾]*﴾/g,m=>`<span style="font-family:var(--f-q);font-size:1.2em">${m}</span>`);
+// ===== Content =====
+const GAMES=[
+{id:'maqasid',name:'بوصلة المقاصد',icon:'compass',c:'#DDEEEC',c2:'#2d636b',skill:'مقاصد السور',type:'mcq',
+ desc:'اقرئي المقصد العظيم، واختاري السورة التي جاءت به.',
+ how:'اقرئي مقصد السورة، ثم اختاري اسمها.',
+ items:[
+  {p:'تعليم المؤمنين الآداب مع الله ورسوله ﷺ ومع الناس.',a:'الحجرات',o:['الحجرات','الدخان','ق','الجاثية'],ex:'سورة الحجرات تُسمّى سورة الآداب.'},
+  {p:'التذكير بالبعث، وأن الله يعلم ما في نفس الإنسان وتُكتب أقواله.',a:'ق',o:['الفتح','ق','محمد','الزخرف'],ex:'في سورة ق: ﴿مَّا يَلْفِظُ مِن قَوْلٍ إِلَّا لَدَيْهِ رَقِيبٌ عَتِيدٌ﴾.'},
+  {p:'البشارة بالفتح والنصر، ورضا الله عن المؤمنين الذين بايعوا تحت الشجرة.',a:'الفتح',o:['الأحقاف','الحجرات','الفتح','الدخان'],ex:'نزلت سورة الفتح بعد صلح الحديبية.'},
+  {p:'الحثّ على نصرة دين الله، ووعد من نصره بالنصر والثبات.',a:'محمد',o:['محمد','الجاثية','ق','الزخرف'],ex:'في سورة محمد: ﴿إِن تَنصُرُوا اللَّهَ يَنصُرْكُمْ وَيُثَبِّتْ أَقْدَامَكُمْ﴾.'},
+  {p:'الدعوة إلى التوحيد والصبر، والوصية ببرّ الوالدين.',a:'الأحقاف',o:['الفتح','الأحقاف','الحجرات','محمد'],ex:'في سورة الأحقاف: ﴿وَوَصَّيْنَا الْإِنسَانَ بِوَالِدَيْهِ إِحْسَانًا﴾.'},
+  {p:'التذكير بنعم الله المسخّرة لنا، وبالحساب يوم القيامة.',a:'الجاثية',o:['الجاثية','الزخرف','ق','الدخان'],ex:'في سورة الجاثية: ﴿وَسَخَّرَ لَكُم مَّا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ جَمِيعًا مِّنْهُ﴾.'},
+  {p:'بيان عظمة القرآن المنزّل في ليلة مباركة، ونصر الله لأوليائه.',a:'الدخان',o:['الحجرات','الدخان','محمد','الأحقاف'],ex:'في سورة الدخان: ﴿إِنَّا أَنزَلْنَاهُ فِي لَيْلَةٍ مُّبَارَكَةٍ﴾.'},
+  {p:'بيان أن زينة الدنيا قليلة، وأن الآخرة خير للمتقين.',a:'الزخرف',o:['ق','الفتح','الزخرف','الجاثية'],ex:'في سورة الزخرف: ﴿وَالْآخِرَةُ عِندَ رَبِّكَ لِلْمُتَّقِينَ﴾.'},
+ ]},
+{id:'tadabbur',name:'فهم وتدبّر',icon:'lamp',c:'#FDF0D5',c2:'#8f6215',skill:'الفهم القرائي',type:'treasure',transit:true,mapName:'خريطة التدبّر',unit:'المحطة',unitPl:'محطات',
+ desc:'أسئلة تدبّرية في ثماني محطات، لكل سورة محطتها.',
+ how:'اقرئي الآية بتأنٍّ، وفكّري: ماذا تعلّمني؟ وكيف أعمل بها؟',
+ stages:[
+ {id:'t-qaf',title:'سورة ق',desc:'مراقبة الله وحفظ اللسان',type:'quiz',mode:'tadabbur',icon:'lamp',s:'#2E7D6B',c:'#DFF1EC',surah:'ق',
+  how:'محطة سورة ق: مراقبة الله وحفظ اللسان. اقرئي الآية، ثم اختاري الإجابة التي تدلّ على فهمها والعمل بها.',
+  items:[
+   {v:'﴿مَّا يَلْفِظُ مِن قَوْلٍ إِلَّا لَدَيْهِ رَقِيبٌ عَتِيدٌ﴾',q:'إذا تذكّرتِ هذه الآية قبل أن تتكلمي، فماذا تفعلين؟',a:'أختار الكلام الطيب؛ لأن كل كلمة تُكتب',o:['أختار الكلام الطيب؛ لأن كل كلمة تُكتب','أتكلم بما أشاء فلا أحد يسمعني','أُكثر من الكلام في كل وقت'],ex:'الملَكان يكتبان كل كلمة، فالمؤمنة تزن كلامها قبل أن تقوله.'},
+   {v:'﴿وَنَحْنُ أَقْرَبُ إِلَيْهِ مِنْ حَبْلِ الْوَرِيدِ﴾',q:'ماذا تعلّمنا هذه الآية؟',a:'أن الله يعلم كل شيء عنّا، فنراقبه في السرّ والعلن',o:['أن الله يعلم كل شيء عنّا، فنراقبه في السرّ والعلن','أن الله لا يعلم ما في القلوب','أن نخاف من الناس أكثر من الله'],ex:'الله أقرب إلينا بعلمه من كل شيء، فنستحيي أن يرانا حيث نهانا.'},
+   {v:'﴿وَالنَّخْلَ بَاسِقَاتٍ لَّهَا طَلْعٌ نَّضِيدٌ﴾',q:'عندما ترين النخل الطويل وثمره المرتّب، بماذا تفكّرين؟',a:'في قدرة الله ونعمته، فأشكره',o:['في قدرة الله ونعمته، فأشكره','في أنه نبت وحده بلا خالق','لا أفكّر في شيء'],ex:'التفكّر في خلق الله يزيد الإيمان ويدعو إلى الشكر.'}]},
+ {id:'t-hujurat',title:'سورة الحجرات',desc:'الآداب والأخوّة',type:'quiz',mode:'tadabbur',icon:'lamp',s:'#6B4BA8',c:'#EEE7F8',surah:'الحجرات',
+  how:'محطة سورة الحجرات: الآداب والأخوّة. اقرئي الآية، ثم اختاري الإجابة التي تدلّ على فهمها والعمل بها.',
+  items:[
+   {v:'﴿إِن جَاءَكُمْ فَاسِقٌ بِنَبَإٍ فَتَبَيَّنُوا﴾',q:'وصلتكِ رسالة فيها خبر عن صديقتك، ماذا تفعلين؟',a:'أتأكّد من صحة الخبر قبل أن أصدّقه أو أنشره',o:['أتأكّد من صحة الخبر قبل أن أصدّقه أو أنشره','أنشره فورًا في المجموعة','أصدّقه وأغضب من صديقتي'],ex:'التثبّت من الأخبار يحمينا من ظلم الناس ومن الندم.'},
+   {v:'﴿لَا يَسْخَرْ قَوْمٌ مِّن قَوْمٍ عَسَىٰ أَن يَكُونُوا خَيْرًا مِّنْهُمْ﴾',q:'ضحكت بعض الطالبات على طالبة جديدة، ما الموقف الذي يرضي الله؟',a:'أنصحهن بلطف، وأُحسن إلى الطالبة الجديدة',o:['أنصحهن بلطف، وأُحسن إلى الطالبة الجديدة','أضحك معهن','أبتعد عن الطالبة الجديدة'],ex:'السخرية محرّمة، وقد تكون التي نسخر منها خيرًا منّا عند الله.'},
+   {v:'﴿إِنَّ أَكْرَمَكُمْ عِندَ اللَّهِ أَتْقَاكُمْ﴾',q:'مَن أكرم الناس عند الله؟',a:'أتقاهم لله',o:['أتقاهم لله','أغناهم مالًا','أجملهم شكلًا'],ex:'ميزان الكرامة عند الله هو التقوى، لا المال ولا الشكل.'}]},
+ {id:'t-fath',title:'سورة الفتح',desc:'السكينة والرحمة',type:'quiz',mode:'tadabbur',icon:'lamp',s:'#D9603F',c:'#FDE8E1',surah:'الفتح',
+  how:'محطة سورة الفتح: السكينة والرحمة. اقرئي الآية، ثم اختاري الإجابة التي تدلّ على فهمها والعمل بها.',
+  items:[
+   {v:'﴿هُوَ الَّذِي أَنزَلَ السَّكِينَةَ فِي قُلُوبِ الْمُؤْمِنِينَ لِيَزْدَادُوا إِيمَانًا﴾',q:'من أين تأتي الطمأنينة إلى قلب المؤمن؟',a:'من الله، فأطلبها بالدعاء والذكر',o:['من الله، فأطلبها بالدعاء والذكر','من كثرة اللعب','من رضا الناس عنّي'],ex:'السكينة هبة من الله، تزداد بالإيمان والذكر.'},
+   {v:'﴿مُّحَمَّدٌ رَّسُولُ اللَّهِ وَالَّذِينَ مَعَهُ أَشِدَّاءُ عَلَى الْكُفَّارِ رُحَمَاءُ بَيْنَهُمْ﴾',q:'كيف أكون من الرحماء بين المؤمنين؟',a:'أُعين أخواتي وأرحمهن وأعفو عنهن',o:['أُعين أخواتي وأرحمهن وأعفو عنهن','أغضب منهن لأقلّ خطأ','أهتمّ بنفسي فقط'],ex:'من صفات أصحاب النبي ﷺ الرحمة فيما بينهم.'},
+   {v:'﴿تَرَاهُمْ رُكَّعًا سُجَّدًا يَبْتَغُونَ فَضْلًا مِّنَ اللَّهِ وَرِضْوَانًا﴾',q:'ماذا كان يطلب الصحابة بصلاتهم؟',a:'فضل الله ورضوانه',o:['فضل الله ورضوانه','مدح الناس لهم','الشهرة بين الناس'],ex:'الإخلاص أن نعمل الطاعة نطلب بها رضا الله وحده.'}]},
+ {id:'t-muhammad',title:'سورة محمد',desc:'نصرة الدين وتدبّر القرآن',type:'quiz',mode:'tadabbur',icon:'lamp',s:'#2F6FB0',c:'#E2EEFA',surah:'محمد',
+  how:'محطة سورة محمد: نصرة الدين وتدبّر القرآن. اقرئي الآية، ثم اختاري الإجابة التي تدلّ على فهمها والعمل بها.',
+  items:[
+   {v:'﴿إِن تَنصُرُوا اللَّهَ يَنصُرْكُمْ وَيُثَبِّتْ أَقْدَامَكُمْ﴾',q:'كيف تنصر الطالبة دين الله؟',a:'بطاعة الله والتمسّك بدينها وأخلاقها',o:['بطاعة الله والتمسّك بدينها وأخلاقها','بترك الصلاة عند الانشغال','بالشجار مع من يخالفها'],ex:'نصرة الله بطاعته واتباع شرعه، ومن نصر الله نصره وثبّته.'},
+   {v:'﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾',q:'ما الذي يفتح القلب لفهم القرآن؟',a:'تدبّر الآيات والتفكّر في معانيها',o:['تدبّر الآيات والتفكّر في معانيها','قراءته بسرعة دون فهم','تركه وعدم قراءته'],ex:'التدبّر مفتاح القلوب، وهو ما نتعلّمه في هذه الألعاب.'},
+   {v:'﴿فَاعْلَمْ أَنَّهُ لَا إِلَهَ إِلَّا اللَّهُ وَاسْتَغْفِرْ لِذَنبِكَ﴾',q:'بماذا أمر الله نبيّه ﷺ في هذه الآية؟',a:'بالعلم بالتوحيد، والاستغفار',o:['بالعلم بالتوحيد، والاستغفار','بالسفر والتجارة','بالنوم والراحة'],ex:'بدأت الآية بالعلم قبل العمل، فالمؤمنة تتعلّم ثم تعمل وتُكثر الاستغفار.'}]},
+ {id:'t-ahqaf',title:'سورة الأحقاف',desc:'برّ الوالدين وشكر النعم',type:'quiz',mode:'tadabbur',icon:'lamp',s:'#B7791F',c:'#FBF0DA',surah:'الأحقاف',
+  how:'محطة سورة الأحقاف: برّ الوالدين وشكر النعم. اقرئي الآية، ثم اختاري الإجابة التي تدلّ على فهمها والعمل بها.',
+  items:[
+   {v:'﴿وَوَصَّيْنَا الْإِنسَانَ بِوَالِدَيْهِ إِحْسَانًا﴾',q:'طلبت منكِ أمّكِ المساعدة وأنتِ تلعبين، ماذا تفعلين؟',a:'أترك اللعب وأساعدها بفرح',o:['أترك اللعب وأساعدها بفرح','أتأفّف وأتأخّر','أتظاهر بأنني لم أسمع'],ex:'الإحسان إلى الوالدين وصيّة الله، وأجره عظيم.'},
+   {v:'﴿حَمَلَتْهُ أُمُّهُ كُرْهًا وَوَضَعَتْهُ كُرْهًا﴾',q:'لماذا ذكرت الآية تعب الأم؟',a:'لنعرف فضلها، فنُحسن إليها ونشكرها',o:['لنعرف فضلها، فنُحسن إليها ونشكرها','لنعرف أن الحمل سهل','لا سبب لذلك'],ex:'تذكّر تعب الأم يدفعنا إلى برّها وشكرها.'},
+   {v:'﴿رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ وَعَلَىٰ وَالِدَيَّ﴾',q:'ماذا نتعلّم من هذا الدعاء؟',a:'أن نشكر الله على نعمه علينا وعلى والدينا',o:['أن نشكر الله على نعمه علينا وعلى والدينا','أن نطلب الدنيا فقط','أن ننسى نعم الله'],ex:'دعاء جميل نحفظه وندعو به لنا ولوالدينا.'}]},
+ {id:'t-jathiya',title:'سورة الجاثية',desc:'النعم والحساب',type:'quiz',mode:'tadabbur',icon:'lamp',s:'#B23A62',c:'#F9E3EB',surah:'الجاثية',
+  how:'محطة سورة الجاثية: النعم والحساب. اقرئي الآية، ثم اختاري الإجابة التي تدلّ على فهمها والعمل بها.',
+  items:[
+   {v:'﴿وَسَخَّرَ لَكُم مَّا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ جَمِيعًا مِّنْهُ﴾',q:'كيف أشكر الله على نعمه المسخّرة لي؟',a:'أستعملها في طاعته، ولا أُسرف فيها',o:['أستعملها في طاعته، ولا أُسرف فيها','أُسرف في الماء والطعام','أنسى أنها من الله'],ex:'شكر النعمة باستعمالها فيما يرضي الله.'},
+   {v:'﴿مَنْ عَمِلَ صَالِحًا فَلِنَفْسِهِ وَمَنْ أَسَاءَ فَعَلَيْهَا﴾',q:'لمن يعود نفع العمل الصالح؟',a:'لصاحبه نفسه',o:['لصاحبه نفسه','لغيره فقط','لا ينتفع به أحد'],ex:'كل عمل صالح نعمله نحن أول من ينتفع به.'},
+   {v:'﴿وَتَرَىٰ كُلَّ أُمَّةٍ جَاثِيَةً كُلُّ أُمَّةٍ تُدْعَىٰ إِلَىٰ كِتَابِهَا﴾',q:'ماذا أفعل لأفرح بكتاب أعمالي يوم القيامة؟',a:'أُكثر من الأعمال الصالحة من الآن',o:['أُكثر من الأعمال الصالحة من الآن','أؤجّل الطاعة حتى أكبر','لا أهتمّ بأعمالي'],ex:'كتاب أعمالنا يُكتب الآن، فلنملأه بالخير.'}]},
+ {id:'t-dukhan',title:'سورة الدخان',desc:'عظمة القرآن ونصر الله',type:'quiz',mode:'tadabbur',icon:'lamp',s:'#3F7A2E',c:'#E7F2DF',surah:'الدخان',
+  how:'محطة سورة الدخان: عظمة القرآن ونصر الله. اقرئي الآية، ثم اختاري الإجابة التي تدلّ على فهمها والعمل بها.',
+  items:[
+   {v:'﴿إِنَّا أَنزَلْنَاهُ فِي لَيْلَةٍ مُّبَارَكَةٍ﴾',q:'كيف أُظهر محبّتي للقرآن الذي أُنزل في ليلة مباركة؟',a:'أقرؤه كل يوم وأتدبّره وأعمل به',o:['أقرؤه كل يوم وأتدبّره وأعمل به','أضعه على الرفّ ولا أفتحه','أقرؤه في رمضان فقط'],ex:'القرآن كتاب مبارك، وبركته لمن يقرؤه ويعمل به.'},
+   {v:'﴿إِنَّ الْمُتَّقِينَ فِي مَقَامٍ أَمِينٍ﴾',q:'مَن الذين وعدهم الله بالمكان الآمن في الجنة؟',a:'المتقون',o:['المتقون','الأغنياء','الأقوياء'],ex:'التقوى طريق الأمن يوم القيامة.'},
+   {v:'﴿وَاتْرُكِ الْبَحْرَ رَهْوًا إِنَّهُمْ جُندٌ مُّغْرَقُونَ﴾',q:'ماذا نتعلّم من نجاة موسى عليه السلام وغرق فرعون؟',a:'أن الله ينصر أولياءه ويُهلك الظالمين',o:['أن الله ينصر أولياءه ويُهلك الظالمين','أن الظالم ينتصر دائمًا','أن البحر لا يطيع الله'],ex:'العاقبة للمتقين مهما طال الظلم.'}]},
+ {id:'t-zukhruf',title:'سورة الزخرف',desc:'الآخرة خير وأبقى',type:'quiz',mode:'tadabbur',icon:'lamp',s:'#9A6B12',c:'#FFF3D1',surah:'الزخرف',
+  how:'محطة سورة الزخرف: الآخرة خير وأبقى. اقرئي الآية، ثم اختاري الإجابة التي تدلّ على فهمها والعمل بها.',
+  items:[
+   {v:'﴿وَالْآخِرَةُ عِندَ رَبِّكَ لِلْمُتَّقِينَ﴾',q:'إذا رأيتِ صديقتكِ تملك ألعابًا أكثر منكِ، فبماذا تذكّرين نفسك؟',a:'أن الآخرة خير وأبقى، فأقنع وأحمد الله',o:['أن الآخرة خير وأبقى، فأقنع وأحمد الله','أن أحسدها','أن أحزن طويلًا'],ex:'زينة الدنيا قليلة، والقناعة كنز.'},
+   {v:'﴿سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ﴾',q:'متى نقول هذا الدعاء؟',a:'عند ركوب السيارة أو أيّ مركوب',o:['عند ركوب السيارة أو أيّ مركوب','عند النوم','عند الأكل'],ex:'دعاء الركوب يذكّرنا أن الله هو الذي سخّر لنا وسائل النقل.'},
+   {v:'﴿الْأَخِلَّاءُ يَوْمَئِذٍ بَعْضُهُمْ لِبَعْضٍ عَدُوٌّ إِلَّا الْمُتَّقِينَ﴾',q:'أيّ صديقة تبقى صداقتها نافعة يوم القيامة؟',a:'الصديقة التقيّة التي تُعينني على الطاعة',o:['الصديقة التقيّة التي تُعينني على الطاعة','الصديقة التي تشغلني عن الصلاة','كل صديقة مهما كانت'],ex:'صداقة المتقين تبقى في الدنيا والآخرة.'}]},
+ ]},
+{id:'meanings',name:'كنز المعاني',icon:'cards',c:'#EFE8F8',c2:'#5b3590',skill:'معاني الكلمات',type:'treasure',mapName:'خريطة الكنز',unit:'المرحلة',unitPl:'مراحل',
+ desc:'ثماني مراحل، لكل سورة كنزها ولعبتها المختلفة.',
+ how:'اختاري مرحلة، وافتحي كنز معاني كل سورة بلعبة مختلفة.',
+ stages:[
+ {id:'m-qaf',surah:'ق',type:'memory',mech:'قلب البطاقات',icon:'palm',s:'#2E7D6B',c:'#DFF1EC',
+  how:'اقلبي بطاقتين في كل مرة: كلمة من سورة ق ومعناها. كلما قلّت محاولاتك زادت نجومك.',
+  pairs:[['بَاسِقَاتٍ','طويلات مرتفعات'],['طَلْعٌ نَّضِيدٌ','ثمر متراكب بعضه فوق بعض'],['فُرُوجٍ','شقوق'],['رَقِيبٌ عَتِيدٌ','ملَك حاضر يكتب'],['سَكْرَةُ الْمَوْتِ','شدّة الموت'],['لُّغُوبٍ','تعب وإعياء']]},
+ {id:'m-hujurat',surah:'الحجرات',type:'connect',mech:'وصّلي الكلمة بمعناها',icon:'link',s:'#6B4BA8',c:'#EEE7F8',
+  how:'اضغطي على كلمة من سورة الحجرات، ثم على معناها في العمود الآخر.',
+  pairs:[['يَغُضُّونَ أَصْوَاتَهُمْ','يخفضون أصواتهم'],['فَتَبَيَّنُوا','تثبّتوا وتأكّدوا'],['تَحْبَطَ','تبطل وتذهب'],['تَنَابَزُوا بِالْأَلْقَابِ','يدعو بعضكم بعضًا بلقب يكرهه'],['لَا تَجَسَّسُوا','لا تبحثوا عن عيوب الناس'],['لَا يَلِتْكُم','لا ينقصكم']]},
+ {id:'m-fath',surah:'الفتح',type:'quiz',mode:'balloon',mech:'بالونات المعاني',icon:'balloon',s:'#D9603F',c:'#FDE8E1',
+  how:'اقرئي الكلمة من سورة الفتح، واختاري البالون الذي يحمل معناها.',
+  items:[
+   {w:'السَّكِينَةَ',a:'الطمأنينة',o:['الطمأنينة','القوة','الغنيمة'],ex:'﴿هُوَ الَّذِي أَنزَلَ السَّكِينَةَ فِي قُلُوبِ الْمُؤْمِنِينَ﴾.'},
+   {w:'تُعَزِّرُوهُ',a:'تنصروه',o:['تنصروه','تتركوه','تسألوه'],ex:'﴿وَتُعَزِّرُوهُ وَتُوَقِّرُوهُ﴾: تنصروه وتعظّموه.'},
+   {w:'تُوَقِّرُوهُ',a:'تعظّموه',o:['تعظّموه','تخافوه','تنادوه'],ex:'التوقير: التعظيم والاحترام.'},
+   {w:'سِيمَاهُمْ',a:'علامتهم',o:['أسماؤهم','علامتهم','بيوتهم'],ex:'﴿سِيمَاهُمْ فِي وُجُوهِهِم مِّنْ أَثَرِ السُّجُودِ﴾.'},
+   {w:'شَطْأَهُ',a:'فروعه الصغيرة',o:['جذوره','ثماره','فروعه الصغيرة'],ex:'﴿كَزَرْعٍ أَخْرَجَ شَطْأَهُ﴾: أخرج فروعه الصغيرة.'},
+   {w:'فَاسْتَغْلَظَ',a:'صار غليظًا قويًّا',o:['صار غليظًا قويًّا','ذبل ويبس','صار رفيعًا'],ex:'﴿فَآزَرَهُ فَاسْتَغْلَظَ فَاسْتَوَىٰ عَلَىٰ سُوقِهِ﴾.'}]},
+ {id:'m-muhammad',surah:'محمد',type:'quiz',mode:'reverse',mech:'ابحثي عن الكلمة',icon:'hex',s:'#2F6FB0',c:'#E2EEFA',shape:'sh-hex',
+  how:'اقرئي المعنى، ثم ابحثي عن الكلمة القرآنية من سورة محمد التي تدل عليه.',
+  items:[
+   {m:'صافٍ خالص من الشوائب',a:'مُّصَفًّى',o:['مُّصَفًّى','غَيْرِ آسِنٍ','بَالَهُمْ'],ex:'﴿وَأَنْهَارٌ مِّنْ عَسَلٍ مُّصَفًّى﴾.'},
+   {m:'لا يتغيّر طعمه ولا رائحته',a:'غَيْرِ آسِنٍ',o:['أَقْفَالُهَا','غَيْرِ آسِنٍ','مُّصَفًّى'],ex:'﴿فِيهَا أَنْهَارٌ مِّن مَّاءٍ غَيْرِ آسِنٍ﴾.'},
+   {m:'شأنهم وحالهم',a:'بَالَهُمْ',o:['بَالَهُمْ','أَوْزَارَهَا','تَهِنُوا'],ex:'﴿وَأَصْلَحَ بَالَهُمْ﴾: أصلح الله شأنهم وحالهم.'},
+   {m:'أبطلها وأضاعها',a:'أَضَلَّ',o:['أَضَلَّ','أَصْلَحَ','مُّصَفًّى'],ex:'﴿أَضَلَّ أَعْمَالَهُمْ﴾: أبطلها فلم ينتفعوا بها.'},
+   {m:'تضعفوا',a:'تَهِنُوا',o:['تَهِنُوا','بَالَهُمْ','أَقْفَالُهَا'],ex:'﴿فَلَا تَهِنُوا وَتَدْعُوا إِلَى السَّلْمِ﴾: لا تضعفوا.'},
+   {m:'ما يُغلَق به القلب فلا يفهم',a:'أَقْفَالُهَا',o:['أَوْزَارَهَا','أَقْفَالُهَا','غَيْرِ آسِنٍ'],ex:'﴿أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾.'}]},
+ {id:'m-ahqaf',surah:'الأحقاف',type:'quiz',mode:'tf',mech:'صح أم خطأ؟',icon:'dune',s:'#B7791F',c:'#FBF0DA',shape:'sh-dune',
+  how:'اقرئي الكلمة من سورة الأحقاف والمعنى المكتوب تحتها: هل المعنى صحيح؟',
+  items:[
+   {w:'أَوْزِعْنِي',m:'ألهمني ووفّقني',t:1,ex:'المعنى صحيح: ﴿رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ﴾.'},
+   {w:'كُرْهًا',m:'بفرح وسهولة',t:0,ex:'المعنى غير صحيح؛ ﴿كُرْهًا﴾ معناها: بمشقة وتعب، ﴿حَمَلَتْهُ أُمُّهُ كُرْهًا وَوَضَعَتْهُ كُرْهًا﴾.'},
+   {w:'أَشُدَّهُ',m:'كمال قوته',t:1,ex:'المعنى صحيح: ﴿حَتَّىٰ إِذَا بَلَغَ أَشُدَّهُ﴾.'},
+   {w:'عَارِضًا',m:'سحابًا ظاهرًا في الأفق',t:1,ex:'المعنى صحيح: ﴿فَلَمَّا رَأَوْهُ عَارِضًا مُّسْتَقْبِلَ أَوْدِيَتِهِمْ﴾.'},
+   {w:'بِدْعًا',m:'آخِر الرسل',t:0,ex:'المعنى غير صحيح؛ ﴿بِدْعًا﴾ معناها: أوّلَ رسولٍ لم يُسبَق، ﴿قُلْ مَا كُنتُ بِدْعًا مِّنَ الرُّسُلِ﴾.'},
+   {w:'أَثَارَةٍ مِّنْ عِلْمٍ',m:'كثير من الأموال',t:0,ex:'المعنى غير صحيح؛ ﴿أَثَارَةٍ مِّنْ عِلْمٍ﴾ معناها: بقيّة من علم.'},
+   {w:'وَلَمْ يَعْيَ',m:'ولم يتعب ولم يعجز',t:1,ex:'المعنى صحيح: ﴿وَلَمْ يَعْيَ بِخَلْقِهِنَّ﴾.'}]},
+ {id:'m-jathiya',surah:'الجاثية',type:'quiz',mode:'verse',mech:'الكلمة في آيتها',icon:'book',s:'#B23A62',c:'#F9E3EB',shape:'sh-leaf',
+  how:'اقرئي الآية، وانتبهي للكلمة الملوّنة، ثم اختاري معناها.',
+  items:[
+   {v:'﴿وَيْلٌ لِّكُلِّ <mark>أَفَّاكٍ</mark> أَثِيمٍ﴾',a:'كذّاب كثير الكذب',o:['كذّاب كثير الكذب','كريم كثير العطاء','عالِم كثير العلم'],ex:'الأفّاك: الذي يُكثر الكذب.'},
+   {v:'﴿وَتَرَىٰ كُلَّ أُمَّةٍ <mark>جَاثِيَةً</mark>﴾',a:'باركة على الرُّكَب',o:['واقفة على الأقدام','باركة على الرُّكَب','مسرعة في المشي'],ex:'جاثية: باركة على رُكَبها يوم القيامة، وبها سُمّيت السورة.'},
+   {v:'﴿ثُمَّ جَعَلْنَاكَ عَلَىٰ <mark>شَرِيعَةٍ</mark> مِّنَ الْأَمْرِ﴾',a:'طريقة ومنهاج واضح',o:['سفينة في البحر','طريقة ومنهاج واضح','مدينة كبيرة'],ex:'الشريعة: الطريق الواضح من الدين.'},
+   {v:'﴿وَجَعَلَ عَلَىٰ بَصَرِهِ <mark>غِشَاوَةً</mark>﴾',a:'غطاء',o:['نور','غطاء','دواء'],ex:'الغشاوة: غطاء على العين فلا تُبصر الحق.'},
+   {v:'﴿أَمْ حَسِبَ الَّذِينَ <mark>اجْتَرَحُوا</mark> السَّيِّئَاتِ﴾',a:'اكتسبوا وعملوا',o:['تركوا وابتعدوا','نسوا','اكتسبوا وعملوا'],ex:'اجترحوا السيئات: عملوها واكتسبوها.'},
+   {v:'﴿إِنَّا كُنَّا <mark>نَسْتَنسِخُ</mark> مَا كُنتُمْ تَعْمَلُونَ﴾',a:'نأمر بكتابته',o:['نأمر بكتابته','ننساه ونتركه','نمحوه ونزيله'],ex:'نستنسخ: نأمر الملائكة بكتابة أعمالكم.'}]},
+ {id:'m-dukhan',surah:'الدخان',type:'chest',mech:'صناديق الكنز',icon:'chest',s:'#3F7A2E',c:'#E7F2DF',
+  how:'في كل صندوق كلمة من سورة الدخان. اختاري صندوقًا، وأجيبي عن معنى كلمته لتفتحيه.',
+  items:[
+   {w:'رَهْوًا',a:'ساكنًا مفتوحًا',o:['ساكنًا مفتوحًا','هائجًا بالأمواج','متجمّدًا'],ex:'﴿وَاتْرُكِ الْبَحْرَ رَهْوًا﴾.'},
+   {w:'يُفْرَقُ',a:'يُفصَل ويُبيَّن',o:['يُخفى ويُنسى','يُفصَل ويُبيَّن','يُجمع ويُخلط'],ex:'﴿فِيهَا يُفْرَقُ كُلُّ أَمْرٍ حَكِيمٍ﴾.'},
+   {w:'فَارْتَقِبْ',a:'فانتظر',o:['فانتظر','فاهرب','فاكتب'],ex:'﴿فَارْتَقِبْ يَوْمَ تَأْتِي السَّمَاءُ بِدُخَانٍ مُّبِينٍ﴾.'},
+   {w:'تَرْجُمُونِ',a:'تؤذوني بالرجم بالحجارة',o:['تُكرموني','تسألوني','تؤذوني بالرجم بالحجارة'],ex:'﴿وَإِنِّي عُذْتُ بِرَبِّي وَرَبِّكُمْ أَن تَرْجُمُونِ﴾: قالها موسى عليه السلام.'},
+   {w:'مَقَامٍ أَمِينٍ',a:'مكان آمن',o:['مكان آمن','مكان مخيف','طريق طويل'],ex:'﴿إِنَّ الْمُتَّقِينَ فِي مَقَامٍ أَمِينٍ﴾.'},
+   {w:'سُندُسٍ وَإِسْتَبْرَقٍ',a:'رقيق الحرير وغليظه',o:['الذهب والفضة','رقيق الحرير وغليظه','القطن والصوف'],ex:'﴿يَلْبَسُونَ مِن سُندُسٍ وَإِسْتَبْرَقٍ مُّتَقَابِلِينَ﴾.'}]},
+ {id:'m-zukhruf',surah:'الزخرف',type:'quiz',mode:'ladder',mech:'سُلَّم المعارج',icon:'ladder',s:'#9A6B12',c:'#FFF3D1',shape:'sh-ticket',
+  how:'كل إجابة صحيحة ترفعك درجة على السُّلَّم. هل تصلين إلى القمّة؟',
+  items:[
+   {w:'أُمِّ الْكِتَابِ',a:'اللوح المحفوظ',o:['اللوح المحفوظ','أول سورة في المصحف','كتاب الحساب'],ex:'﴿وَإِنَّهُ فِي أُمِّ الْكِتَابِ لَدَيْنَا لَعَلِيٌّ حَكِيمٌ﴾.'},
+   {w:'مُقْرِنِينَ',a:'مُطيقين قادرين',o:['خائفين','مسافرين','مُطيقين قادرين'],ex:'﴿سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ﴾ دعاء الركوب.'},
+   {w:'يُنَشَّأُ فِي الْحِلْيَةِ',a:'يُربّى في الزينة',o:['يُربّى في الزينة','يسكن في البيت','يمشي في الطريق'],ex:'﴿أَوَمَن يُنَشَّأُ فِي الْحِلْيَةِ﴾.'},
+   {w:'مَعَارِجَ',a:'سلالم ودرجات',o:['أبواب','سلالم ودرجات','أنهار'],ex:'﴿وَمَعَارِجَ عَلَيْهَا يَظْهَرُونَ﴾: سلالم يصعدون عليها.'},
+   {w:'زُخْرُفًا',a:'ذهبًا وزينة',o:['طعامًا وشرابًا','ماءً ومطرًا','ذهبًا وزينة'],ex:'﴿وَزُخْرُفًا﴾، وبها سُمّيت السورة.'},
+   {w:'يَعْشُ',a:'يُعرِض ويغفل',o:['يعيش طويلًا','يُعرِض ويغفل','يُسرع إليه'],ex:'﴿وَمَن يَعْشُ عَن ذِكْرِ الرَّحْمَنِ﴾: يُعرض عنه ويغفل.'}]},
+ ]},
+{id:'rasm',name:'عين الرسم',icon:'quill',c:'#FBEBDC',c2:'#8f6215',skill:'رسم المصحف',type:'mcq',
+ desc:'كلمات كُتبت برسم المصحف، فكيف نكتبها في الإملاء؟',
+ how:'اقرئي الكلمة كما في المصحف، واختاري كتابتها في دفترك.',
+ items:[
+  {big:'ٱلسَّمَٰوَٰتِ',src:'الجاثية',a:'السماوات',o:['السموت','السماوات','السماواة'],ex:'الألف الصغيرة فوق الحرف تُقرأ ألفًا ممدودة، ونكتبها في الإملاء ألفًا كاملة: السماوات.'},
+  {big:'ٱلْكِتَٰبِ',src:'الجاثية',a:'الكتاب',o:['الكتب','الكتاب','الكاتب'],ex:'﴿ٱلْكِتَٰبِ﴾ تُقرأ «الكتاب» بالمدّ، ونكتبها بالألف.'},
+  {big:'ٱلصَّٰلِحَٰتِ',src:'محمد',a:'الصالحات',o:['الصلحت','الصالحت','الصالحات'],ex:'فيها ألفان صغيرتان، ونكتبهما في الإملاء: الصالحات.'},
+  {big:'ٱلْعَٰلَمِينَ',src:'الجاثية',a:'العالمين',o:['العالمين','العلمين','العاليمين'],ex:'نكتبها في الإملاء: العالمين.'},
+  {big:'يَٰٓأَيُّهَا',src:'الحجرات',a:'يا أيها',o:['ياأيها','يا أيها','يأيها'],ex:'في الإملاء نفصل حرف النداء: «يا أيها».'},
+  {big:'أَنْهَٰرٌ',src:'محمد',a:'أنهار',o:['أنهر','أنهار','انهارو'],ex:'نكتبها في الإملاء بالألف: أنهار.'},
+  {big:'هَٰذَا',src:'الزخرف',a:'هذا',o:['هاذا','هذا','هذى'],ex:'انتبهي! «هذا» تُنطق بالألف، لكنها تُكتب بلا ألف في المصحف وفي الإملاء أيضًا.'},
+ ]},
+{id:'imla',name:'واحة الإملاء',icon:'quill2',c:'#FFF1CC',c2:'#8f6215',skill:'قواعد الإملاء',type:'treasure',transit:true,mapName:'خريطة الواحة',unit:'المحطة',unitPl:'محطات',
+ desc:'أربع محطات: اللام، والهمزة، والألف، والتنوين.',
+ how:'ابدئي من المحطة الأولى، وبعد كل محطة ينتقل القطار إلى التي تليها.',
+ stages:[
+ {id:'lam',title:'شمسية أم قمرية؟',desc:'اللام بين الظهور والاختفاء',type:'sunmoon',icon:'sun',s:'#B7791F',c:'#FFF1CC',
+  how:'اقرئي الكلمة بصوت مسموع: إذا ظهرت اللام فهي قمرية، وإذا اختفت وشُدّد الحرف بعدها فهي شمسية.',
+  items:[['الحجرات','moon','ح'],['الزخرف','sun','ز'],['الفتح','moon','ف'],['الدخان','sun','د'],['الأحقاف','moon','أ'],['الجاثية','moon','ج'],['الرحمن','sun','ر'],['السكينة','sun','س'],['القرآن','moon','ق'],['الشجرة','sun','ش']]},
+ {id:'hamza',title:'همزة القطع والوصل',desc:'همزة تُنطق دائمًا، وهمزة تسقط',type:'quiz',mode:'two',fixed:true,icon:'hamza',s:'#7B4FB0',c:'#EFE8F8',
+  prompt:'ما نوع الهمزة في أول هذه الكلمة؟',
+  how:'ضعي «و» قبل الكلمة واقرئيها: إذا بقيت الهمزة تُنطق فهي همزة قطع وتُكتب (أ، إ)، وإذا سقطت في النطق فهي همزة وصل وتُكتب ألفًا بلا همزة (ا).',
+  items:[
+   {w:'أَنزَلْنَاهُ',src:'الدخان',a:'همزة قطع',o:['همزة قطع','همزة وصل'],ex:'نقول: «وأنزلناه» فتبقى الهمزة مسموعة، فهي همزة قطع.'},
+   {w:'اسْتَغْلَظَ',src:'الفتح',a:'همزة وصل',o:['همزة قطع','همزة وصل'],ex:'نقول: «فاستغلظ» فلا تُنطق الهمزة، فهي همزة وصل.'},
+   {w:'أَكْرَمَكُمْ',src:'الحجرات',a:'همزة قطع',o:['همزة قطع','همزة وصل'],ex:'نقول: «وأكرمكم» فتبقى الهمزة مسموعة، فهي همزة قطع.'},
+   {w:'اتَّقُوا',src:'الحجرات',a:'همزة وصل',o:['همزة قطع','همزة وصل'],ex:'﴿وَاتَّقُوا اللَّهَ﴾: سقطت الهمزة في النطق، فهي همزة وصل.'},
+   {w:'إِخْوَةٌ',src:'الحجرات',a:'همزة قطع',o:['همزة قطع','همزة وصل'],ex:'نقول: «وإخوة» فتبقى الهمزة مسموعة، فهي همزة قطع.'},
+   {w:'اجْتَرَحُوا',src:'الجاثية',a:'همزة وصل',o:['همزة قطع','همزة وصل'],ex:'﴿الَّذِينَ اجْتَرَحُوا﴾: لا تُنطق الهمزة، فهي همزة وصل.'},
+   {w:'الْكِتَابِ',src:'الجاثية',a:'همزة وصل',o:['همزة قطع','همزة وصل'],ex:'همزة «ال» همزة وصل: نقول «تنزيلُ الكتاب» فلا نَنطقها.'},
+   {w:'أَنْهَارٌ',src:'محمد',a:'همزة قطع',o:['همزة قطع','همزة وصل'],ex:'نقول: «وأنهار» فتبقى الهمزة مسموعة، فهي همزة قطع.'}]},
+ {id:'alif',title:'الألف في آخر الكلمة',desc:'ا ممدودة أم ى مقصورة؟',type:'quiz',mode:'tiles',fixed:true,icon:'alif',s:'#1E7F5C',c:'#DEF3EA',
+  prompt:'أكملي الكلمة بالألف المناسبة',
+  how:'الألف في آخر الكلمة تُكتب ممدودة (ا) أو مقصورة (ى). اقرئي الكلمة واختاري الصحيحة.',
+  items:[
+   {w:'هُدً ؟',src:'الجاثية',a:'ى',o:['ا','ى'],ex:'«هُدًى»: نقول «هديتُ» فأصل الألف ياء، فتُكتب مقصورة.'},
+   {w:'فَدَعَ ؟',src:'الدخان',a:'ا',o:['ا','ى'],ex:'«فدعا»: نقول «دعوتُ» فأصل الألف واو، فتُكتب ممدودة.'},
+   {w:'مُوسَ ؟',src:'الأحقاف',a:'ى',o:['ا','ى'],ex:'﴿كِتَابُ مُوسَىٰ﴾: اسم «موسى» يُكتب بالألف المقصورة.'},
+   {w:'عِيسَ ؟',src:'الزخرف',a:'ى',o:['ا','ى'],ex:'﴿وَلَمَّا جَاءَ عِيسَىٰ﴾: اسم «عيسى» يُكتب بالألف المقصورة.'},
+   {w:'الدُّنْيَ ؟',src:'الزخرف',a:'ا',o:['ا','ى'],ex:'«الدنيا»: قبل الألف ياء، فتُكتب ممدودة؛ حتى لا تجتمع ياءان في الكتابة.'},
+   {w:'فَاسْتَوَ ؟',src:'الفتح',a:'ى',o:['ا','ى'],ex:'«فاستوى»: فعل أكثر من ثلاثة أحرف، ولم تُسبق ألفه بياء، فتُكتب مقصورة.'},
+   {w:'عَلَ ؟',src:'الفتح',a:'ى',o:['ا','ى'],ex:'حرف «على» يُكتب بالألف المقصورة.'}]},
+ {id:'tanwin',title:'تنوين الفتح',desc:'متى نكتب الألف بعده؟',type:'quiz',mode:'tiles',wcls:'verse',icon:'tanwin',s:'#C05621',c:'#FDEBDD',
+  prompt:'اختاري الكتابة الصحيحة للكلمة',
+  how:'تنوين الفتح نكتب بعده ألفًا (فتحًا)، إلا إذا جاء على تاء مربوطة (رحمةً) أو على همزة قبلها ألف (ماءً).',
+  items:[
+   {w:'﴿إِنَّا فَتَحْنَا لَكَ ...... مُّبِينًا﴾',src:'الفتح',a:'فَتْحًا',o:['فَتْحًا','فَتْحً'],ex:'تنوين فتح على حرف عادي، فنكتب بعده ألفًا: فتحًا.'},
+   {w:'﴿وَاتْرُكِ الْبَحْرَ ......﴾',src:'الدخان',a:'رَهْوًا',o:['رَهْوً','رَهْوًا'],ex:'نكتب بعد تنوين الفتح ألفًا: رهوًا.'},
+   {w:'﴿...... مِّن رَّبِّكَ﴾',src:'الدخان',a:'رَحْمَةً',o:['رَحْمَةً','رَحْمَةًا'],ex:'التاء المربوطة لا نكتب بعدها ألفًا: رحمةً.'},
+   {w:'﴿وَنَزَّلْنَا مِنَ السَّمَاءِ ...... مُّبَارَكًا﴾',src:'ق',a:'مَاءً',o:['مَاءًا','مَاءً'],ex:'الهمزة التي قبلها ألف لا نكتب بعدها ألفًا: ماءً.'},
+   {w:'﴿وَجَعَلْنَاكُمْ ...... وَقَبَائِلَ﴾',src:'الحجرات',a:'شُعُوبًا',o:['شُعُوبًا','شُعُوبً'],ex:'نكتب بعد تنوين الفتح ألفًا: شعوبًا.'},
+   {w:'﴿بِوَالِدَيْهِ ......﴾',src:'الأحقاف',a:'إِحْسَانًا',o:['إِحْسَانً','إِحْسَانًا'],ex:'نكتب بعد تنوين الفتح ألفًا: إحسانًا.'}]},
+ ]},
+{id:'lang',name:'رحلة اللغة',icon:'train',c:'#E1ECF8',c2:'#2B5C8F',skill:'مهارات اللغة',type:'treasure',transit:true,mapName:'خريطة الرحلة',unit:'المحطة',unitPl:'محطات',
+ desc:'سبع محطات في النحو والإملاء والثروة اللغوية.',
+ how:'اركبي قطار اللغة وابدئي من المحطة الأولى، أو اختاري أي محطة.',
+ stages:[
+ {id:'l-taa',title:'التاء الذكية',desc:'التاء المربوطة والمفتوحة',type:'quiz',mode:'tiles',fixed:true,skill:'قواعد الإملاء',icon:'taa',s:'#1F7A86',c:'#DDF0F2',
+  prompt:'أكملي الكلمة بالتاء المناسبة',
+  how:'قفي على آخر الكلمة: إذا نطقتِها هاءً فهي مربوطة (ة)، وإذا بقيت تاءً فهي مفتوحة (ت).',
+  items:[
+   {w:'الجاثيـ ؟',a:'ة',o:['ة','ت'],ex:'نقف عليها «الجاثيه» بالهاء، فهي تاء مربوطة: الجاثية.'},
+   {w:'الحجرا ؟',a:'ت',o:['ة','ت'],ex:'جمع مؤنث سالم، نقف عليه بالتاء: الحجرات.'},
+   {w:'بيعـ ؟ الرضوان',a:'ة',o:['ة','ت'],ex:'نقف عليها «بيعه» بالهاء: بيعة.'},
+   {w:'ليلـ ؟ مباركة',a:'ة',o:['ة','ت'],ex:'نقف عليها «ليله» بالهاء: ليلة.'},
+   {w:'جنّا ؟',a:'ت',o:['ة','ت'],ex:'جمع «جنّة»، نقف عليه بالتاء: جنّات.'},
+   {w:'آيا ؟',a:'ت',o:['ة','ت'],ex:'جمع «آية»، نقف عليه بالتاء: آيات.'},
+   {w:'السكينـ ؟',a:'ة',o:['ة','ت'],ex:'نقف عليها «السكينه» بالهاء: السكينة.'}]},
+ {id:'l-opp',title:'الأضداد',desc:'الكلمة وضدّها من الآيات',type:'connect',bothQ:true,rel:'ضدّها',skill:'الثروة اللغوية',icon:'opp',s:'#C05621',c:'#FDEBDD',
+  how:'في سور المقرر كلمات جاءت مع أضدادها. اضغطي على كلمة، ثم على ضدّها في العمود الآخر.',
+  pairs:[['نُحْيِي','نُمِيتُ'],['اللَّيْلِ','النَّهَارِ'],['الْحَقَّ','الْبَاطِلَ'],['ذَكَرٍ','أُنثَىٰ'],['الدُّنْيَا','الْآخِرَةُ'],['طُلُوعِ الشَّمْسِ','الْغُرُوبِ']]},
+ {id:'l-sing',title:'المفرد والجمع',desc:'ابحثي عن مفرد الكلمة',type:'quiz',mode:'pick',shape:'sh-leaf',skill:'اللغة والنحو',icon:'one',s:'#1E7F5C',c:'#DEF3EA',
+  prompt:'ما مفرد هذه الكلمة؟',
+  how:'الجمع يدل على أكثر من اثنين، والمفرد يدل على واحد. اختاري مفرد الكلمة.',
+  items:[
+   {w:'أَنْهَارٌ',src:'محمد',a:'نهر',o:['نهر','نهار','أنهر'],ex:'﴿فِيهَا أَنْهَارٌ مِّن مَّاءٍ غَيْرِ آسِنٍ﴾، ومفردها: نهر.'},
+   {w:'شُعُوبًا',src:'الحجرات',a:'شعب',o:['شعب','شعاب','شعبة'],ex:'﴿وَجَعَلْنَاكُمْ شُعُوبًا وَقَبَائِلَ﴾، ومفردها: شعب.'},
+   {w:'قَبَائِلَ',src:'الحجرات',a:'قبيلة',o:['قبل','قبيلة','قابل'],ex:'مفرد «قبائل»: قبيلة.'},
+   {w:'قُلُوبٍ',src:'محمد',a:'قلب',o:['قالب','تقلّب','قلب'],ex:'﴿أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا﴾، ومفردها: قلب.'},
+   {w:'لَآيَاتٍ',src:'الجاثية',a:'آية',o:['آية','آيتان','أيّ'],ex:'﴿إِنَّ فِي السَّمَاوَاتِ وَالْأَرْضِ لَآيَاتٍ لِّلْمُؤْمِنِينَ﴾، ومفردها: آية.'},
+   {w:'أَعْمَالُكُمْ',src:'الحجرات',a:'عمل',o:['عامل','عمل','معمل'],ex:'﴿أَن تَحْبَطَ أَعْمَالُكُمْ﴾، ومفرد «أعمال»: عمل.'}]},
+ {id:'l-gen',title:'مذكّر أم مؤنّث؟',desc:'هذا أم هذه؟',type:'quiz',mode:'two',fixed:true,skill:'اللغة والنحو',icon:'gen',s:'#B83280',c:'#FBE4F1',
+  prompt:'هل الكلمة مذكّر أم مؤنّث؟',
+  how:'جرّبي أن تقولي قبل الكلمة «هذا» أو «هذه»: «هذا» للمذكّر، و«هذه» للمؤنّث.',
+  items:[
+   {w:'الشَّجَرَةِ',src:'الفتح',a:'مؤنّث',o:['مذكّر','مؤنّث'],ex:'نقول: هذه الشجرة، وعلامتها التاء المربوطة.'},
+   {w:'الْبَحْرَ',src:'الجاثية',a:'مذكّر',o:['مذكّر','مؤنّث'],ex:'نقول: هذا البحر.'},
+   {w:'السَّكِينَةَ',src:'الفتح',a:'مؤنّث',o:['مذكّر','مؤنّث'],ex:'نقول: هذه السكينة، وعلامتها التاء المربوطة.'},
+   {w:'الْكِتَابِ',src:'الجاثية',a:'مذكّر',o:['مذكّر','مؤنّث'],ex:'نقول: هذا الكتاب.'},
+   {w:'لَيْلَةٍ',src:'الدخان',a:'مؤنّث',o:['مذكّر','مؤنّث'],ex:'نقول: هذه ليلة مباركة.'},
+   {w:'رَسُولُ',src:'الفتح',a:'مذكّر',o:['مذكّر','مؤنّث'],ex:'﴿مُّحَمَّدٌ رَّسُولُ اللَّهِ﴾، ونقول: هذا رسول.'},
+   {w:'أُنثَىٰ',src:'الحجرات',a:'مؤنّث',o:['مذكّر','مؤنّث'],ex:'نقول: هذه أنثى، وعلامتها الألف المقصورة.'}]},
+ {id:'l-order',title:'ترتيب الهداية',desc:'رتّبي كلمات هداية من السورة',type:'arrange',skill:'اللغة والنحو',icon:'puzzle',s:'#2B6CB0',c:'#E1ECF8',
+  how:'اضغطي على الكلمات بالترتيب الصحيح لتكوين هداية من هدايات السورة، وإذا أخطأتِ فاضغطي على الكلمة لإعادتها.',
+  items:[
+   {w:['المؤمنون','إخوة','يتحابّون','ويتعاونون'],src:'الحجرات'},
+   {w:['نتثبّت','من','الأخبار','قبل','نقلها'],src:'الحجرات'},
+   {w:['الله','يعلم','ما','في','نفوسنا'],src:'ق'},
+   {w:['من','نصر','دين','الله','نصره','الله'],src:'محمد'},
+   {w:['نبرّ','والدينا','ونحسن','إليهما'],src:'الأحقاف'},
+   {w:['الآخرة','خير','من','زينة','الدنيا'],src:'الزخرف'}]},
+ {id:'parts',title:'اسم أم فعل أم حرف؟',skill:'اللغة والنحو',desc:'اكتشفي نوع الكلمة في الآية',type:'mcq',icon:'blocks',s:'#4F7F32',c:'#E6F0DD',
+ how:'الاسم يدل على شيء، والفعل يدل على عمل وزمن، والحرف لا يظهر معناه إلا مع غيره.',
+ items:[
+  {v:'﴿إِنَّا <mark>فَتَحْنَا</mark> لَكَ فَتْحًا مُّبِينًا﴾',src:'الفتح',a:'فعل',o:['اسم','فعل','حرف'],ex:'«فتحنا» تدل على عمل حدث في الزمن الماضي، فهي فعل.'},
+  {v:'﴿إِنَّا فَتَحْنَا لَكَ <mark>فَتْحًا</mark> مُّبِينًا﴾',src:'الفتح',a:'اسم',o:['اسم','فعل','حرف'],ex:'«فتحًا» اسم يدل على الفتح نفسه، وقد جاء بالتنوين.'},
+  {v:'﴿إِنَّا أَنزَلْنَاهُ <mark>فِي</mark> لَيْلَةٍ مُّبَارَكَةٍ﴾',src:'الدخان',a:'حرف',o:['اسم','فعل','حرف'],ex:'«في» حرف جرّ، لا يظهر معناه إلا مع ما بعده.'},
+  {v:'﴿اللَّهُ الَّذِي <mark>سَخَّرَ</mark> لَكُمُ الْبَحْرَ﴾',src:'الجاثية',a:'فعل',o:['اسم','فعل','حرف'],ex:'«سخّر» فعل ماضٍ.'},
+  {v:'﴿وَإِنَّا <mark>إِلَىٰ</mark> رَبِّنَا لَمُنقَلِبُونَ﴾',src:'الزخرف',a:'حرف',o:['اسم','فعل','حرف'],ex:'«إلى» حرف جرّ.'},
+  {v:'﴿وَنَزَّلْنَا مِنَ السَّمَاءِ <mark>مَاءً</mark> مُّبَارَكًا﴾',src:'ق',a:'اسم',o:['اسم','فعل','حرف'],ex:'«ماء» اسم لشيء نراه ونشربه.'},
+  {v:'﴿فَسَبِّحْ بِحَمْدِ رَبِّكَ قَبْلَ <mark>طُلُوعِ</mark> الشَّمْسِ﴾',src:'ق',a:'اسم',o:['اسم','فعل','حرف'],ex:'«طلوع» اسم، لا يدل على زمن، ويصح أن نقول: الطلوع.'},
+ ]},
+ {id:'number',title:'واحد أم اثنان أم أكثر؟',skill:'اللغة والنحو',desc:'المفرد والمثنى والجمع في الآيات',type:'mcq',icon:'count',s:'#C24B5E',c:'#FBE3E7',
+ how:'انظري إلى الكلمة الملوّنة في الآية: هل تدل على واحد، أم اثنين، أم أكثر من اثنين؟',
+ items:[
+  {v:'﴿فَأَصْلِحُوا بَيْنَ <mark>أَخَوَيْكُمْ</mark>﴾',src:'الحجرات',a:'مثنى',o:['مفرد','مثنى','جمع'],ex:'«أخوين» تدل على اثنين، فهي مثنى.'},
+  {v:'﴿إِنَّمَا الْمُؤْمِنُونَ <mark>إِخْوَةٌ</mark>﴾',src:'الحجرات',a:'جمع',o:['مفرد','مثنى','جمع'],ex:'«إخوة» تدل على أكثر من اثنين، فهي جمع، ومفردها: أخ.'},
+  {v:'﴿وَوَصَّيْنَا الْإِنسَانَ <mark>بِوَالِدَيْهِ</mark> إِحْسَانًا﴾',src:'الأحقاف',a:'مثنى',o:['مفرد','مثنى','جمع'],ex:'الوالدان: الأب والأم، اثنان، فهي مثنى.'},
+  {v:'﴿إِذْ يُبَايِعُونَكَ تَحْتَ <mark>الشَّجَرَةِ</mark>﴾',src:'الفتح',a:'مفرد',o:['مفرد','مثنى','جمع'],ex:'«الشجرة» واحدة، فهي مفرد.'},
+  {v:'﴿فِيهَا <mark>أَنْهَارٌ</mark> مِّن مَّاءٍ غَيْرِ آسِنٍ﴾',src:'محمد',a:'جمع',o:['مفرد','مثنى','جمع'],ex:'«أنهار» جمع، ومفردها: نهر.'},
+  {v:'﴿وَجَعَلْنَاكُمْ <mark>شُعُوبًا</mark> وَقَبَائِلَ﴾',src:'الحجرات',a:'جمع',o:['مفرد','مثنى','جمع'],ex:'«شعوب» جمع، ومفردها: شعب.'},
+  {v:'﴿اللَّهُ الَّذِي سَخَّرَ لَكُمُ <mark>الْبَحْرَ</mark>﴾',src:'الجاثية',a:'مفرد',o:['مفرد','مثنى','جمع'],ex:'«البحر» واحد، فهو مفرد، وجمعه: بحار.'},
+ ]},
+ ]},
+];
+GAMES.forEach(g=>g.stages&&g.stages.forEach((s,i)=>{s.parent=g;s.idx=i;s.label=s.title||('سورة '+s.surah);s.name=`${g.unit} ${AR(i+1)}: ${s.label}`}));
+const SKILLS=['مقاصد السور','الفهم القرائي','معاني الكلمات','رسم المصحف','قواعد الإملاء','اللغة والنحو','الثروة اللغوية'];
+let PLAYER='',KLASS='';const RES={}; // id -> {right,total,stars}
+const view=document.getElementById('view');
+function starsOf(p){return p>=.9?3:p>=.6?2:p>0?1:0}
+function starStr(n){return '★'.repeat(n)+'☆'.repeat(3-n)}
+function resOf(g){if(!g.stages)return RES[g.id]||null;const pl=g.stages.filter(s=>RES[s.id]);if(!pl.length)return null;const r=pl.reduce((a,s)=>a+RES[s.id].right,0),t=pl.reduce((a,s)=>a+RES[s.id].total,0);return {right:r,total:t,stars:starsOf(r/t)}}
+const backFn=g=>()=>g.parent?treasure(g.parent):hub();
+
+function hub(){
+  view.innerHTML=`<div class="cloud"><small>✦ نتدبّر القرآن فتحيا قلوبنا وتزكو أخلاقنا ✦</small><h1>في رحاب <b>القرآن العظيم</b></h1><p style="color:var(--ink);font-weight:700;font-size:1rem">نتعلّم ونلعب ونتنقّل في مراحل ممتعة، نجمع فيها نجوم الإنجاز ★</p><p>ق • الحجرات • الفتح • محمد • الأحقاف • الجاثية • الدخان • الزخرف</p></div>
+  <div class="hub">${GAMES.map(g=>`<button class="gcard" data-id="${g.id}" style="--c:${g.c};--c2:${g.c2}">${(r=>r?`<span class="stars" aria-label="${r.stars} نجوم">${starStr(r.stars)}</span>`:'')(resOf(g))}<span class="gic">${ICON[g.icon]}</span><span><span class="gt">${g.name}</span><span class="gd">${g.desc}</span><span class="skill">${g.skill}</span></span></button>`).join('')}
+  </div>
+  <div class="rescard"><span class="gic" style="background:#1F3B4D;width:62px;height:62px"><svg viewBox="0 0 40 40"><rect x="7" y="20" width="6" height="12" rx="2" fill="#F2B84B"/><rect x="17" y="13" width="6" height="19" rx="2" fill="#fff"/><rect x="27" y="7" width="6" height="25" rx="2" fill="#8DB06A"/></svg></span><span class="rc-main"><span class="gt">لوحة الإنجاز</span><span class="gd">نتائج المهارات بعد اللعب: للمعلمة وللطالبة.</span><span class="skill" style="background:#E6ECF0;color:#1F3B4D">تقويم الفهم</span></span>
+  <div class="idcard"><span class="idtag">★ بطاقة الطالبة</span><label>الاسم:<input id="hp" autocomplete="off" placeholder="اكتبي اسمك"></label><label>الصف:<input id="hk" autocomplete="off" placeholder="٤/أ" style="width:70px"></label></div>
+  <button class="primary" id="toRes">عرض اللوحة</button></div>`;
+  {const hp=document.getElementById('hp'),hk=document.getElementById('hk');hp.value=PLAYER;hk.value=KLASS;hp.oninput=()=>{PLAYER=hp.value};hk.oninput=()=>{KLASS=hk.value}}
+  view.querySelectorAll('.gcard[data-id]').forEach(b=>b.onclick=()=>play(GAMES.find(g=>g.id===b.dataset.id)));
+  document.getElementById('toRes').onclick=results;
+  window.scrollTo({top:0});
+}
+function frame(g,inner){const th=g.s?` th ${g.shape||''}" style="--s:${g.s};--s2:${g.c}`:'';return `<div class="stage${th}"><div class="stage-top"><h2><span class="gic" style="width:42px;height:42px;background:${g.c}">${ICON[g.icon]}</span>${g.name}</h2><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><div class="prog" id="prog"></div><button class="back" id="back">${g.parent?g.parent.mapName:'الألعاب'}</button></div></div><p class="how">${g.how}</p>${inner}</div>`}
+function play(g){
+  if(g.type==='treasure')return treasure(g);
+  if(g.type==='memory')return memory(g);
+  if(g.type==='connect')return connect(g);
+  if(g.type==='chest')return chests(g);
+  if(g.type==='quiz')return quiz(g);
+  if(g.type==='arrange')return arrange(g);
+  const items=shuffle(g.type==='sunmoon'?g.items.map(x=>({sm:x})):g.items);
+  let k=0,right=0;const marks=[];
+  view.innerHTML=frame(g,'<div class="qbox" id="qb"></div>');
+  document.getElementById('back').onclick=backFn(g);
+  const prog=()=>{document.getElementById('prog').innerHTML=items.map((_,i)=>`<i class="${marks[i]||(i===k?'cur':'')}"></i>`).join('')};
+  function show(){
+    prog();const it=items[k];const qb=document.getElementById('qb');let h='';
+    if(it.sm){h=`<div class="prompt">كيف نقرأ لام هذه الكلمة؟</div><div class="big">${it.sm[0]}</div><div class="sunmoon">
+      <button class="opt" data-v="sun"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="8" fill="#F2B84B"/><g stroke="#F2B84B" stroke-width="3" stroke-linecap="round"><path d="M20 4v5M20 31v5M4 20h5M31 20h5M8.5 8.5l3.5 3.5M28 28l3.5 3.5M8.5 31.5l3.5-3.5M28 12l3.5-3.5"/></g></svg>لام شمسية</button>
+      <button class="opt" data-v="moon"><svg viewBox="0 0 40 40"><path d="M27 31a12 12 0 1 1-9-21 9 9 0 0 0 9 21z" fill="#3E5A9B"/><circle cx="31" cy="10" r="1.6" fill="#F2B84B"/></svg>لام قمرية</button></div>`}
+    else{
+      h=`<div class="prompt">${it.p?SAW(it.p):g.id==='rasm'?'كيف نكتب هذه الكلمة في الإملاء؟':g.id==='taa'?'أكملي الكلمة بالتاء المناسبة':g.id==='number'?'على كم تدل الكلمة الملوّنة؟':'ما نوع الكلمة الملوّنة؟'}</div>`;
+      if(it.big)h+=`<div class="big">${it.big}</div>${it.src?`<div style="font-weight:700;color:var(--muted);font-size:.85rem">من سورة ${it.src}</div>`:''}`;
+      if(it.v)h+=`<div class="verse">${it.v}</div><div style="font-weight:700;color:var(--muted);font-size:.85rem">سورة ${it.src}</div>`;
+      const opts=g.id==='maqasid'||g.id==='rasm'?shuffle(it.o):it.o;
+      h+=`<div class="opts ${g.id==='taa'?'tiles':''}">${opts.map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('')}</div>`;
+    }
+    h+=`<div class="feedback" id="fb" aria-live="polite"></div><div class="next" id="nx"></div>`;
+    qb.innerHTML=h;
+    qb.querySelectorAll('.opt').forEach(b=>b.onclick=()=>answer(b,it));
+  }
+  function answer(b,it){
+    const ans=it.sm?it.sm[1]:it.a;const ok=b.dataset.v===ans;const fb=document.getElementById('fb');
+    document.querySelectorAll('#qb .opt').forEach(x=>{x.disabled=true;if(x.dataset.v===ans)x.classList.add('right')});
+    if(!ok)b.classList.add('wrong');
+    let ex;
+    if(it.sm){ex=it.sm[1]==='sun'?`بعد اللام حرف «${it.sm[2]}»، فلا تُنطق اللام ويُشدَّد الحرف: لام شمسية.`:`بعد اللام حرف «${it.sm[2]}»، فتُنطق اللام واضحة: لام قمرية.`}
+    else ex=it.ex;
+    ex=SAW(ex).replace(/﴿[^﴾]*﴾/g,m=>`<span style="font-family:var(--f-q);font-size:1.2em">${m}</span>`);
+    fb.className='feedback '+(ok?'ok':'no');
+    fb.innerHTML=(ok?'أحسنتِ! ':'الإجابة الصحيحة: <b>'+(it.sm?(ans==='sun'?'لام شمسية':'لام قمرية'):ans)+'</b>. ')+ex;
+    if(ok)right++;marks[k]=ok?'ok':'no';prog();
+    const nx=document.getElementById('nx');nx.innerHTML=`<button class="primary">${k<items.length-1?'السؤال التالي':'عرض النتيجة'}</button>`;
+    nx.firstChild.onclick=()=>{k++;k<items.length?show():end(g,right,items.length)};nx.firstChild.focus();
+  }
+  show();
+}
+function memory(g){
+  const cards=shuffle(g.pairs.flatMap((p,i)=>[{i,t:p[0],q:true},{i,t:p[1]}]));
+  let open=[],tries=0,done=0,lock=false;
+  view.innerHTML=frame(g,`<div class="memory" id="mem">${cards.map((c,n)=>`<button class="mc" data-n="${n}" aria-label="بطاقة">؟</button>`).join('')}</div><div class="feedback" id="fb" aria-live="polite"></div>`);
+  document.getElementById('back').onclick=backFn(g);
+  document.getElementById('prog').innerHTML=`<span style="font-weight:800;font-size:.9rem" id="tr">المحاولات: ٠</span>`;
+  const els=[...document.querySelectorAll('.mc')];
+  const face=(el,c)=>{el.classList.add('open');el.setAttribute('aria-label',c.t);el.innerHTML=c.q?`<span class="q">${c.t}</span>`:c.t};
+  els.forEach(el=>el.onclick=()=>{
+    const n=+el.dataset.n,c=cards[n];if(lock||el.classList.contains('open')||el.classList.contains('done'))return;
+    face(el,c);open.push(n);
+    if(open.length===2){tries++;document.getElementById('tr').textContent='المحاولات: '+AR(tries);
+      const [a,b]=open;const fb=document.getElementById('fb');
+      if(cards[a].i===cards[b].i&&cards[a].q!==cards[b].q){[a,b].forEach(x=>{els[x].classList.add('done');els[x].classList.remove('open')});done++;open=[];
+        const p=g.pairs[cards[a].i];fb.className='feedback ok';fb.innerHTML=`أحسنتِ! <span style="font-family:var(--f-q);font-size:1.2em">﴿${p[0]}﴾</span> معناها: ${p[1]}.`;
+        if(done===g.pairs.length)setTimeout(()=>end(g,Math.round(g.pairs.length*Math.min(1,(g.pairs.length+2)/tries)),g.pairs.length,`أنهيتِ المطابقة في ${AR(tries)} محاولة`),900)}
+      else{lock=true;setTimeout(()=>{[a,b].forEach(x=>{els[x].classList.remove('open');els[x].textContent='؟';els[x].setAttribute('aria-label','بطاقة')});open=[];lock=false},1000)}
+    }});
+}
+function end(g,right,total,note){
+  const p=right/total,s=starsOf(p);
+  const prev=RES[g.id];if(!prev||p>=prev.right/prev.total)RES[g.id]={right,total,stars:s};
+  const msg=s===3?'ما شاء الله! فهمٌ متميّز':s===2?'أحسنتِ! أنتِ في طريقك للإتقان':'بداية جميلة، أعيدي اللعبة لتزدادي فهمًا';
+  const nxt=g.parent&&g.parent.stages[g.idx+1];
+  const sum=note||`أجبتِ إجابة صحيحة عن ${AR(right)} من ${AR(total)}`;
+  if(g.parent&&g.parent.transit)return transit(g,s,msg,sum,nxt);
+  view.innerHTML=frame(g,`<div class="endbox"><div class="score">${starStr(s)}</div><p>${msg}</p><p style="font-size:.95rem;color:var(--muted)">${sum}</p>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px">${nxt?`<button class="primary" id="nxt">${g.parent.unit} التالية: ${nxt.label}</button>`:''}<button class="${nxt?'back':'primary'}" id="again">العبي مرة أخرى</button><button class="back" id="home">${g.parent?g.parent.mapName:'لعبة أخرى'}</button><button class="back" id="res">لوحة الإنجاز</button></div></div>`);
+  document.getElementById('back').onclick=backFn(g);document.getElementById('home').onclick=backFn(g);document.getElementById('again').onclick=()=>play(g);document.getElementById('res').onclick=results;
+  if(nxt)document.getElementById('nxt').onclick=()=>play(nxt);
+}
+const TRAIN='<svg viewBox="0 0 70 44" aria-hidden="true"><circle cx="54" cy="6" r="4" fill="#cbd5e1"/><circle cx="60" cy="3" r="3" fill="#e2e8f0"/><rect x="34" y="14" width="30" height="18" rx="4" fill="#2B6CB0"/><rect x="44" y="6" width="8" height="10" rx="2" fill="#1F3B4D"/><path d="M34 32V12h-12a6 6 0 0 0-6 6v14z" fill="#E07A5F"/><rect x="20" y="17" width="9" height="8" rx="2" fill="#fff"/><path d="M8 32h56" stroke="#1F3B4D" stroke-width="3"/><circle cx="24" cy="36" r="5" fill="#1F3B4D"/><circle cx="42" cy="36" r="5" fill="#1F3B4D"/><circle cx="56" cy="36" r="5" fill="#1F3B4D"/><path d="M4 30l8-6v8z" fill="#F2B84B"/></svg>';
+function railHTML(P,at,lit){const n=P.stages.length;return `<div class="rail"><div class="rline"></div>${P.stages.map((st,j)=>`<span class="stn ${j<=lit?'done':''}" style="right:${j/(n-1)*100}%;--s:${st.s}"><i>${AR(j+1)}</i><b>${st.title}</b></span>`).join('')}<span class="train" id="train" style="right:${at/(n-1)*100}%">${TRAIN}</span></div>`}
+function transit(g,s,msg,sum,nxt){
+  const P=g.parent,i=g.idx,n=P.stages.length;
+  view.innerHTML=`<div class="stage th transit" style="--s:${(nxt||g).s};--s2:${(nxt||g).c}"><div class="stage-top"><h2>${nxt?'انتقالة إلى '+P.unit+' التالية':'وصلتِ إلى آخر '+P.unit.slice(2)+'!'}</h2><button class="back" id="back">${P.mapName}</button></div>
+   <div class="endbox"><p style="margin:.2em 0 0">أنهيتِ ${P.unit.slice(2)} «${g.title}»</p><div class="score">${starStr(s)}</div><p>${msg}</p><p style="font-size:.95rem;color:var(--muted)">${sum}</p></div>
+   ${railHTML(P,i,i)}
+   ${nxt?`<div class="nextcard" style="--s:${nxt.s};--s2:${nxt.c}"><span class="gic">${ICON[nxt.icon]}</span><span><small>${P.unit} ${AR(i+2)} من ${AR(n)}</small><b>${nxt.title}</b><span>${nxt.desc}</span></span></div>`:`<p class="tdone">أتممتِ جميع ${P.unitPl} «${P.name}»، بارك الله فيكِ!</p>`}
+   <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">${nxt?`<button class="primary" id="nxt">انطلقي إلى «${nxt.title}»</button>`:`<button class="primary" id="res2">لوحة الإنجاز</button>`}<button class="back" id="again">أعيدي هذه ${P.unit.slice(2)}</button><button class="back" id="home">${P.mapName}</button></div></div>`;
+  document.getElementById('back').onclick=backFn(g);document.getElementById('home').onclick=backFn(g);document.getElementById('again').onclick=()=>play(g);
+  if(nxt){document.getElementById('nxt').onclick=()=>play(nxt);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{const t=document.getElementById('train');if(t){t.style.right=((i+1)/(n-1)*100)+'%';setTimeout(()=>{const st=view.querySelectorAll('.stn')[i+1];if(st)st.classList.add('done')},1500)}}))}
+  else document.getElementById('res2').onclick=results;
+  window.scrollTo({top:0});
+}
+function treasure(g){
+  const doneN=g.stages.filter(s=>RES[s.id]).length;
+  const firstOpen=g.stages.findIndex(s=>!RES[s.id]);
+  view.innerHTML=`<div class="stage"><div class="stage-top"><h2><span class="gic" style="width:42px;height:42px;background:${g.c}">${ICON[g.icon]}</span>${g.name}</h2><button class="back" id="back">الألعاب</button></div><p class="how">${g.how} أنجزتِ ${AR(doneN)} من ${AR(g.stages.length)} ${g.unitPl}.</p>
+  ${g.transit?railHTML(g,firstOpen<0?g.stages.length-1:firstOpen,-1):''}
+  ${g.transit?`<div style="text-align:center;margin-top:6px"><button class="primary" id="go">${doneN?(firstOpen<0?'ابدئي الرحلة من جديد':'أكملي الرحلة: '+g.stages[firstOpen].title):'ابدئي الرحلة'}</button></div>`:''}
+  <div class="map">${g.stages.map((s,i)=>`<button class="st" data-i="${i}" style="--s:${s.s};--s2:${s.c}"><span class="num">${AR(i+1)}</span>${RES[s.id]?`<span class="stars">${starStr(RES[s.id].stars)}</span>`:''}<span class="gic">${ICON[s.icon]}</span><span><span class="gt">${s.label}</span><span class="mech">${s.mech||s.desc}</span></span></button>`).join('')}</div></div>`;
+  document.getElementById('back').onclick=hub;
+  if(g.transit){view.querySelectorAll('.stn').forEach((e,j)=>{if(RES[g.stages[j].id])e.classList.add('done')});document.getElementById('go').onclick=()=>play(g.stages[firstOpen<0?0:firstOpen])}
+  view.querySelectorAll('.st').forEach(b=>b.onclick=()=>play(g.stages[+b.dataset.i]));window.scrollTo({top:0});
+}
+function arrange(g){
+  const items=shuffle(g.items);let k=0,right=0;const marks=[];
+  view.innerHTML=frame(g,'<div class="qbox" id="qb"></div>');
+  document.getElementById('back').onclick=backFn(g);
+  const prog=()=>{document.getElementById('prog').innerHTML=items.map((_,i)=>`<i class="${marks[i]||(i===k?'cur':'')}"></i>`).join('')};
+  function show(){
+    prog();const it=items[k];let pool=it.w.map((t,i)=>({t,i}));do{pool=shuffle(pool)}while(pool.every((x,j)=>x.t===it.w[j]));const line=[];let checked=false;
+    const qb=document.getElementById('qb');
+    const draw=()=>{
+      qb.innerHTML=`<div class="prompt">رتّبي الكلمات لتكوين هداية من هدايات سورة ${it.src}</div><div class="aline" id="al">${line.length?line.map((x,j)=>`<button class="wt" data-j="${j}">${x.t}</button>`).join(''):'<span class="ph">اضغطي على الكلمات بالترتيب</span>'}</div><div class="pool">${pool.map((x,j)=>`<button class="wt" data-p="${j}">${x.t}</button>`).join('')}</div><div class="feedback" id="fb" aria-live="polite"></div><div class="next" id="nx">${!pool.length?'<button class="primary" id="chk">تحقّقي</button>':''}</div>`;
+      qb.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{line.push(pool.splice(+b.dataset.p,1)[0]);draw()});
+      qb.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>{pool.push(line.splice(+b.dataset.j,1)[0]);draw()});
+      const c=document.getElementById('chk');if(c){c.onclick=check;c.focus()}};
+    function check(){if(checked)return;checked=true;const ok=line.every((x,j)=>x.t===it.w[j]);
+      qb.querySelectorAll('.wt').forEach(b=>b.disabled=true);document.getElementById('al').classList.add(ok?'ok':'no');
+      const fb=document.getElementById('fb');fb.className='feedback '+(ok?'ok':'no');
+      fb.innerHTML=(ok?'أحسنتِ! هداية جميلة: ':'الترتيب الصحيح: ')+'«<b>'+it.w.join(' ')+'</b>»';
+      if(ok)right++;marks[k]=ok?'ok':'no';prog();
+      nextBtn(k===items.length-1,()=>{k++;k<items.length?show():end(g,right,items.length)})}
+    draw();
+  }
+  show();
+}
+function nextBtn(last,go){const nx=document.getElementById('nx');nx.innerHTML=`<button class="primary">${last?'عرض النتيجة':'السؤال التالي'}</button>`;nx.firstChild.onclick=go;nx.firstChild.focus()}
+function ladderSVG(n,r){const H=40+n*34;let s=`<svg viewBox="0 0 90 ${H}" role="img" aria-label="الدرجات: ${AR(r)} من ${AR(n)}"><text x="45" y="12" text-anchor="middle" font-family="Tajawal,sans-serif" font-weight="800" font-size="11" fill="#9A6B12">القمّة</text><path d="M22 ${H-6}V20M68 ${H-6}V20" stroke="#9A6B12" stroke-width="5" stroke-linecap="round"/>`;
+  for(let i=0;i<n;i++){const y=H-24-i*34;s+=`<rect x="20" y="${y-4}" width="50" height="8" rx="4" fill="${i<r?'#F2B84B':'#EADBC0'}"/>`}
+  const sy=r?H-24-(r-1)*34-16:H-12;return s+`<path transform="translate(45 ${sy})" d="M0-12l3.5 7.2 8 1.1-5.8 5.6 1.4 7.9L0 6.1l-7.1 3.7 1.4-7.9-5.8-5.6 8-1.1z" fill="#E07A5F" stroke="#fff" stroke-width="1.5"/></svg>`}
+function quiz(g){
+  const items=shuffle(g.items);let k=0,right=0;const marks=[];const lad=g.mode==='ladder';
+  view.innerHTML=frame(g,lad?'<div class="ladwrap"><div class="qbox" id="qb"></div><div class="ladder" id="lad"></div></div>':'<div class="qbox" id="qb"></div>');
+  document.getElementById('back').onclick=backFn(g);
+  const prog=()=>{document.getElementById('prog').innerHTML=items.map((_,i)=>`<i class="${marks[i]||(i===k?'cur':'')}"></i>`).join('');if(lad)document.getElementById('lad').innerHTML=ladderSVG(items.length,right)};
+  const ansOf=it=>g.mode==='tf'?(it.t?'صح':'خطأ'):it.a;
+  const btns=(o,cls)=>(g.fixed?o:shuffle(o)).map((x,i)=>`<button class="opt ${cls||''}" style="--bc:${BAL[i%4]}" data-v="${x}">${x}</button>`).join('');
+  function show(){
+    prog();const it=items[k];let h;
+    if(g.mode==='reverse')h=`<div class="prompt">أيُّ كلمة قرآنية معناها:</div><div class="mean">${it.m}</div><div class="opts">${btns(it.o,'q')}</div>`;
+    else if(g.mode==='tf')h=`<div class="prompt">هل هذا المعنى صحيح؟</div><div class="big">${it.w}</div><div class="mean">معناها: ${it.m}</div><div class="opts tfb"><button class="opt" data-v="صح"><span class="tfi">✓</span>صح</button><button class="opt" data-v="خطأ"><span class="tfi">✗</span>خطأ</button></div>`;
+    else if(g.mode==='tadabbur')h=`<div class="verse">${it.v}</div><div class="src">سورة ${g.surah}</div><div class="prompt" style="margin-top:10px">${SAW(it.q)}</div><div class="opts">${btns(it.o,'wide')}</div>`;
+    else if(g.mode==='verse')h=`<div class="prompt">ما معنى الكلمة الملوّنة؟</div><div class="verse">${it.v}</div><div class="src">سورة ${g.surah}</div><div class="opts">${btns(it.o)}</div>`;
+    else h=`<div class="prompt">${g.prompt||'ما معنى هذه الكلمة؟'}</div><div class="${g.wcls||'big'}">${it.w}</div>${(it.src||g.surah)?`<div class="src">من سورة ${it.src||g.surah}</div>`:''}<div class="opts ${{balloon:'balloons',tiles:'tiles',two:'tfb'}[g.mode]||''}">${btns(it.o)}</div>`;
+    h+=`<div class="feedback" id="fb" aria-live="polite"></div><div class="next" id="nx"></div>`;
+    const qb=document.getElementById('qb');qb.innerHTML=h;qb.querySelectorAll('.opt').forEach(b=>b.onclick=()=>answer(b,it));
+  }
+  function answer(b,it){
+    const ans=ansOf(it),ok=b.dataset.v===ans;
+    document.querySelectorAll('#qb .opt').forEach(x=>{x.disabled=true;if(x.dataset.v===ans)x.classList.add('right')});
+    if(!ok)b.classList.add('wrong');
+    const fb=document.getElementById('fb');fb.className='feedback '+(ok?'ok':'no');
+    fb.innerHTML=(ok?(lad?'أحسنتِ! صعدتِ درجة. ':'أحسنتِ! '):(g.mode==='tf'?'انتبهي! ':'الإجابة الصحيحة: <b>'+ans+'</b>. '))+qfont(it.ex);
+    if(ok)right++;marks[k]=ok?'ok':'no';prog();
+    nextBtn(k===items.length-1,()=>{k++;k<items.length?show():end(g,right,items.length,lad?(right===items.length?'وصلتِ إلى قمّة السُّلَّم!':`صعدتِ ${AR(right)} درجات من ${AR(items.length)}`):'')});
+  }
+  show();
+}
+function chestSVG(s){const b=s==='no'?'#9b9184':'#8a5a2b',l=s==='no'?'#b3a99b':'#a56d35';
+  return `<svg viewBox="0 0 80 64" aria-hidden="true">${s==='ok'?`<path d="M12 22c0-12 8-16 28-16s28 4 28 16z" fill="${l}" transform="rotate(-14 12 22) translate(0 -4)"/><circle cx="30" cy="30" r="7" fill="#F2B84B"/><circle cx="44" cy="27" r="7" fill="#F7CF6B"/><circle cx="53" cy="32" r="6" fill="#F2B84B"/>`:''}<path d="M12 30h56v28H12z" fill="${b}"/>${s==='ok'?'':`<path d="M12 30c0-12 8-17 28-17s28 5 28 17z" fill="${l}"/>`}<path d="M12 30h56" stroke="#F2B84B" stroke-width="4"/><rect x="35" y="26" width="10" height="13" rx="2" fill="${s==='no'?'#7d746a':'#F2B84B'}"/></svg>`}
+function chests(g){
+  const items=shuffle(g.items);const st=items.map(()=>null);let right=0,cur=-1;
+  view.innerHTML=frame(g,'<div class="chests" id="ch"></div><div class="qbox" id="qb"><p class="hint">اضغطي على أي صندوق لتبدئي.</p></div>');
+  document.getElementById('back').onclick=backFn(g);
+  const draw=()=>{document.getElementById('prog').innerHTML=items.map((_,i)=>`<i class="${st[i]||(i===cur?'cur':'')}"></i>`).join('');
+    document.getElementById('ch').innerHTML=items.map((it,i)=>`<button class="chest ${st[i]||''} ${i===cur?'sel':''}" data-i="${i}" ${st[i]?'disabled':''}>${chestSVG(st[i])}<span>${it.w}</span></button>`).join('');
+    document.querySelectorAll('.chest').forEach(b=>b.onclick=()=>pick(+b.dataset.i))};
+  function pick(i){cur=i;draw();const it=items[i];const qb=document.getElementById('qb');
+    qb.innerHTML=`<div class="prompt">لفتح الصندوق: ما معنى ${qfont('﴿'+it.w+'﴾')}؟</div><div class="opts">${shuffle(it.o).map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('')}</div><div class="feedback" id="fb" aria-live="polite"></div><div class="next" id="nx"></div>`;
+    qb.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok=b.dataset.v===it.a;
+      qb.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(x.dataset.v===it.a)x.classList.add('right')});if(!ok)b.classList.add('wrong');
+      st[i]=ok?'ok':'no';if(ok)right++;cur=-1;draw();
+      const fb=document.getElementById('fb');fb.className='feedback '+(ok?'ok':'no');fb.innerHTML=(ok?'أحسنتِ! فُتح الكنز. ':'الإجابة الصحيحة: <b>'+it.a+'</b>. ')+qfont(it.ex);
+      if(st.every(x=>x))nextBtn(true,()=>end(g,right,items.length,`فتحتِ ${AR(right)} صناديق من ${AR(items.length)}`));
+      else document.getElementById('nx').innerHTML='<p class="hint">اختاري صندوقًا آخر ↑</p>'});
+    qb.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  draw();
+}
+function connect(g){
+  const P=g.pairs,W=shuffle(P.map((_,i)=>i)),M=shuffle(P.map((_,i)=>i));let sel=null,done=0,miss=0;
+  view.innerHTML=frame(g,`<div class="conn"><div class="col">${W.map(i=>`<button class="cbtn q" data-i="${i}" data-s="w">${P[i][0]}</button>`).join('')}</div><div class="col">${M.map(i=>`<button class="cbtn${g.bothQ?' q':''}" data-i="${i}" data-s="m">${P[i][1]}</button>`).join('')}</div></div><div class="feedback" id="fb" aria-live="polite"></div>`);
+  document.getElementById('back').onclick=backFn(g);
+  const pr=()=>{document.getElementById('prog').innerHTML=`<span style="font-weight:800;font-size:.9rem">وصّلتِ ${AR(done)} من ${AR(P.length)}</span>`};pr();
+  document.querySelectorAll('.cbtn').forEach(b=>b.onclick=()=>{
+    if(b.classList.contains('done'))return;
+    if(!sel||sel.dataset.s===b.dataset.s){if(sel)sel.classList.remove('sel');sel=b;b.classList.add('sel');return}
+    const a=sel;sel=null;a.classList.remove('sel');const fb=document.getElementById('fb');
+    if(a.dataset.i===b.dataset.i){const c=PAIRC[done%PAIRC.length];[a,b].forEach(x=>{x.classList.add('done');x.style.setProperty('--pc',c);x.disabled=true});done++;pr();
+      const p=P[+a.dataset.i];fb.className='feedback ok';fb.innerHTML=`أحسنتِ! ${qfont('﴿'+p[0]+'﴾')} ${g.rel||'معناها'}: ${g.bothQ?qfont('﴿'+p[1]+'﴾'):p[1]}.`;
+      if(done===P.length)setTimeout(()=>end(g,Math.max(0,P.length-miss),P.length,miss?`وصّلتِ الكلمات كلها مع ${AR(miss)} محاولة خاطئة`:'وصّلتِ الكلمات كلها دون أي خطأ'),900)}
+    else{miss++;[a,b].forEach(x=>{x.classList.add('bad');setTimeout(()=>x.classList.remove('bad'),450)});fb.className='feedback no';fb.textContent='حاولي مرة أخرى: اقرئي الكلمة وفكّري في معناها.'}
+  });
+}
+function results(){
+  const name='';
+  window.scrollTo({top:0});
+  const units=GAMES.flatMap(g=>g.stages?g.stages.map(s=>({u:s,sk:s.skill||g.skill,n:s.skill?s.title:g.name})):[{u:g,sk:g.skill,n:g.name}]);
+  const rows=SKILLS.map(sk=>{const us=units.filter(x=>x.sk===sk);const gs=[...new Set(us.map(x=>x.n))].map(name=>({name}));const played=us.map(x=>x.u).filter(u=>RES[u.id]);
+    if(!played.length)return {sk,p:null,gs};const r=played.reduce((a,u)=>a+RES[u.id].right,0),t=played.reduce((a,u)=>a+RES[u.id].total,0);return {sk,p:r/t,gs}});
+  const lvl=p=>p===null?['d','لم تُلعب بعد']:p>=.9?['a','متمكّنة']:p>=.6?['b','في طريقها للإتقان']:['c','تحتاج إلى مراجعة'];
+  view.innerHTML=`<div class="stage"><div class="stage-top"><h2>لوحة الإنجاز</h2><div class="idbox"><label>اسم الطالبة:<input id="player" autocomplete="off"></label><label>الصف:<input id="klass" autocomplete="off" style="width:70px"></label></div><button class="back" id="back">الألعاب</button></div>
+  <p class="how">تقيس كل لعبة مهارة، وتُحسب النسبة من الإجابة الأولى في كل سؤال، فتعرفين ما فهمته الطالبة وما تحتاج إلى مراجعته.</p>
+  <div class="vres">${rows.map(r=>{const [c,t]=lvl(r.p);const pc=r.p===null?0:Math.round(r.p*100);return `<div class="vcol" title="${r.gs.map(g=>g.name).join('، ')}"><span class="vpc">${r.p===null?'—':AR(pc)+'٪'}</span><div class="vbar"><i style="height:${pc}%"></i></div><b>${r.sk}</b><span class="lvl ${c}">${t}</span></div>`}).join('')}</div>
+  <p class="note">تُحفظ النتائج ما دامت الصفحة مفتوحة، وتبدأ من جديد عند إعادة فتحها.</p></div>`;
+  const pl=document.getElementById('player');pl.value=PLAYER;pl.oninput=()=>{PLAYER=pl.value};const kl=document.getElementById('klass');kl.value=KLASS;kl.oninput=()=>{KLASS=kl.value};
+  document.getElementById('back').onclick=hub;
+}
+hub();
+</script>
+
+</body></html>
