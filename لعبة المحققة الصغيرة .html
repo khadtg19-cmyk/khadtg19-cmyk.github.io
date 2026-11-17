@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>قضية قلب مجروح</title>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--pn:rgba(255,248,236,.93);--tx:#2E2230;--ac:#0F6E66;--ab:#fff;--gd:#C8932A;--ok:#D2F0DA;--no:#F8D6D6;--bd:#E3D0B8;--bg:#E9F6F3}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--pn:rgba(28,24,34,.93);--tx:#F6ECF2;--ac:#4CC4B4;--ab:#08262A;--ok:#1F4A36;--no:#5A2A2E;--bd:#4A3F52;--bg:#10242A}}
+:root[data-theme=dark]{--pn:rgba(28,24,34,.93);--tx:#F6ECF2;--ac:#4CC4B4;--ab:#08262A;--ok:#1F4A36;--no:#5A2A2E;--bd:#4A3F52;--bg:#10242A}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--tx);font-family:'Cairo',Tahoma,sans-serif}
+canvas{position:fixed;inset:0;width:100%;height:100%;touch-action:manipulation}
+#top{position:fixed;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 8px) 12px 0;display:flex;gap:8px;align-items:center;pointer-events:none}
+#top>*{pointer-events:auto}
+.pill{background:rgba(20,18,30,.55);color:#FFF4DC;border-radius:22px;padding:4px 14px;font-weight:700;font-size:15px;min-height:40px;display:flex;align-items:center;gap:6px}
+#rw i{font-style:normal;opacity:.25;filter:grayscale(1)}#rw i.on{opacity:1;filter:none}
+.sp{flex:1}
+.i{min-width:44px;min-height:44px;border-radius:22px;border:0;background:rgba(20,18,30,.55);color:#FFF4DC;font:700 14px Cairo,sans-serif;padding:0 14px}
+#p{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,100%);max-height:54vh;overflow:auto;background:var(--pn);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--bd);border-bottom:0;border-radius:26px 26px 0 0;padding:16px 18px calc(env(safe-area-inset-bottom,0px) + 16px);font-size:17px;line-height:1.8}
+.st{font:700 22px/2.1 'Cairo',Tahoma,sans-serif;color:var(--tx);min-height:4.2em;margin:0 0 8px}
+h2,h3{font-family:'Aref Ruqaa',serif;margin:0 0 4px;font-weight:700}h2{font-size:32px}h3{font-size:24px}
+p{margin:4px 0 8px}
+.b{display:block;width:100%;min-height:48px;margin:8px 0;padding:8px 16px;border-radius:14px;border:2px solid var(--ac);background:var(--ac);color:var(--ab);font:700 17px Cairo,sans-serif;text-align:start}
+.b.s,.b.o{background:transparent;color:var(--tx);border-color:var(--bd)}
+.b.g{background:var(--ok);border-color:#2E9B57;color:var(--tx)}.b.x{background:var(--no);border-color:#C25555;color:var(--tx)}
+input,textarea{width:100%;min-height:48px;border-radius:14px;border:2px solid var(--bd);background:transparent;color:var(--tx);font:17px Cairo,sans-serif;padding:8px 12px}
+textarea{min-height:90px;direction:ltr}
+.v{border-inline-start:4px solid var(--gd);padding:6px 14px;margin:8px 0;font-size:20px;line-height:2}
+.cl{border-inline-start:4px solid var(--gd);padding:2px 12px;margin:6px 0}
+.bar{height:6px;border-radius:3px;background:var(--bd);margin-bottom:10px}.bar i{display:block;height:100%;border-radius:3px;background:var(--gd);transition:width .6s}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:15px}td,th{border:1px solid var(--bd);padding:4px 8px;white-space:nowrap}
+.seal{width:130px;height:130px;margin:6px auto;border-radius:50%;display:grid;place-items:center;text-align:center;font:700 25px/1.2 'Aref Ruqaa',serif;color:#4A2F00;background:radial-gradient(circle at 35% 30%,#FFE9A8,#D9A93B 60%,#A9741A);box-shadow:0 0 0 5px rgba(217,169,59,.35),0 0 32px rgba(255,214,120,.8)}
+#bd{position:fixed;inset:0;z-index:3;overflow:auto;display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 56px) 12px calc(env(safe-area-inset-bottom,0px) + 16px);background:rgba(8,26,30,.45)}
+.card{width:min(480px,100%);background:var(--pn);border:3px solid var(--gd);outline:1px solid var(--gd);outline-offset:-9px;border-radius:26px;padding:26px 20px;text-align:center}
+.ob{font:700 22px 'Aref Ruqaa',serif;color:var(--gd)}.nm{font:700 40px/1.3 'Aref Ruqaa',serif;color:var(--ac)}.sb{margin-bottom:4px}
+.rows{display:flex;gap:8px;margin:10px 0}.rows div{flex:1;border:1px solid var(--bd);border-radius:14px;padding:8px 4px;font-size:14px}.rows b{display:block;font-size:22px;color:var(--ac)}
+.rwd{display:flex;justify-content:space-between;gap:4px;margin:6px 0 10px;font-size:24px}.rwd small{display:block;font-size:11px;line-height:1.3}
+.fr{border-top:1px dashed var(--bd);border-bottom:1px dashed var(--bd);padding:8px 4px;margin:6px 0}.fr small{display:block;color:var(--gd);font-weight:700}.fr b{font:700 26px 'Aref Ruqaa',serif;color:var(--ac)}.fr p{font-size:15px;margin:2px 0}
+.ft{font-size:14px;line-height:1.7;margin-top:8px}
+.fb{display:inline-block;width:auto;min-height:44px;margin:4px 3px}
+body.shot #top,body.shot .nb{display:none}
+#pz{position:fixed;inset:0;background:rgba(10,8,20,.7);display:none;place-items:center;z-index:5}
+#pz div{background:var(--pn);padding:24px;border-radius:22px;width:min(320px,86%)}
+#ts{position:fixed;top:18%;left:50%;transform:translateX(-50%);background:#F3C969;color:#2A1B00;font-weight:900;padding:10px 22px;border-radius:24px;display:none;z-index:4;white-space:nowrap}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="top"><div class="pill">النقاط <span id="pts">0</span></div><div class="pill" id="rw"></div><span class="sp"></span><button class="i" id="bs" onclick="snd()">الأصوات: تشغيل</button><button class="i" onclick="pz(1)">إيقاف</button></div>
+<div id="ts"></div>
+<div id="p"></div>
+<div id="pz"><div><h3>اللعبة متوقفة</h3><button class="b" onclick="pz(0)">استكملي اللعب</button><button class="b s" onclick="pz(0);menu()">القائمة الرئيسية</button></div></div>
+<script>
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>'&#'+c.charCodeAt()+';'),nc=s=>String(s).replace(/,/g,'،');
+const S={name:'',pts:0,cor:0,tot:0,done:0,sound:true,stage:0,o:0};
+const RW=['مفتاح الأدلة','جوهرة العفو','نجمة الاحترام','مفتاح المصالحة','وسام سفيرة التسامح'],RI=['🔑','💎','⭐','🗝️','🏅'];
+/* ===== المشهد الطبيعي ===== */
+const cv=$('c'),g=cv.getContext('2d'),rnd=Math.random,cl01=(v,a,b)=>Math.max(a,Math.min(b,v));
+let FP=0,w,h,SH,W=.08,WT=.08,B=0,lf=0,paused=false,T0=0,wind=0;
+const mix=(a,b,k)=>a.map((v,i)=>Math.round(v+(b[i]-v)*k)),rgb=(c,a)=>`rgba(${c[0]},${c[1]},${c[2]},${a==null?1:a})`;
+const rain=Array.from({length:160},()=>({x:rnd(),y:rnd(),v:.7+rnd()*.6}));
+const clouds=Array.from({length:7},(_,i)=>({x:rnd(),y:.08+rnd()*.3,s:.8+rnd()*.9,v:.004+rnd()*.01}));
+const leaves=Array.from({length:24},()=>({x:rnd(),y:rnd(),v:.05+rnd()*.08,p:rnd()*6}));
+const flies=Array.from({length:20},()=>({x:rnd(),y:.35+rnd()*.35,p:rnd()*6}));
+const fl=Array.from({length:24},(_,i)=>({x:rnd(),h:14+rnd()*14,p:rnd()*6}));
+const planks=[0,0,0,0];
+const FRU=[{n:'راحة القلب',d:'التسامح يغسل القلب من الغلّ والضغينة، فينام صاحبه مطمئنًّا وتخفّ عن صدره أثقال الخصام.',c:'#E4573D'},
+{n:'مغفرة الله',d:'من عفا وصفح رجا أن يغفر الله له، قال تعالى: ﴿أَلَا تُحِبُّونَ أَنْ يَغْفِرَ اللَّهُ لَكُمْ﴾.',c:'#8E5BD0'},
+{n:'عودة المودّة',d:'اعتذارٌ صادق وقلبٌ متسامح يعيدان الصداقة أجمل مما كانت، كجسرٍ جديد أمتن من القديم.',c:'#F07FA8'},
+{n:'العزّة والكرامة',d:'قال رسول الله ﷺ: «وما زاد الله عبدًا بعفوٍ إلا عزًّا». فالعفو يرفع صاحبه ولا يُنقص من قدره.',c:'#E8A93A'},
+{n:'قوة النفس',d:'القويّة هي التي تملك نفسها عند الغضب، فتختار الأجمل ولا تردّ الإساءة بمثلها.',c:'#3FA77A'},
+{n:'القدوة الحسنة',d:'حين تتسامحين يتعلّم منكِ من حولكِ، فيتحوّل الصفّ كلّه إلى حديقةٍ تزهر بالمحبة.',c:'#3E9BD6'}];
+const FR=FRU.map(f=>Object.assign(f,{x:0,y:0,seen:0}));
+const clues=[{fx:.2,fy:.46,t:'في دفتر المشروع خطّت سارة فكرةً جميلة لتزيين لوحة الفصل، غير أنها نسيت أن تكتب فيه اسم نورة.'},
+{fx:.8,fy:.4,t:'وعلى ورقةٍ مطويّة رسمت نورة وردةً بديعة، وانتظرت أن يسألها أحدٌ عن رأيها، فلم يسألها أحد.'},
+{fx:.34,fy:.24,t:'قالت ريم: لم تقصد سارة أن تجرح صديقتها، فقد كانت مستعجلة. أما نورة فكتمت حزنها، وظنّت أن رأيها لا قيمة له.'},
+{fx:.66,fy:.17,t:'قالت سارة: لم أنتبه إلى رسمك. وقالت نورة: ظننتكِ لا تريدين رأيي. ثم سكتتا، وكبر الصمت بينهما كما يكبر الجرح إذا أُهمل.'}].map(c=>Object.assign(c,{f:0,x:0,y:0,r:10}));
+function rs(){const d=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;cv.width=w*d;cv.height=h*d;g.setTransform(d,0,0,d,0,0);SH=Math.min(h*.58,w*1.05)}addEventListener('resize',rs);rs();
+function heart(cx,cy,s,col,off,glow){const hp=()=>{g.beginPath();g.moveTo(cx,cy+s);g.bezierCurveTo(cx-s*1.35,cy-s*.1,cx-s*.6,cy-s*1.15,cx,cy-s*.35);g.bezierCurveTo(cx+s*.6,cy-s*1.15,cx+s*1.35,cy-s*.1,cx,cy+s)};
+ [-1,1].forEach(sd=>{g.save();g.beginPath();g.rect(sd<0?cx-s*2:cx,cy-s*2,s*2,s*4);g.clip();g.translate(sd*off,sd*off*.4);g.shadowColor=rgb([255,150,190],glow);g.shadowBlur=24*glow;hp();g.fillStyle=col;g.fill();g.restore()})}
+function draw(t,dt){
+ W+=(WT-W)*cl01(dt*.9,0,1);const k=W,by=SH*.66,gx0=w*.36,gx1=w*.64,wd=(wind=Math.sin(t*.4)*.5+.5+k*.2);
+ let gr=g.createLinearGradient(0,0,0,SH);gr.addColorStop(0,rgb(mix([34,44,66],[96,178,214],k)));gr.addColorStop(1,rgb(mix([76,88,104],[255,216,176],k)));g.fillStyle=gr;g.fillRect(0,0,w,h);
+ const sy=SH*(.72-.32*k);gr=g.createRadialGradient(w*.5,sy,0,w*.5,sy,SH*.55);gr.addColorStop(0,rgb([255,232,160],.95*k));gr.addColorStop(1,rgb([255,232,160],0));g.fillStyle=gr;g.fillRect(0,0,w,SH);
+ clouds.forEach(c=>{c.x=(c.x+c.v*dt*(1+wd))%1.4;const x=(c.x-.2)*w,r=SH*.07*c.s;g.fillStyle=rgb(mix([58,64,80],[255,255,255],k),(1-k*.8)*.92);[[0,0,1],[.9,.2,.8],[-.9,.25,.75],[.3,-.3,.7]].forEach(q=>{g.beginPath();g.arc(x+q[0]*r,SH*c.y+q[1]*r,r*q[2],0,6.3);g.fill()})});
+ const prog=B/4;
+ const hill=(y,a,f,c)=>{g.fillStyle=c;g.beginPath();g.moveTo(0,h);for(let x=0;x<=w+20;x+=20)g.lineTo(x,y+Math.sin(x*f+a)*SH*.04);g.lineTo(w,h);g.fill()};
+ hill(SH*.46,5,.006,rgb(mix([52,62,82],[150,190,200],k)));hill(SH*.52,1,.008,rgb(mix([42,54,68],[120,180,160],k)));hill(SH*.58,3,.012,rgb(mix([32,46,54],[84,152,122],k)));
+ gr=g.createLinearGradient(0,SH*.4,0,SH*.66);gr.addColorStop(0,rgb([255,235,215],0));gr.addColorStop(1,rgb(mix([120,130,150],[255,236,215],k),.45));g.fillStyle=gr;g.fillRect(0,SH*.4,w,SH*.26);
+ if(k>.5){g.fillStyle=rgb([255,236,170],.14*(k-.5));for(let i=0;i<5;i++){g.beginPath();g.moveTo(w*.5,sy);g.lineTo(w*(.1+i*.2)-20,SH*.66);g.lineTo(w*(.1+i*.2)+40,SH*.66);g.fill()}}
+ gr=g.createLinearGradient(0,by,0,h);gr.addColorStop(0,rgb(mix([28,48,66],[120,196,206],k)));gr.addColorStop(1,rgb(mix([18,32,48],[70,150,170],k)));g.fillStyle=gr;g.fillRect(gx0,by,gx1-gx0,h-by);
+ g.strokeStyle=rgb([255,255,255],.12+.2*k);g.lineWidth=1.5;for(let i=0;i<7;i++){const y=by+12+i*(SH*.05);g.beginPath();for(let x=gx0+4;x<gx1-4;x+=8)g.lineTo(x,y+Math.sin(x*.05+t*(1.2+i*.2)+i)*2.5);g.stroke()}
+ const gc=rgb(mix([34,50,44],[96,158,88],k));g.fillStyle=gc;[[0,gx0],[gx1,w]].forEach(([a,b])=>{g.beginPath();g.roundRect?g.roundRect(a-(a?0:30),by,b-a+(a?30:0),h,16):g.rect(a,by,b-a,h);g.fill()});
+ g.fillStyle=rgb(mix([52,74,58],[130,190,100],k));g.fillRect(0,by,gx0,5);g.fillRect(gx1,by,w-gx1,5);
+ g.strokeStyle=rgb(mix([70,52,40],[150,110,70],k));g.lineWidth=3;[[w*.02,gx0-w*.06],[gx1+w*.06,w*.98]].forEach(([a,b])=>{for(let x=a;x<b;x+=16){g.beginPath();g.moveTo(x,by-1);g.lineTo(x,by-20);g.stroke()}g.lineWidth=2;g.beginPath();g.moveTo(a,by-14);g.lineTo(b,by-14);g.stroke();g.lineWidth=3});
+ for(let i=0;i<4;i++){const x=gx0+(gx1-gx0)*(.18+i*.21),y=by+SH*(.07+.035*(i%3));g.fillStyle=rgb(mix([30,70,60],[70,150,90],k));g.beginPath();g.ellipse(x,y,16,6,0,0,6.3);g.fill();if(k>.6){g.fillStyle='#F7A8C6';g.beginPath();g.arc(x,y-4,5*(k-.4),0,6.3);g.fill()}}
+ g.strokeStyle=rgb(mix([40,70,50],[100,150,70],k));g.lineWidth=2;for(let i=0;i<9;i++){const x=i<5?gx0-4-i*5:gx1+4+(i-5)*5,sw=Math.sin(t*1.5+i)*4*wd;g.beginPath();g.moveTo(x,by+8);g.quadraticCurveTo(x,by-20,x+sw,by-34-(i%3)*8);g.stroke()}
+ [.1,.9].forEach((fx,j)=>{const x=w*fx,sw=Math.sin(t*.8+j)*(2+wd*5);g.fillStyle=rgb(mix([40,30,28],[110,76,50],k));g.fillRect(x-7,by-SH*.22,14,SH*.22);g.fillStyle=rgb(mix([28,54,48],[66,142,88],k));[[0,-.28,.11],[-.08,-.2,.09],[.08,-.2,.09]].forEach(q=>{g.beginPath();g.arc(x+sw+q[0]*SH,by+q[1]*SH,q[2]*SH,0,6.3);g.fill()})});
+ FP+=((S.stage==6?1:0)-FP)*cl01(dt*1.2,0,1);
+ if(FP>.02)FR.forEach((f,i)=>{const j=i%2,q=i>>1,x=w*(j?.9:.1)+Math.sin(t*.8+j)*(2+wd*5)+[-.06,.07,-.01][q]*SH,y=by+[-.3,-.22,-.15][q]*SH,r=13*FP;f.x=x;f.y=y;
+  if(!f.seen){g.strokeStyle=rgb([255,240,170],.5+.4*Math.sin(t*4+i));g.lineWidth=3;g.beginPath();g.arc(x,y,r+6,0,6.3);g.stroke()}
+  g.fillStyle=f.c;g.beginPath();g.arc(x,y,r,0,6.3);g.fill();g.fillStyle='rgba(255,255,255,.45)';g.beginPath();g.arc(x-r*.3,y-r*.3,r*.28,0,6.3);g.fill();
+  if(f.seen){g.strokeStyle='#FFF1B8';g.lineWidth=3;g.beginPath();g.arc(x,y,r+3,0,6.3);g.stroke()}});
+ const nf=k*24;fl.forEach((f,i)=>{const s=cl01(nf-i,0,1);if(s<=0)return;const side=i%2,x=side?gx1+(w-gx1)*(.1+f.x*.8):gx0*(.06+f.x*.7),sw=Math.sin(t*1.5+f.p)*3*wd;g.strokeStyle=rgb([60,130,70]);g.lineWidth=2;g.beginPath();g.moveTo(x,by+3);g.lineTo(x+sw,by-f.h*s);g.stroke();g.fillStyle=['#F58AB0','#FFD36B','#C8A2F0'][i%3];g.beginPath();g.arc(x+sw,by-f.h*s,5*s,0,6.3);g.fill()});
+ const lit=.25+.75*prog,lx=[gx0-28,gx1+28],pl=SH*.14;
+ for(let i=0;i<4;i++){planks[i]+=((i<B?1:0)-planks[i])*cl01(dt*4,0,1);const p=planks[i];if(p<.02)continue;const pw=(gx1-gx0+56)/4,x=gx0-28+i*pw;g.save();g.globalAlpha=p;g.translate(x+pw/2,by-(1-p)*60);g.rotate((1-p)*.3);g.fillStyle='#A9784A';g.fillRect(-pw/2+2,-5,pw-4,11);g.fillStyle='#C9976A';g.fillRect(-pw/2+2,-5,pw-4,3);g.restore()}
+ if(B>=4){g.strokeStyle='#8A5F36';g.lineWidth=3;g.beginPath();g.moveTo(lx[0],by-pl*.5);g.quadraticCurveTo(w*.5,by-pl*.15,lx[1],by-pl*.5);g.stroke()}
+ lx.forEach((x,j)=>{g.fillStyle='#5B4636';g.fillRect(x-3,by-pl,6,pl);const y=by-pl-14,gl=lit*(.8+.2*Math.sin(t*3+j));gr=g.createRadialGradient(x,y,0,x,y,SH*.16);gr.addColorStop(0,rgb([255,200,110],.75*gl));gr.addColorStop(1,rgb([255,200,110],0));g.fillStyle=gr;g.fillRect(x-SH*.2,y-SH*.2,SH*.4,SH*.4);g.fillStyle=rgb([255,214,130],.35+.65*lit);g.beginPath();g.ellipse(x,y,10,14,0,0,6.3);g.fill();g.strokeStyle='#5B4636';g.lineWidth=2;g.stroke()});
+ if(B>=4){g.strokeStyle=rgb([255,220,140],.5+.4*Math.sin(t*3));g.lineWidth=3;g.beginPath();g.moveTo(lx[0],by-pl-14);g.quadraticCurveTo(w*.5,by-pl-SH*.12,lx[1],by-pl-14);g.stroke()}
+ const nr=Math.floor(160*Math.pow(1-k,1.3));g.strokeStyle=rgb([205,225,245],.5);g.lineWidth=1.2;g.beginPath();
+ for(let i=0;i<nr;i++){const d=rain[i];d.y=(d.y+d.v*dt*.9)%1;const y=d.y*SH*1.1,x=(d.x*w*1.3+y*.25+t*20*wd)%(w*1.2);g.moveTo(x,y);g.lineTo(x+4,y+14)}g.stroke();
+ if(k<.35){if(rnd()<dt*.12)lf=1;lf=Math.max(0,lf-dt*3);if(lf>.02){g.fillStyle=`rgba(255,255,255,${lf*.35})`;g.fillRect(0,0,w,h)}}
+ leaves.forEach(l=>{l.x=(l.x+l.v*dt*(.4+wd))%1.1;l.y=(l.y+dt*.05)%1;const x=l.x*w,y=SH*(.2+l.y*.7)+Math.sin(t*2+l.p)*10;g.fillStyle=rgb(mix([160,110,60],[255,170,200],k),.8);g.save();g.translate(x,y);g.rotate(t+l.p);g.beginPath();g.ellipse(0,0,6,3,0,0,6.3);g.fill();g.restore()});
+ if(k>.6)for(let i=0;i<5;i++){const x=(.15+i*.17+Math.sin(t*.6+i)*.05)*w,y=SH*(.5+Math.cos(t*.7+i*2)*.1),f=Math.abs(Math.sin(t*9+i))*7;g.fillStyle=['#F58AB0','#FFD36B','#9FD8F5'][i%3];g.beginPath();g.ellipse(x-4,y,f,5,.5,0,6.3);g.ellipse(x+4,y,f,5,-.5,0,6.3);g.fill()}
+ const nf2=4+Math.floor(k*16);for(let i=0;i<nf2;i++){const f=flies[i],x=(f.x+Math.sin(t*.4+f.p)*.04)*w,y=(f.y+Math.cos(t*.5+f.p)*.03)*SH,a=.4+.6*Math.abs(Math.sin(t*1.6+f.p));g.fillStyle=rgb([255,226,130],.18*a);g.beginPath();g.arc(x,y,9,0,6.3);g.fill();g.fillStyle=rgb([255,240,170],a);g.beginPath();g.arc(x,y,2.4,0,6.3);g.fill()}
+ clues.forEach((c,i)=>{if(S.stage!=1||c.f)return;const r=8+i*6,a=i==S.cn?.75+.25*Math.sin(t*3):.35;c.x=c.fx*w+Math.sin(t+i)*6;c.y=c.fy*SH+Math.cos(t*1.3+i)*6;c.r=r;
+ gr=g.createRadialGradient(c.x,c.y,0,c.x,c.y,r*3.2);gr.addColorStop(0,rgb([255,236,150],.85*a));gr.addColorStop(1,rgb([255,236,150],0));g.fillStyle=gr;g.beginPath();g.arc(c.x,c.y,r*3.2,0,6.3);g.fill();
+ g.fillStyle=rgb([255,244,200],Math.min(1,a+.2));g.beginPath();for(let q=0;q<10;q++){const R=q%2?r*.45:r,an=-1.57+q*.628;g.lineTo(c.x+Math.cos(an)*R,c.y+Math.sin(an)*R)}g.closePath();g.fill();
+ g.fillStyle='#4A3300';g.font='700 '+Math.round(r*.9)+'px Cairo';g.textAlign='center';g.fillText(['١','٢','٣','٤'][i],c.x,c.y+r*.3)});
+}
+function lp(ms){requestAnimationFrame(lp);const t=ms*.001,dt=Math.min(t-T0,.1);T0=t;if(paused)return;draw(t,dt);mixer(t)}
+requestAnimationFrame(lp);
+cv.onpointerdown=e=>{
+ if(S.stage==1){const c=clues.find(c=>!c.f&&Math.hypot(e.clientX-c.x,e.clientY-c.y)<c.r+24);if(!c)return;const i=clues.indexOf(c);if(i!=S.cn){toast('ابدئي بالنجمة رقم '+(S.cn+1));return}c.f=1;S.cn++;chime([660,880]);
+  P.insertAdjacentHTML('beforeend','<p class="cl">'+c.t+'</p>');$('fc').textContent=S.cn;P.scrollTop=P.scrollHeight;
+  if(S.cn==4)P.insertAdjacentHTML('beforeend','<button class="b" onclick="quiz(Q1,()=>fin(s2,1),0,\'تحدي الأدلة\')">انتقلي إلى التحدي</button>')}
+ else if(S.stage==6){const f=FR.find(f=>Math.hypot(e.clientX-f.x,e.clientY-f.y)<30);if(f)fruit(FR.indexOf(f))}};
+/* ===== أصوات طبيعية فقط ===== */
+let ac,rg,wg,nz;
+function aud(){if(ac)return;try{ac=new AudioContext();const n=ac.sampleRate*2,b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=rnd()*2-1;
+ const mk=(f,q,ty)=>{const s=ac.createBufferSource();s.buffer=b;s.loop=true;const fl=ac.createBiquadFilter();fl.type=ty;fl.frequency.value=f;fl.Q.value=q;const gn=ac.createGain();gn.gain.value=0;s.connect(fl);fl.connect(gn);gn.connect(ac.destination);s.start();return gn};
+ rg=mk(4200,.4,'bandpass');wg=mk(380,.7,'lowpass');setInterval(()=>{if(S.sound&&!paused&&W>.55)bird()},2600)}catch(e){}}
+function mixer(t){if(!rg)return;const on=S.sound&&!paused;rg.gain.value+=((on?.11*Math.pow(1-W,1.3):0)-rg.gain.value)*.04;wg.gain.value+=((on?.07+.04*Math.sin(t*.5):0)-wg.gain.value)*.04}
+function chime(f){if(!S.sound||!ac)return;f.forEach((q,i)=>{const o=ac.createOscillator(),gn=ac.createGain(),t=ac.currentTime+i*.14;o.type='sine';o.frequency.value=q;o.connect(gn);gn.connect(ac.destination);gn.gain.setValueAtTime(.001,t);gn.gain.exponentialRampToValueAtTime(.14,t+.03);gn.gain.exponentialRampToValueAtTime(.001,t+.9);o.start(t);o.stop(t+.95)})}
+function bird(){if(!ac)return;const o=ac.createOscillator(),gn=ac.createGain(),t=ac.currentTime;o.frequency.setValueAtTime(2600,t);o.frequency.exponentialRampToValueAtTime(3800,t+.09);o.frequency.exponentialRampToValueAtTime(2900,t+.18);o.connect(gn);gn.connect(ac.destination);gn.gain.setValueAtTime(.001,t);gn.gain.exponentialRampToValueAtTime(.05,t+.03);gn.gain.exponentialRampToValueAtTime(.001,t+.2);o.start(t);o.stop(t+.22)}
+function snd(){S.sound=!S.sound;$('bs').textContent='الأصوات: '+(S.sound?'تشغيل':'إيقاف')}
+function pz(v){paused=!!v;$('pz').style.display=v?'grid':'none'}
+/* ===== القصة ===== */
+const P=$('p');let tw;
+function typ(el,t){clearInterval(tw);if(matchMedia('(prefers-reduced-motion:reduce)').matches){el.textContent=t;return}let i=0;tw=setInterval(()=>{el.textContent=t.slice(0,++i);if(i>=t.length)clearInterval(tw)},32)}
+function show(h,t){P.innerHTML=(t?'<p class="st" id="st"></p>':'')+h;P.scrollTop=0;if(t)typ($('st'),t)}
+function hud(){$('pts').textContent=S.pts;$('rw').innerHTML=RI.map((r,i)=>`<i class="${i<S.done?'on':''}" title="${RW[i]}">${r}</i>`).join('')}
+function toast(t){const e=$('ts');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2600)}
+const bar=()=>'<div class="bar"><i style="width:'+S.stage/6*100+'%"></i></div>',TG=[.08,.1,.3,.5,.7,.9,1];
+function save(){try{const a=JSON.parse(localStorage.getItem('ld')||'[]'),r={n:S.name,p:S.pts,s:S.done,c:S.cor,t:S.tot,d:new Date().toISOString().slice(0,10),ti:S.done>4?'سفيرة التسامح':'محققة صغيرة',f:S.fruit||''},i=a.findIndex(x=>x.n==S.name);i<0?a.push(r):a[i]=r;localStorage.setItem('ld',JSON.stringify(a))}catch(e){}}
+function fin(next,d){S.done=d;hud();chime([523,659,784,1046]);toast('حصلتِ على '+RW[S.done-1]);save();next()}
+function menu(){go(0);B=0;show('<h2>قضية قلب مجروح</h2><input id="nm" placeholder="اكتبي اسمك هنا" maxlength="30"><button class="b" onclick="begin()">ابدئي الحكاية</button><button class="b s" onclick="teacher()">وضع المعلمة</button>','في صباحٍ دراسيٍّ اختلفت ثلاث صديقات، فانكسر شيءٌ عزيز بينهنّ. اكتبي اسمكِ لتدخلي حكايتهنّ.')}
+function begin(){const n=$('nm').value.trim();if(!n){$('nm').focus();return}aud();Object.assign(S,{name:n,pts:0,cor:0,tot:0,done:0,fruit:'',cn:0});clues.forEach(c=>c.f=0);FR.forEach(f=>f.seen=0);hud();story(0)}
+const Q1=[{q:'ما أول خطوة عادلة نقوم بها؟',o:['ننحاز إلى سارة فورًا','نستمع إلى الطرفين بهدوء','نترك الصديقتين ونمضي'],a:1,e:'العدل يبدأ بالاستماع إلى الطرفين قبل الحكم.'}];
+const Q2=[{q:'ما الفرق بين التسامح والضعف؟',o:['لا فرق بينهما','التسامح قرار الواثقة بنفسها، والضعف خوف من المواجهة','التسامح أن أسكت عن كل أذى'],a:1,e:'التسامح قوة، لأنه يحتاج إلى ضبط النفس.'},
+{q:'هل يعني العفو قبول الظلم؟',o:['نعم، دائمًا','لا، أعفو وأحمي نفسي بالطريقة الصحيحة','لا، بل أردّ الأذى بمثله'],a:1,e:'العفو لا يعني قبول الظلم أو تكراره.'}];
+const Q3=[{q:'اختلفت معك زميلتك في الرأي. كيف تتصرفين؟',o:['أقاطعها','أحترم رأيها وأعرض رأيي بلطف','أرفع صوتي'],a:1,e:'الاختلاف طبيعي، والاحترام يحفظ الصداقة.'},
+{q:'اعتذرت إليك صديقتك. ماذا تفعلين؟',o:['أقبل اعتذارها وأعفو','أتجاهلها','أنتظر اعتذارًا ثانيًا'],a:0,e:'قبول الاعتذار خلق كريم.'},
+{q:'شاهدتِ طالبة تسخر من زميلتها. ماذا تفعلين؟',o:['أضحك معها','أنصحها بلطف وأقف مع زميلتي','أتجاهل الموقف'],a:1,e:'نصرة المظلومة بالحكمة من الأخلاق الحسنة.'},
+{q:'تكرر الأذى وصرتِ تشعرين بعدم الأمان. ما التصرف المناسب؟',o:['أسكت وأتحمل','أخبر معلمتي أو والدتي ليحموني','أردّ بالأذى'],a:1,e:'التسامح لا يمنع طلب الحماية من الكبار.'}];
+const ST=['الاستماع بهدوء إلى كل صديقة','توضيح ما حدث والاعتراف بالخطأ','الاعتذار بصدق وقبول الاعتذار','الاتفاق على التعاون واحترام الآراء مستقبلًا'];
+const Q5=[{q:'ماذا يأمر قوله تعالى «وليعفوا وليصفحوا»؟',o:['بالعفو والصفح','بالغضب','بالقطيعة'],a:0,e:'الآية تدعو إلى العفو والصفح رجاء مغفرة الله.'},
+{q:'رفضت صديقتك رأيك ثم اعتذرت. ما القرار الأفضل؟',o:['أعفو وأعيد التعاون معها','أقاطعها أسبوعًا'],a:0,e:'العفو يعيد الود ويرفع صاحبه.'},
+{q:'أي حل ينهي خلاف سارة ونورة؟',o:['أن تتحدثا بهدوء وتعتذرا وتتعاونا','أن تتجنب كل منهما الأخرى','أن تختار ريم بينهما'],a:0,e:'الحوار والاعتذار والتعاون هي طريق الصلح.'}];
+function go(n){S.stage=n;WT=TG[n]}
+const SP=['كانت الحصة الثانية تفيض بالحماس؛ فقد طلبت المعلمة من الطالبات أن يزيّنّ لوحة الفصل. وجلست سارة ونورة وريم معًا، ثلاث صديقات تجمعهنّ الضحكة والدفتر الواحد.',
+'أمسكت سارة قلمها وكتبت فكرتها بسرعة وبهجة. وكانت نورة تمسك ورقةً رسمت عليها وردةً حمراء، وتحمل في قلبها فكرةً جميلة تتمنى أن تُسمع، وتنتظر أن يُقال لها: ما رأيكِ؟',
+'لكنّ الحماس أخذ سارة بعيدًا، فنسيت أن تسأل. ولم تنتبه إلى أنّ إهمال الرأي قد يؤلم كما تؤلم الكلمة القاسية.',
+'طوت نورة وردتها بهدوء، وحبست حزنها في صدرها كما يحبس الغيمُ مطره. وظنّت أنّ صديقتها لا تريد رأيها، وأنّ رأيها قليل القيمة.',
+'وحين رنّ جرس الفسحة، جلست كل واحدة في ركنٍ بعيد. وبقيت ريم تنقل نظرها بينهما، وتتساءل: كيف يتّسع الصمت بين صديقتين حتى يصير نهرًا عريضًا؟',
+'ولأنّ المشاعر تُرى بعين الخيال، فتحت لكِ الحكاية بابًا إلى «حديقة القلوب»؛ فيها هبّت عاصفة الغضب، وانكسر جسر الصداقة.',
+'يا {n}، أنتِ المحققة الصغيرة، فهل تعينينا على كشف ما جرى وإصلاح الجسر؟'];
+function story(i){go(0);const L=i==SP.length-1,t=SP[i].replace('{n}',S.name);
+ show('<div class="bar"><i style="width:'+(i+1)/SP.length*100+'%"></i></div><button class="b" id="nx" style="display:none" onclick="'+(L?'s1()':'story('+(i+1)+')')+'">'+(L?'نعم، لنبدأ بناء الأدلة':'تابعي الحكاية')+'</button>',t);
+ setTimeout(()=>{const b=$('nx');if(b)b.style.display='block'},Math.min(t.length*32+200,6500))}
+function s1(){go(1);S.cn=0;clues.forEach(c=>c.f=0);show(bar()+'<h3>بناء الأدلة</h3><p>المسي النجوم بالترتيب، من الأصغر إلى الأكبر، فكل نجمةٍ تكشف فصلًا من الحكاية: <b id="fc">0</b> من ٤</p>','اشتدّ الظلام، وتلألأت فيه نجومٌ يتفاوت حجمها: أصغرها أول الحكاية، وأكبرها آخرها. المسيها بالترتيب لتنكشف خيوط ما جرى.')}
+function s2(){go(2);show(bar()+'<h3>ما التسامح؟</h3><p>التسامح أن يعفوَ الإنسان عمّن أساء إليه وهو قادرٌ على الردّ، ويصفحَ عنه ابتغاءَ مرضاة الله وحفظًا للمودّة. وهو خُلُق الأقوياء، ولا يعني قبول الظلم ولا السكوت عن الأذى.</p><div class="v">﴿وَلْيَعْفُوا وَلْيَصْفَحُوا ۗ أَلَا تُحِبُّونَ أَنْ يَغْفِرَ اللَّهُ لَكُمْ﴾ [النور: ٢٢]</div><div class="v">قال رسول الله ﷺ: «وما زاد الله عبدًا بعفوٍ إلا عزًّا». رواه مسلم.</div><button class="b" onclick="quiz(Q2,()=>fin(s3,2),0,\'تحدي الفهم\')">ابدئي التحدي</button>','خفّ صوت المطر، وتسلّل شعاعٌ من بين الغيوم كأنه يهمس بأن للخصام نهاية. فاقرئي ما التسامح، فهو أول الطريق إلى الصلح.')}
+function s3(){go(3);quiz(Q3,()=>fin(s4,3),0,'مواقف وقرارات','مرّ نسيمٌ لطيف يحمل إليكِ مواقف من أيام المدرسة؛ فاختاري ما يحفظ المودّة ويصون الكرامة.')}
+function s4(){go(4);S.o=0;const sh=ST.map((t,i)=>[t,i]).sort(()=>rnd()-.5);show(bar()+'<p>انقري على الخطوات بالترتيب الصحيح، فيرتفع الجسر لوحًا بعد لوح.</p><ol id="ol"></ol><div>'+sh.map(([t,i])=>'<button class="b o" onclick="pick(this,'+i+')">'+t+'</button>').join('')+'</div><p id="fb"></p>','وقف الجسر المكسور ينتظر ألواحه؛ وكل خطوةٍ من خطوات الصلح لوحٌ يعيد إليه الحياة، فرتّبيها كما ينبغي.')}
+function pick(b,i){if(i==S.o){chime([523+S.o*110]);$('ol').insertAdjacentHTML('beforeend','<li>'+b.textContent+'</li>');b.remove();S.o++;B=S.o;$('fb').textContent='';if(S.o==4){S.pts+=20;S.cor++;S.tot++;hud();setTimeout(()=>fin(s5,4),900)}}else $('fb').textContent='ليست هذه الخطوة الآن. جرّبي خطوةً أخرى.'}
+function s5(){go(5);quiz(Q5,()=>{chime([784,988,1175]);bloom()},0,'القرار الأخير','تنفّس الصباح في الأفق، وبقي سؤالٌ أخير يفصل بين ظلمة الخصام ونور الصلح.')}
+function bloom(){go(6);S.fr=0;show(bar()+'<h3>ثمرات التسامح</h3><p>اضغطي على الثمار المضيئة في الشجرتين: <b id="fc">0</b> من ٦</p><div>'+FR.map((f,i)=>'<button class="b o fb" onclick="fruit('+i+')">'+f.n+'</button>').join('')+'</div><div id="fd"></div><div id="ch"></div>','انقشع الغيم، وأشرقت الحديقة، وأزهرت الأشجار وأثمرت. وكل ثمرةٍ تخبّئ درسًا من دروس التسامح، فاقطفيها واحدةً واحدة.')}
+function fruit(i){const f=FR[i];if(!f.seen){f.seen=1;S.fr++;chime([587,740])}$('fc').textContent=S.fr;$('fd').innerHTML='<div class="v"><b>'+f.n+'</b><br>'+f.d+'</div>';
+ if(S.fr==6)$('ch').innerHTML='<h3>أيُّ الثمرات لامست قلبكِ؟</h3><p>اختاري الثمرة التي ستسجَّل في لوحة إنجازكِ.</p>'+FR.map((q,k)=>'<button class="b o" onclick="choose('+k+')">'+q.n+'</button>').join('')}
+function choose(i){S.fi=i;S.fruit=FR[i].n;S.pts+=10;hud();fin(board,5)}
+function leave(){$('bd').remove();document.body.classList.remove('shot');menu()}
+function board(){B=4;const f=FR[S.fi],pc=S.tot?Math.round(S.cor/S.tot*100):0;let d='';try{d=new Date().toLocaleDateString('ar-SA-u-ca-gregory')}catch(e){d=new Date().toISOString().slice(0,10)}
+ const o=document.createElement('div');o.id='bd';o.onclick=()=>document.body.classList.remove('shot');
+ o.innerHTML='<div class="card"><div class="ob">لوحة الإنجاز</div><div class="nm">'+esc(S.name)+'</div><div class="sb">أصلحت جسر الصداقة بالتسامح</div><div class="seal">سفيرة<br>التسامح</div><div class="rows"><div><b>'+S.pts+'</b>نقطة</div><div><b>'+S.cor+'/'+S.tot+'</b>إجابة صحيحة</div><div><b>'+pc+'%</b>نسبة الإنجاز</div></div><div class="rwd">'+RI.map((r,i)=>'<span>'+r+'<small>'+RW[i]+'</small></span>').join('')+'</div><div class="fr"><small>الثمرة التي لامست قلبي</small><b>'+f.n+'</b><p>'+f.d+'</p></div><div class="ft">المدرسة الابتدائية ١٩ لتحفيظ القرآن الكريم<br>فريق «بقيمنا نرتقي»<br>'+d+'</div><div class="nb"><p>التقطي لقطة شاشة وأرسليها إلى معلمتكِ.</p><button class="b" onclick="event.stopPropagation();document.body.classList.add(\'shot\')">إخفاء الأزرار للتصوير</button><button class="b s" onclick="leave()">حكاية جديدة</button></div></div>';document.body.appendChild(o)}
+function quiz(l,n,i,t,nar){i=i||0;if(i>=l.length)return n();const q=l[i];window.Q={l,n,i,t:t||(window.Q&&window.Q.t),d:0};
+ show(bar()+'<h3>'+Q.t+' ('+(i+1)+'/'+l.length+')</h3><p>'+q.q+'</p>'+q.o.map((o,k)=>'<button class="b o" onclick="ans('+k+')">'+o+'</button>').join('')+'<div id="ex"></div>',i?'':nar)}
+function ans(k){if(Q.d)return;Q.d=1;const q=Q.l[Q.i],ok=k==q.a,bs=P.querySelectorAll('.o');S.tot++;bs[q.a].classList.add('g');
+ if(ok){S.cor++;S.pts+=10;chime([523,659,784])}else bs[k].classList.add('x');hud();
+ $('ex').innerHTML='<p><b>'+(ok?'أحسنتِ! ':'ليست الإجابة الصحيحة. ')+'</b>'+q.e+'</p><button class="b" onclick="quiz(Q.l,Q.n,Q.i+1)">التالي</button>'}
+function teacher(){let a=[];try{a=JSON.parse(localStorage.getItem('ld')||'[]')}catch(e){}
+ const csv='الاسم,النقاط,المراحل المكتملة,الإجابات الصحيحة,عدد الأسئلة,نسبة الإنجاز,اللقب,الثمرة,التاريخ\n'+a.map(r=>[nc(r.n),r.p,r.s,r.c,r.t,r.s*20+'%',r.ti,nc(r.f||''),r.d].join(',')).join('\n');
+ show('<h3>لوحة المعلمة</h3><div class="tw"><table><tr><th>الاسم</th><th>النقاط</th><th>المراحل</th><th>صحيحة</th><th>الإنجاز</th><th>اللقب</th><th>الثمرة</th></tr>'+(a.map(r=>'<tr><td>'+esc(r.n)+'</td><td>'+r.p+'</td><td>'+r.s+'/5</td><td>'+r.c+'/'+r.t+'</td><td>'+r.s*20+'%</td><td>'+r.ti+'</td><td>'+esc(r.f||'')+'</td></tr>').join('')||'<tr><td colspan="7">لا توجد نتائج بعد.</td></tr>')+'</table></div><p>النتائج محفوظة في هذا الجهاز. انسخي ملف CSV وافتحيه في Excel.</p><textarea id="cv" readonly>'+esc(csv)+'</textarea><button class="b" onclick="cpy()">نسخ CSV</button><button class="b s" onclick="menu()">رجوع</button>')}
+function cpy(){const t=$('cv');t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand('copy')}toast('تم النسخ')}
+hud();menu();
+</script>
+</body>
+</html>
